@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HRIS Action Plan — Executive Dashboard · Plan L3-12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* ── Page shell ── */
+body {
+  background: #f0efe8;
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+  min-height: 100vh;
+}
+
+/* ── Top nav bar ── */
+#topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding: 10px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+#topbar .tb-left { display: flex; align-items: center; gap: 10px; }
+#topbar .tb-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.tb-logo {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: linear-gradient(135deg, #1a6ec7 0%, #0d8f52 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: #fff; font-weight: 600; flex-shrink: 0;
+}
+.tb-title { font-size: 14px; font-weight: 600; color: #1a1917; }
+.tb-sub { font-size: 11px; color: #9a9895; font-family: 'IBM Plex Mono', monospace; }
+.tb-chip {
+  font-size: 10px; font-family: 'IBM Plex Mono', monospace;
+  padding: 3px 10px; border-radius: 20px;
+  background: rgba(13,143,82,0.1); color: #0d8f52;
+  border: 1px solid rgba(13,143,82,0.3);
+  white-space: nowrap;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+.tb-date {
+  font-size: 11px; font-family: 'IBM Plex Mono', monospace;
+  color: #9a9895; white-space: nowrap;
+}
+
+/* ── Page wrapper ── */
+#page-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* ── Dashboard CSS (original) ── */
+
+  :root {
+    --bg: #f8f7f4;
+    --bg2: #ffffff;
+    --bg3: #f2f1ee;
+    --border: rgba(0,0,0,0.08);
+    --border2: rgba(0,0,0,0.14);
+    --text-primary: #1a1917;
+    --text-secondary: #5a5855;
+    --text-muted: #9a9895;
+    --green: #0d8f52;
+    --green-dim: rgba(13,143,82,0.08);
+    --green-border: rgba(13,143,82,0.25);
+    --amber: #b8720a;
+    --amber-dim: rgba(184,114,10,0.08);
+    --amber-border: rgba(184,114,10,0.25);
+    --blue: #1a6ec7;
+    --blue-dim: rgba(26,110,199,0.07);
+    --blue-border: rgba(26,110,199,0.2);
+    --red: #c0392b;
+    --red-dim: rgba(192,57,43,0.07);
+    --red-border: rgba(192,57,43,0.2);
+    --purple: #6d4fc2;
+    --font: 'IBM Plex Sans Thai', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-left { display: flex; flex-direction: column; gap: 4px; }
+  .header-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .header-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+  .header-right { display: flex; align-items: center; gap: 20px; }
+  .header-meta {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .header-meta span {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  .header-meta strong {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .date-badge {
+    background: var(--amber-dim);
+    border: 1px solid var(--amber-border);
+    color: var(--amber);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main { padding: 28px 36px; display: flex; flex-direction: column; gap: 24px; }
+
+  /* ── TOP KPI BAR ── */
+  .kpi-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .kpi-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 12px 12px 0 0;
+  }
+  .kpi-card.green::before { background: var(--green); }
+  .kpi-card.amber::before { background: var(--amber); }
+  .kpi-card.blue::before  { background: var(--blue); }
+  .kpi-card.red::before   { background: var(--red); }
+
+  .kpi-label {
+    font-size: 10px;
+    font-family: var(--mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .kpi-value {
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .kpi-card.green .kpi-value { color: var(--green); }
+  .kpi-card.amber .kpi-value { color: var(--amber); }
+  .kpi-card.blue  .kpi-value { color: var(--blue); }
+  .kpi-card.red   .kpi-value { color: var(--red); }
+
+  .kpi-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ── ACTION ALERT BANNER ── */
+  .alert-banner {
+    background: var(--red-dim);
+    border: 1px solid var(--red-border);
+    border-radius: 12px;
+    padding: 16px 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .alert-icon {
+    font-size: 18px;
+    line-height: 1.3;
+    flex-shrink: 0;
+  }
+  .alert-content { flex: 1; }
+  .alert-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--red);
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    font-family: var(--mono);
+  }
+  .alert-items { display: flex; flex-direction: column; gap: 6px; }
+  .alert-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: #7a1f18;
+    line-height: 1.5;
+  }
+  .alert-item-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  /* ── PROJECT GRID ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .project-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .project-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .project-header-left { display: flex; flex-direction: column; gap: 3px; }
+  .project-number {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+  .project-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .project-pic {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  .badge {
+    font-size: 10px;
+    font-family: var(--mono);
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+  .badge-completed { background: var(--green-dim); color: var(--green); border: 1px solid var(--green-border); }
+  .badge-onprocess { background: var(--blue-dim); color: var(--blue); border: 1px solid var(--blue-border); }
+  .badge-warning   { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber-border); }
+  .badge-action    { background: var(--red-dim); color: var(--red); border: 1px solid var(--red-border); }
+
+  .project-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
+
+  /* Phase/Quarter rows */
+  .phase-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--bg3);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .phase-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    letter-spacing: 0.05em;
+  }
+  .phase-tag-green  { background: var(--green-dim); color: var(--green); border: 1px solid var(--green-border); }
+  .phase-tag-blue   { background: var(--blue-dim);  color: var(--blue);  border: 1px solid var(--blue-border); }
+  .phase-tag-amber  { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber-border);}
+  .phase-tag-gray   { background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border); }
+
+  .phase-content { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+  .phase-title { font-size: 12px; font-weight: 500; color: var(--text-primary); line-height: 1.4; }
+  .phase-target { font-size: 10px; color: var(--text-muted); font-family: var(--mono); }
+  .phase-remark {
+    font-size: 11px;
+    color: #f5a623cc;
+    background: var(--amber-dim);
+    border: 1px solid var(--amber-border);
+    border-radius: 5px;
+    padding: 5px 9px;
+    line-height: 1.5;
+    margin-top: 2px;
+  }
+  .phase-remark-red {
+    font-size: 11px;
+    color: #ff8080;
+    background: var(--red-dim);
+    border: 1px solid var(--red-border);
+    border-radius: 5px;
+    padding: 5px 9px;
+    line-height: 1.5;
+    margin-top: 2px;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+  }
+  .progress-track {
+    height: 4px;
+    background: var(--bg3);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease;
+  }
+  .fill-green { background: var(--green); }
+  .fill-blue  { background: var(--blue); }
+  .fill-amber { background: var(--amber); }
+
+  /* ── HR Tech: spans full width ── */
+  .project-card.full-width {
+    grid-column: 1 / -1;
+  }
+  .sub-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .sub-project-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sub-project-name { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+  .sub-project-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+  .sub-project-status { display: flex; align-items: center; justify-content: space-between; }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 16px 36px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-left { display: flex; gap: 20px; }
+  .footer-item { font-size: 10px; color: var(--text-muted); font-family: var(--mono); }
+  .footer-item span { color: var(--text-secondary); }
+
+  /* ── OVERALL TIMELINE ── */
+  .timeline-section {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 24px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-family: var(--mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .timeline-bar-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .timeline-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    align-items: center;
+    gap: 14px;
+  }
+  .timeline-name {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-family: var(--mono);
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .tl-track {
+    height: 22px;
+    background: var(--bg3);
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+  .tl-bar {
+    position: absolute;
+    top: 0; height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+  }
+  .tl-bar-label {
+    font-size: 9px;
+    font-family: var(--mono);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .tl-now {
+    position: absolute;
+    top: 0; height: 100%;
+    width: 1.5px;
+    background: var(--amber);
+    opacity: 0.7;
+    z-index: 10;
+  }
+  /* month markers */
+  .tl-months {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  .tl-month-labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4px;
+  }
+  .tl-month-label {
+    font-size: 9px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+  }
+
+  /* ── OVERALL PROGRESS ── */
+  .overall-progress-section {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .overall-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .overall-title-block { display: flex; flex-direction: column; gap: 4px; }
+  .overall-pct {
+    font-size: 52px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+  }
+  .overall-pct span { font-size: 24px; font-weight: 400; color: var(--text-muted); }
+  .overall-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  .overall-main-track {
+    height: 12px;
+    background: var(--bg3);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+  .overall-main-fill {
+    height: 100%;
+    border-radius: 8px;
+    background: linear-gradient(90deg, var(--green) 0%, #4a9eff 60%, var(--amber) 100%);
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
+  .project-breakdown {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .breakdown-item {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .breakdown-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .breakdown-name {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-family: var(--mono);
+  }
+  .breakdown-pct-label {
+    font-size: 12px;
+    font-family: var(--mono);
+    font-weight: 500;
+  }
+  .breakdown-track {
+    height: 6px;
+    background: var(--bg3);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .breakdown-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease 0.3s;
+  }
+  .breakdown-sub {
+    font-size: 10px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .calc-note {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    padding-top: 4px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* animate in */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .kpi-card     { animation: fadeUp 0.4s ease both; }
+  .kpi-card:nth-child(1) { animation-delay: 0.05s; }
+  .kpi-card:nth-child(2) { animation-delay: 0.10s; }
+  .kpi-card:nth-child(3) { animation-delay: 0.15s; }
+  .kpi-card:nth-child(4) { animation-delay: 0.20s; }
+  .alert-banner  { animation: fadeUp 0.4s ease 0.25s both; }
+  .project-card  { animation: fadeUp 0.4s ease 0.3s both; }
+  .timeline-section { animation: fadeUp 0.4s ease 0.35s both; }
+
+
+      .tl2-wrap { font-family: var(--font); }
+      .tl2-header { display: grid; grid-template-columns: 190px 1fr; gap: 10px; margin-bottom: 4px; }
+      .tl2-months { display: flex; justify-content: space-between; padding: 0 2px; }
+      .tl2-month { font-size: 11px; color: var(--text-muted); font-family: var(--mono); }
+      .tl2-body { display: flex; flex-direction: column; gap: 3px; }
+      .tl2-group { display: grid; grid-template-columns: 190px 1fr; gap: 10px; align-items: center; margin: 10px 0 4px; }
+      .tl2-glabel { font-size: 11px; font-family: var(--mono); font-weight: 500; text-align: left; letter-spacing: 0.04em; padding-left: 2px; }
+      .tl2-gline { height: 1px; }
+      .tl2-row { display: grid; grid-template-columns: 190px 1fr; gap: 10px; align-items: center; }
+      .tl2-name { font-size: 11px; color: var(--text-secondary); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--mono); padding-left: 2px; }
+      .tl2-name.s { color: var(--text-muted); font-size: 10px; padding-left: 10px; }
+      .tl2-name.xs { color: var(--text-muted); font-size: 9px; padding-left: 20px; }
+      .tl2-track { position: relative; height: 22px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+      .tl2-track.thin { height: 15px; }
+      .tl2-now { position: absolute; top: 0; bottom: 0; width: 1.5px; background: var(--amber); opacity: 0.7; z-index: 5; left: 27%; }
+      .tl2-bar { position: absolute; top: 0; height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 6px; overflow: hidden; }
+      .tl2-bar span { font-size: 10px; font-family: var(--mono); white-space: nowrap; }
+      .b-g   { background: var(--green); } .b-g span { color: #fff; }
+      .b-gd  { background: var(--green-dim); border: 1px solid var(--green-border); } .b-gd span { color: var(--green); }
+      .b-b   { background: var(--blue); } .b-b span { color: #fff; }
+      .b-bd  { background: var(--blue-dim); border: 1px solid var(--blue-border); } .b-bd span { color: var(--blue); }
+      .b-bf  { background: rgba(26,110,199,0.06); border: 1px solid rgba(26,110,199,0.15); } .b-bf span { color: var(--blue); opacity: 0.7; }
+      .b-a   { background: var(--amber); } .b-a span { color: #fff; }
+      .b-ad  { background: var(--amber-dim); border: 1px solid var(--amber-border); } .b-ad span { color: var(--amber); }
+      .b-atbc{ background: none; border: 1px dashed var(--amber-border); } .b-atbc span { color: var(--text-muted); }
+      .b-mini{ background: var(--blue-dim); border: 1px solid var(--blue-border); } .b-mini span { font-size: 9px; color: var(--blue); }
+      .tl2-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+      .tl2-li { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text-muted); font-family: var(--mono); }
+      .tl2-dot { width: 12px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    
+
+/* ── Override: make header fit new shell ── */
+.header {
+  background: #ffffff !important;
+  border-bottom: none !important;
+  border-radius: 0 !important;
+  padding: 20px 28px !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+}
+.main { padding: 20px 28px 40px !important; }
+
+/* ── Fade-in animation ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.kpi-card     { animation: fadeUp 0.5s ease both; }
+.kpi-card:nth-child(1) { animation-delay: 0.05s; }
+.kpi-card:nth-child(2) { animation-delay: 0.10s; }
+.kpi-card:nth-child(3) { animation-delay: 0.15s; }
+.kpi-card:nth-child(4) { animation-delay: 0.20s; }
+.alert-banner  { animation: fadeUp 0.5s ease 0.25s both; }
+.overall-progress-section { animation: fadeUp 0.5s ease 0.30s both; }
+.project-card  { animation: fadeUp 0.5s ease 0.35s both; }
+.timeline-section { animation: fadeUp 0.5s ease 0.40s both; }
+
+/* ── Footer ── */
+#site-footer {
+  background: #fff;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #9a9895;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ── Print-ready ── */
+@media print {
+  #topbar { position: relative; backdrop-filter: none; background: #fff; }
+  .kpi-card, .alert-banner, .overall-progress-section, .project-card, .timeline-section { animation: none; opacity: 1; transform: none; }
+}
+
+/* FIX TIMELINE POSITIONING */
+.timeline-grid {
+  position: relative;
+}
+
+.timeline-today-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #f59e0b;
+  z-index: 10;
+  pointer-events: none;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Top navigation bar -->
+<div id="topbar">
+  <div class="tb-left">
+    <div class="tb-logo">HR</div>
+    <div>
+      <div class="tb-title">HRIS Action Plan — Executive Dashboard</div>
+      <div class="tb-sub">Plan L3-12 · Energy Absolute PCL.</div>
+    </div>
+  </div>
+  <div class="tb-right">
+    <span class="tb-chip">● Live</span>
+    <span class="tb-date">กำลังโหลด...</span>
+  </div>
+</div>
+
+<!-- Dashboard content -->
+<div id="page-wrap">
+  <!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <span class="header-label">Executive Dashboard · Plan L3-12</span>
+    <span class="header-title">HR Individual Action Plan — Overview</span>
+  </div>
+  <div class="header-right">
+    <div class="header-meta">
+      <span>Main PIC</span>
+      <strong>Pornpetch K.</strong>
+    </div>
+    <div class="header-meta">
+      <span>Project support by</span>
+      <strong>Thanutt K.</strong>
+    </div>
+    <div class="date-badge">ณ 8 เม.ย. 2569</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- KPI BAR -->
+  <div class="kpi-bar">
+    <div class="kpi-card green">
+      <span class="kpi-label">Completed</span>
+      <span class="kpi-value">1</span>
+      <span class="kpi-sub">Outsource Payroll<br>ดำเนินการครบ 3 phases แล้ว</span>
+    </div>
+    <div class="kpi-card blue">
+      <span class="kpi-label">On Process</span>
+      <span class="kpi-value">6</span>
+      <span class="kpi-sub">กำลังดำเนินการตามแผน<br>HR Data Hub Q2–Q4, HR Tech Q2 + Genspark 🚀 Launch</span>
+    </div>
+    <div class="kpi-card red">
+      <span class="kpi-label">Action Needed</span>
+      <span class="kpi-value">1</span>
+      <span class="kpi-sub">ต้องการ support จากฝ่ายที่เกี่ยวข้อง<br>Data Cleansing (Payroll แก้ไขครบแล้ว)</span>
+    </div>
+    <div class="kpi-card amber">
+      <span class="kpi-label">Overall Progress</span>
+      <span class="kpi-value">Q2</span>
+      <span class="kpi-sub">เข้าสู่ Q2 / 2026 แล้ว · Q1 ✓ ครบ<br>Genspark 🚀 Launch Active เม.ย.–พ.ค.</span>
+    </div>
+  </div>
+
+  <!-- ACTION ALERT -->
+  <div class="alert-banner" style="background:var(--red-dim);border-color:var(--red-border)">
+    <span class="alert-icon">🔴</span>
+    <div class="alert-content">
+      <div class="alert-title" style="color:var(--red)">⚡ Action Required — ต้องการการตัดสินใจจากผู้บริหาร (1 รายการ)</div>
+      <div class="alert-items">
+        <div class="alert-item">
+          <div class="alert-item-dot"></div>
+          <span><strong style="color:var(--red)">Data Cleansing — HR Data Control Hub (วิกฤต):</strong> ความคืบหน้าจริงเพียง <strong style="color:#6b0f08">11.8%</strong> จากพนักงานทั้งหมด 1,114 คน — Finished 101 คน (9.1%) · Submitted 31 คน (2.8%) · <strong style="color:#6b0f08">Pending 982 คน = 88.2%</strong> · กลุ่มเสี่ยงสูง: อมิตา+AAB รวม ~300 คน ยังไม่มี Submitted เลย — ต้องการให้ผู้บริหาร <strong style="color:#6b0f08">แจ้ง Department Head ทุก BU เร่งรัดพนักงานโดยด่วน</strong></span>
+        </div>
+        <div class="alert-item" style="color:#1a5c3a">
+          <div class="alert-item-dot" style="background:var(--green)"></div>
+          <span><strong style="color:var(--green)">🚀 Genspark AI — Launch Active เม.ย. 2569:</strong> 5/5 ผ่าน · คะแนนเฉลี่ย 98.2/100 · AI Leader ทุกคน (พี่ที 94 · พี่หน่อย 100 · พี่กวาง 97 · พี่แป๊ะ 100 · พี่บอย 100) — <strong style="color:var(--green)">🚀 Launch + Expand เม.ย.–พ.ค. เริ่มแล้ว!</strong></span>
+        </div>
+        <div class="alert-item" style="color:#1a5c3a">
+          <div class="alert-item-dot" style="background:var(--green)"></div>
+          <span><strong style="color:var(--green)">✅ Outsource Payroll — ครบถ้วน 100%:</strong> Action Items ทั้ง 4 + กระบวนการทั้ง 3 รายการเรียบร้อย · คะแนนรอบสอง 75/100 ปรับปรุงจากรอบแรก (45/100)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OVERALL PROGRESS -->
+  <div class="overall-progress-section">
+    <div class="overall-header">
+      <div class="overall-title-block">
+        <span class="section-title" style="margin-bottom:0">Overall Project Progress</span>
+        <div style="display:flex;align-items:flex-end;gap:12px;margin-top:6px">
+          <span class="overall-pct">76<span>%</span></span>
+          <div style="display:flex;flex-direction:column;gap:3px;padding-bottom:6px">
+            <span style="font-size:12px;color:var(--text-secondary)">ประเมินตาม % ความคืบหน้าของแต่ละ sub-task (รวม HR Tech Q2–Q4 TBC และ Genspark AI)</span>
+            <span class="overall-note">Weighted average จาก 3 โครงการหลัก · น้ำหนักเท่ากัน (33.3% each) · HR Tech รวม 4 sub-projects</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+        <span class="badge badge-onprocess" style="font-size:11px;padding:5px 14px">● On Track</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">ณ 8 เม.ย. 2569</span>
+      </div>
+    </div>
+
+    <!-- Main bar -->
+    <div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">0%</span>
+        <span style="font-size:10px;color:var(--amber);font-family:var(--mono)">▼ ตอนนี้ 76%</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">100%</span>
+      </div>
+      <div class="overall-main-track">
+        <div class="overall-main-fill" style="width:76%"></div>
+      </div>
+<!-- 🔽 Previous Progress Comparison -->
+<div style="margin-top:10px">
+
+  <div style="display:flex;justify-content:space-between;font-size:9px;font-family:var(--mono);color:var(--text-muted);margin-bottom:4px">
+    <span>Previous (Baseline)</span>
+    <span>47%</span>
+  </div>
+
+  <div style="height:6px;background:var(--bg3);border-radius:6px;overflow:hidden;opacity:0.6">
+    <div style="height:100%;width:47%;background:#9ca3af;border-radius:6px"></div>
+  </div>
+
+  <div style="font-size:10px;margin-top:4px;font-family:var(--mono);color:var(--green)">
+    ▲ +29% improvement (47% → 76%)
+  </div>
+
+</div>
+
+      <div style="position:relative;height:18px;margin-top:2px">
+        <!-- milestone ticks -->
+        <div style="position:absolute;left:76%;top:0;display:flex;flex-direction:column;align-items:center;gap:1px">
+          <div style="width:1px;height:5px;background:var(--amber)"></div>
+          <span style="font-size:9px;color:var(--amber);font-family:var(--mono);white-space:nowrap;transform:translateX(-50%)">Now</span>
+        </div>
+        <div style="position:absolute;left:40%;top:0;display:flex;flex-direction:column;align-items:center;gap:1px">
+          <div style="width:1px;height:5px;background:var(--text-muted)"></div>
+          <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono);white-space:nowrap;transform:translateX(-50%)">Q1 done ~40%</span>
+        </div>
+        <div style="position:absolute;left:65%;top:0;display:flex;flex-direction:column;align-items:center;gap:1px">
+          <div style="width:1px;height:5px;background:var(--text-muted)"></div>
+          <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono);white-space:nowrap;transform:translateX(-50%)">Q2 done ~60%</span>
+        </div>
+        <div style="position:absolute;left:85%;top:0;display:flex;flex-direction:column;align-items:center;gap:1px">
+          <div style="width:1px;height:5px;background:var(--text-muted)"></div>
+          <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono);white-space:nowrap;transform:translateX(-50%)">Q3 done ~80%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Per-project breakdown -->
+    <div class="project-breakdown">
+
+      <div class="breakdown-item">
+        <div class="breakdown-label">
+          <span class="breakdown-name">1. Outsource Payroll</span>
+          <span class="breakdown-pct-label" style="color:var(--green)">100%</span>
+        </div>
+        <div class="breakdown-track"><div class="breakdown-fill fill-green" style="width:100%"></div></div>
+        <span class="breakdown-sub">
+          3/3 phases Go-Live ✓ · Action Items ครบทุกรายการ ✓<br>
+          กระบวนการ &amp; ระยะเวลา แก้ไขแล้วทั้ง 3 รายการ ✓<br>
+          <span style="color:var(--green);font-size:9px">✓ ดำเนินการครบถ้วน — ติดตามต่อเนื่องรอบถัดไป</span>
+        </span>
+      </div>
+
+      <div class="breakdown-item">
+        <div class="breakdown-label">
+          <span class="breakdown-name">2. HR Data Control Hub</span>
+          <span class="breakdown-pct-label" style="color:var(--blue)">63%</span>
+        </div>
+        <div class="breakdown-track"><div class="breakdown-fill fill-blue" style="width:63%"></div></div>
+        <span class="breakdown-sub">
+          Q1 ✓ ครบ · Data Cleansing Pending 88.2% — ให้ความร่วมมือน้อย + Q3 ~30% (5 dashboards live) + Q2&amp;Q4 เริ่มดำเนินการ<br>
+          ประเมิน Q2 progress weighted = 63% · Q1 phases สมบูรณ์แล้ว<br>
+          <span style="color:var(--red);font-size:9px">⚠ Data Cleansing ความคืบหน้าจริง 11.8% (Finished 101/1,114 คน) — ต้องการ Management Enforce เร่งด่วน</span>
+        </span>
+      </div>
+
+      <div class="breakdown-item">
+        <div class="breakdown-label">
+          <span class="breakdown-name">3. HR Tech Project</span>
+          <span class="breakdown-pct-label" style="color:var(--blue)">65%</span>
+        </div>
+        <div class="breakdown-track"><div class="breakdown-fill fill-blue" style="width:65%"></div></div>
+        <span class="breakdown-sub">
+          Q2 avg 71%: AI Rec 65%·EASY 80%·Frappe 72%·Genspark 68%<br>
+          Q1 ✓ ครบ · Q2 contribution เริ่มแล้ว · Genspark 🚀 Launch Active<br>
+          <span style="color:var(--green);font-size:9px">🚀 Genspark Launch เริ่มแล้ว เม.ย. · EASY Phase 1 IT Test ใกล้เสร็จ · Frappe Edit Form Active</span>
+        </span>
+      </div>
+
+    </div>
+
+    <!-- Sub-task detail bar (HR Tech Q1) -->
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:10px;font-family:var(--mono);color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase">HR Tech — Sub-task breakdown (4 projects) · Q2 Active</span>
+        <span style="font-size:10px;font-family:var(--mono);color:var(--text-secondary)">avg <strong style="color:var(--blue)">71%</strong></span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <div style="display:grid;grid-template-columns:200px 1fr 36px;align-items:center;gap:10px">
+          <span style="font-size:11px;color:var(--text-secondary);font-family:var(--mono)">AI Recruitment v2</span>
+          <div class="breakdown-track"><div class="breakdown-fill fill-blue" style="width:65%"></div></div>
+          <span style="font-size:11px;color:var(--blue);font-family:var(--mono);text-align:right">65%</span>
+        </div>
+        <div style="display:grid;grid-template-columns:200px 1fr 36px;align-items:center;gap:10px">
+          <span style="font-size:11px;color:var(--text-secondary);font-family:var(--mono)">EASY Smart Assistant</span>
+          <div class="breakdown-track">
+            <div class="breakdown-fill fill-blue" style="width:80%"></div>
+          </div>
+          <span style="font-size:11px;color:var(--blue);font-family:var(--mono);text-align:right">80%</span>
+        </div>
+        <div style="display:grid;grid-template-columns:200px 1fr 36px;align-items:center;gap:10px">
+          <span style="font-size:11px;color:var(--text-secondary);font-family:var(--mono)">Frappe App Form</span>
+          <div class="breakdown-track"><div class="breakdown-fill fill-green" style="width:72%"></div></div>
+          <span style="font-size:11px;color:var(--green);font-family:var(--mono);text-align:right">72%</span>
+        </div>
+        <div style="height:1px;background:var(--border)"></div>
+        <div style="display:grid;grid-template-columns:200px 1fr 36px;align-items:center;gap:10px">
+          <span style="font-size:11px;color:var(--text-secondary);font-family:var(--mono)">Genspark AI (Launch & Expansion)</span>
+          <div class="breakdown-track"><div class="breakdown-fill fill-blue" style="width:68%"></div></div>
+          <span style="font-size:11px;color:var(--blue);font-family:var(--mono);text-align:right">68%</span>
+        </div>
+        <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:5px;padding:5px 9px;font-size:10px;color:var(--green)">
+          🚀 Genspark AI: Launch Active เม.ย. 2569 · Trial 5/5 ผ่าน · คะแนนเฉลี่ย 98.2/100 · ทุกคนระดับ AI Leader · Expand พ.ค. ต่อไป
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-note">
+      วิธีคำนวณ (Weighted avg · น้ำหนัก 1/3 ต่อโครงการ):
+      Outsource Payroll 100% × 33.3% = 33.3% &nbsp;|&nbsp;
+      HR Data Hub 63% × 33.3% = 21.0% (Q1 ✓ ครบ · Data Cleansing Pending 88.2% ยังต้องเร่ง · Q2 เริ่มแล้ว) &nbsp;|&nbsp;
+      HR Tech 65% × 33.3% = 21.7% (Q2 avg 71% · AI Rec 65%·EASY 80%·Frappe 72%·Genspark 68% 🚀 Launch) &nbsp;|&nbsp;
+      รวม = <strong style="color:var(--text-secondary)">~76%</strong>
+      <span style="color:var(--green);margin-left:8px">▲ +29% จาก baseline 47% — Q1 ✓ ครบทุกโครงการ · Genspark 🚀 Launch Active · เข้าสู่ Q2 แล้ว</span>
+    </div>
+  </div>
+
+  <!-- PROJECT CARDS GRID -->
+  <div class="projects-grid">
+
+    <!-- PROJECT 1: Outsource Payroll -->
+    <div class="project-card" style="grid-column:1/-1">
+      <div class="project-header">
+        <div class="project-header-left">
+          <span class="project-number">PROJECT 01 · 1st Follow-Up Meeting — 26 ก.พ. 2569</span>
+          <span class="project-name">Outsource Payroll</span>
+          <span class="project-pic">PIC: Pornpetch K. / Katenapa S. &nbsp;|&nbsp; ประชุม: Thanutt K., Phatpong T., Preeyaporn R., Jutharat P. + Worachai (United Outsource)</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="badge badge-completed">✓ Go-Live แล้ว</span>
+          <span class="badge badge-action">⚠ 17 Issues · Action Required</span>
+        </div>
+      </div>
+      <div class="project-body">
+
+        <!-- Phase progress -->
+        <div class="progress-section">
+          <div class="progress-label"><span>Phase completion</span><span style="color:var(--green)">3 / 3 ✓ &nbsp;|&nbsp; ปัจจุบัน: Follow-Up &amp; Continuous Improvement</span></div>
+          <div class="progress-track"><div class="progress-fill fill-green" style="width:100%"></div></div>
+        </div>
+
+        <!-- 3-column layout: Issues / To-Be / Action Items -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:4px">
+
+          <!-- Column 1: Issues -->
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--red);text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid var(--red-border)">🔴 ปัญหาที่พบ (As-Is) — 17 รายการ</div>
+
+            <div style="font-size:10px;font-weight:500;color:var(--text-secondary);margin-top:2px">📄 รูปแบบ &amp; ความถูกต้องรายงาน (7)</div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <div style="background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--red);line-height:1.5">รายงานรูปแบบไม่ตรง / แก้ไขช้ากว่า In-house</div>
+              <div style="background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--red);line-height:1.5">สูตร Excel ผิด — Sum range ไม่ครบบรรทัดสุดท้าย ยอดไม่ตรงใบปะหน้า</div>
+              <div style="background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--red);line-height:1.5">หน้าปกระบุเดือนผิด / วันที่จ่ายไม่สอดคล้องกัน</div>
+              <div style="background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--red);line-height:1.5">รายงาน Paste Value — ไม่มีสูตรตรวจสอบที่มาตัวเลข</div>
+              <div style="background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--red);line-height:1.5">มาตรฐานรายงานแต่ละบริษัทไม่เหมือนกัน</div>
+              <div style="background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--red);line-height:1.5">OT Cover แนวตั้ง อ่านยาก (AAB 20 บรรทัด)</div>
+              <div style="background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--red);line-height:1.5">สั่งแก้ 2 รายการ กลับมาแค่รายการเดียว</div>
+            </div>
+
+            <div style="font-size:10px;font-weight:500;color:var(--text-secondary);margin-top:4px">🗄️ ความถูกต้องข้อมูล (7)</div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <div style="background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--red);line-height:1.5">EBI: ข้อมูลเงินกู้ที่อยู่อาศัยหายไป ต้องเติมเอง</div>
+              <div style="background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--red);line-height:1.5">Manpower จำนวนพนักงานผิด ต้องแก้ด้วยมือ</div>
+              <div style="background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--red);line-height:1.5">Naming Convention ไม่สม่ำเสมอ (มี/ไม่มีจุด) ยอด Summary ≠ Detail</div>
+              <div style="background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--red);line-height:1.5">ภาษี Expatriate หายไปจากหน้าปกสรุป</div>
+              <div style="background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--red);line-height:1.5">ยอดภาษีใบปะหน้า ≠ ภ.ง.ด.1 / ยอด SSO ฝั่ง EE ≠ ER</div>
+              <div style="background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--red);line-height:1.5">เหตุผลลาออกแสดงแค่ "Resigned" ไม่ละเอียด</div>
+              <div style="background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--red);line-height:1.5">Adjustment / Back-pay ไม่สื่อสารที่มาชัดเจน</div>
+            </div>
+
+            <div style="font-size:10px;font-weight:500;color:var(--text-secondary);margin-top:4px">⏱️ กระบวนการ &amp; ระยะเวลา (3) <span style="color:var(--green);font-family:var(--mono)">✓ แก้ไขแล้ว</span></div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:6px 9px;font-size:11px;color:#0a6b3c;line-height:1.5;text-decoration:line-through;opacity:0.7">ตอบกลับแก้ไขล่าช้า เครียดช่วงใกล้จ่ายเงิน</div>
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:6px 9px;font-size:11px;color:#0a6b3c;line-height:1.5;text-decoration:line-through;opacity:0.7">อนุมัติ OT/ลาล่าช้า — พนักงาน SWM-เกาะล้าน ถูกหัก 7,000–8,000 บ.</div>
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:6px 9px;font-size:11px;color:#0a6b3c;line-height:1.5;text-decoration:line-through;opacity:0.7">รอรายงานภาษี/SSO/PVD 1–2 วัน Reconcile ไม่ได้ทันที</div>
+            </div>
+          </div>
+
+          <!-- Column 2: To-Be -->
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--green);text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid var(--green-border)">🟢 แนวทางแก้ไข (To-Be) — 6 ข้อ</div>
+            <div style="display:flex;flex-direction:column;gap:7px">
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:3px">
+                <span style="font-size:11px;font-weight:500;color:var(--green)">1. Workflow 2-ขั้นตอน</span>
+                <span style="font-size:11px;color:#0a6b3c;line-height:1.5">Outsource ส่ง Payroll Register ให้ภายในยืนยันยอดก่อน แล้วค่อยออกรายงานเต็ม</span>
+              </div>
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:3px">
+                <span style="font-size:11px;font-weight:500;color:var(--green)">2. Cut-off Date ชัดเจน</span>
+                <span style="font-size:11px;color:#0a6b3c;line-height:1.5">อนุมัติ OT/ลา ≤ วันที่ 22 · ส่งข้อมูลให้ Outsource ≤ วันที่ 24 ไม่มีผ่อนปรน</span>
+              </div>
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:3px">
+                <span style="font-size:11px;font-weight:500;color:var(--green)">3. ปรับรูปแบบ OT Cover</span>
+                <span style="font-size:11px;color:#0a6b3c;line-height:1.5">รวม OT เป็น Sum ตามประเภท แทนแจกแจงทุกรายการ</span>
+              </div>
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:3px">
+                <span style="font-size:11px;font-weight:500;color:var(--green)">4. แก้ Naming Convention</span>
+                <span style="font-size:11px;color:#0a6b3c;line-height:1.5">ตรวจสอบชื่อรายการสวัสดิการไม่ให้มีอักขระแปลกปลอม</span>
+              </div>
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:3px">
+                <span style="font-size:11px;font-weight:500;color:var(--green)">5. หยุด Manual Fix</span>
+                <span style="font-size:11px;color:#0a6b3c;line-height:1.5">ทีมภายใน Feedback ให้ Outsource แก้ที่ต้นเหตุ ห้ามแก้เองในไฟล์</span>
+              </div>
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:3px">
+                <span style="font-size:11px;font-weight:500;color:var(--green)">6. Strict Deadline</span>
+                <span style="font-size:11px;color:#0a6b3c;line-height:1.5">หากอนุมัติไม่ทัน จะตัดยอดไปเดือนถัดไปทันที ไม่ยืดหยุ่น</span>
+              </div>
+            </div>
+
+            <!-- Requirements -->
+            <div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--blue);text-transform:uppercase;padding:8px 0 4px;border-bottom:1px solid var(--blue-border);margin-top:4px">🔵 Requirements เพิ่มเติม (7)</div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <div style="font-size:11px;color:var(--blue);padding:5px 9px;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:5px;line-height:1.5">Excel Summary ผู้บริหาร รวมทุกบริษัท — HC / เงินเดือน / OT / ภาษี / SSO / PVD / หักอื่น</div>
+              <div style="font-size:11px;color:var(--blue);padding:5px 9px;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:5px;line-height:1.5">Grouping OT: Summary รวม · Detail แยกย่อย (โดยเฉพาะ AAB)</div>
+              <div style="font-size:11px;color:var(--blue);padding:5px 9px;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:5px;line-height:1.5">Manpower รายงาน "เหตุผลลาออก" ละเอียดจากระบบภายใน</div>
+              <div style="font-size:11px;color:var(--blue);padding:5px 9px;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:5px;line-height:1.5">รายงานภาษีรวม "Tax paid on behalf" เพื่อบัญชีสั่งจ่ายเช็คถูกต้อง</div>
+              <div style="font-size:11px;color:var(--blue);padding:5px 9px;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:5px;line-height:1.5">ส่ง SSO + PVD + ภาษี พร้อม Payroll Register ทันทีที่ยอด Final</div>
+              <div style="font-size:11px;color:var(--blue);padding:5px 9px;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:5px;line-height:1.5">รายงาน PVD ส่ง ≤ วันที่ 1 ของเดือน เพื่อบัญชีจ่ายทันวันที่ 3</div>
+              <div style="font-size:11px;color:var(--blue);padding:5px 9px;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:5px;line-height:1.5">ไฟล์ Backup OT / Adjustment ส่งวันเงินออก เพื่อ HR ตอบพนักงานได้ทันที</div>
+            </div>
+          </div>
+
+          <!-- Column 3: Action Items -->
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--amber);text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid var(--amber-border)">✅ Action Items — ต้องดำเนินการ</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+
+              <div style="background:var(--bg3);border:1px solid var(--amber-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
+                  <span style="font-size:10px;background:var(--red-dim);color:var(--red);border:1px solid var(--red-border);border-radius:4px;padding:1px 7px;font-family:var(--mono);white-space:nowrap">ทันที</span>
+                  <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Phatpong</span>
+                </div>
+                <span style="font-size:11px;color:var(--text-primary);line-height:1.5">อนุมัติ Cover sheet AMT</span>
+              </div>
+
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
+                  <span style="font-size:10px;background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);border-radius:4px;padding:1px 7px;font-family:var(--mono);white-space:nowrap">✓ เรียบร้อยแล้ว</span>
+                  <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Thanutt / Pornpetch</span>
+                </div>
+                <span style="font-size:11px;color:var(--text-primary);line-height:1.5">ส่ง Excel Template Summary ทุกบริษัทให้ Outsource</span>
+              </div>
+
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
+                  <span style="font-size:10px;background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);border-radius:4px;padding:1px 7px;font-family:var(--mono);white-space:nowrap">✓ เรียบร้อยแล้ว</span>
+                  <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Thanutt + ทีม</span>
+                </div>
+                <span style="font-size:11px;color:var(--text-primary);line-height:1.5">สรุปปัญหาแยก BU เพื่อนำเสนอผู้บริหาร</span>
+              </div>
+
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
+                  <span style="font-size:10px;background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);border-radius:4px;padding:1px 7px;font-family:var(--mono);white-space:nowrap">✓ เรียบร้อยแล้ว · รอบมีนาคม</span>
+                  <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Worachai (United)</span>
+                </div>
+                <span style="font-size:11px;color:var(--text-primary);line-height:1.5">แก้สูตร Excel + Naming Convention + ปรับ OT Grouping + ส่ง SSO/PVD/ภาษีพร้อม Payroll Register</span>
+              </div>
+
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
+                  <span style="font-size:10px;background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);border-radius:4px;padding:1px 7px;font-family:var(--mono);white-space:nowrap">✓ เรียบร้อยแล้ว · ≤ วันที่ 22 ทุกเดือน</span>
+                  <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">หัวหน้างานทุกคน</span>
+                </div>
+                <span style="font-size:11px;color:var(--text-primary);line-height:1.5">อนุมัติ OT/ลาให้เสร็จสิ้น ก่อน Cut-off</span>
+                <span style="font-size:10px;color:var(--green);font-family:var(--mono);margin-top:2px">ระบบตั้งแจ้งเตือนทางอีเมลไปยังหัวหน้างานเพื่อกดอนุมัติทุกๆ 10 โมงเช้าทุกวัน</span>
+              </div>
+
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
+                  <span style="font-size:10px;background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);border-radius:4px;padding:1px 7px;font-family:var(--mono);white-space:nowrap">✓ เรียบร้อยแล้ว · ≤ วันที่ 23 ก่อน 12:00</span>
+                  <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">ทีม HR ภายใน</span>
+                </div>
+                <span style="font-size:11px;color:var(--text-primary);line-height:1.5">ส่งข้อมูลทั้งหมดให้ Outsource</span>
+                <span style="font-size:10px;color:var(--green);font-family:var(--mono);margin-top:2px">อยู่ใน timeline</span>
+              </div>
+
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
+                  <span style="font-size:10px;background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);border-radius:4px;padding:1px 7px;font-family:var(--mono);white-space:nowrap">✓ เรียบร้อยแล้ว · วันที่ 1 ทุกเดือน</span>
+                  <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Katenapa</span>
+                </div>
+                <span style="font-size:11px;color:var(--text-primary);line-height:1.5">ขอรายงาน PVD จาก Outsource (บัญชีจ่ายทันวันที่ 3)</span>
+                <span style="font-size:10px;color:var(--green);font-family:var(--mono);margin-top:2px">อยู่ใน timeline</span>
+              </div>
+
+              <!-- Assessment summary -->
+              <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:8px;padding:10px 12px;margin-top:4px;display:flex;flex-direction:column;gap:5px">
+                <span style="font-size:10px;font-family:var(--mono);color:var(--green);font-weight:500;text-transform:uppercase;letter-spacing:0.08em">📊 การประเมินภาพรวม — รอบสอง</span>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span style="font-size:12px;color:var(--text-secondary)">คุณภาพงาน Outsource รอบสอง</span>
+                  <span style="font-size:13px;font-weight:500;color:var(--green)">✓ ปรับปรุงดีขึ้น</span>
+                </div>
+                <div style="height:1px;background:var(--green-border)"></div>
+                <!-- Score bar -->
+                <div style="display:flex;flex-direction:column;gap:4px;margin-top:2px">
+                  <div style="display:flex;justify-content:space-between;font-size:10px;font-family:var(--mono);color:var(--text-muted)">
+                    <span>คะแนนประเมิน</span><span style="color:var(--green);font-weight:600">75 / 100</span>
+                  </div>
+                  <div style="height:5px;background:var(--bg3);border-radius:4px;overflow:hidden">
+                    <div style="height:100%;width:75%;background:var(--green);border-radius:4px"></div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font-size:9px;font-family:var(--mono);color:var(--text-muted)">
+                    <span>รอบแรก: ~45/100</span><span>เป้าหมาย: 90/100</span>
+                  </div>
+                </div>
+                <div style="height:1px;background:var(--green-border);margin-top:2px"></div>
+                <!-- Detail breakdown -->
+                <div style="display:flex;flex-direction:column;gap:4px;margin-top:2px">
+                  <div style="display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center">
+                    <span style="font-size:10px;color:var(--text-secondary);font-family:var(--mono)">📄 รูปแบบ &amp; ความถูกต้องรายงาน</span>
+                    <span style="font-size:10px;color:var(--green);font-family:var(--mono)">ดีขึ้น — สูตร Excel &amp; Naming แก้แล้ว</span>
+                  </div>
+                  <div style="display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center">
+                    <span style="font-size:10px;color:var(--text-secondary);font-family:var(--mono)">🗄️ ความถูกต้องข้อมูล</span>
+                    <span style="font-size:10px;color:var(--amber);font-family:var(--mono)">ต้องติดตาม — ยังมีบางรายการ</span>
+                  </div>
+                  <div style="display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center">
+                    <span style="font-size:10px;color:var(--text-secondary);font-family:var(--mono)">⏱️ กระบวนการ &amp; ระยะเวลา</span>
+                    <span style="font-size:10px;color:var(--green);font-family:var(--mono)">แก้ไขแล้วครบทั้ง 3 รายการ</span>
+                  </div>
+                </div>
+                <div style="height:1px;background:var(--green-border);margin-top:2px"></div>
+                <span style="font-size:11px;color:#0a6b3c;line-height:1.6">รอบสองมีพัฒนาการที่ชัดเจน — ปัญหากระบวนการทั้ง 3 รายการแก้ไขแล้ว ระบบแจ้งเตือนอีเมล Cut-off ทำงาน · OT Grouping &amp; Naming Convention ถูกต้อง · ส่ง SSO/PVD/ภาษีพร้อม Payroll Register ตรงเวลา อย่างไรก็ตาม <strong>ความถูกต้องข้อมูลเชิงลึก</strong> ยังต้องติดตามต่ออีก 1–2 รอบ เพื่อยืนยันว่าแก้ที่ต้นเหตุจริง ไม่ใช่แค่ปิดอาการ</span>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Sub 4: Genspark AI -->
+          <div class="sub-project-card" style="grid-column:1/-1">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap">
+              <div style="display:flex;flex-direction:column;gap:2px">
+                <span style="font-size:10px;font-family:var(--mono);color:var(--text-muted);letter-spacing:0.06em">SUB-PROJECT 4</span>
+                <span class="sub-project-name">Digital Workforce Enhancement Project — Genspark AI</span>
+              </div>
+              <span class="badge badge-onprocess" style="font-size:9px;padding:3px 7px">On process</span>
+            </div>
+            <span class="sub-project-desc">นำ Genspark AI เข้ามาประยุกต์ใช้ในงาน HR เช่น Chatbot, Dashboard, วิเคราะห์ข้อมูล และประมวลผลเอกสารอัตโนมัติ</span>
+            <div class="progress-section">
+              <div class="progress-label"><span>Launch progress</span><span style="color:var(--blue)">7 users ทดลองใช้งาน</span></div>
+              <div class="progress-track"><div class="progress-fill fill-blue" style="width:20%"></div></div>
+            </div>
+            <div class="phase-remark">🔬 ✓ Trial completed · Entering Launch phase → Early rollout & preparing enterprise expansion — เพื่อประเมินผลก่อนขยายผล</div>
+
+            <!-- Timeline mini -->
+            <div style="margin-top:6px;display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:10px;font-family:var(--mono);color:var(--text-muted);letter-spacing:0.06em;text-transform:uppercase">Timeline 2569</span>
+              <div style="position:relative;height:28px;background:var(--bg3);border-radius:6px;overflow:hidden">
+                <!-- Now line -->
+                <div style="position:absolute;top:0;bottom:0;left:27%;width:1.5px;background:var(--amber);opacity:0.7;z-index:5"></div>
+                <!-- ม.ค.–ก.พ. นำเสนอ/ขออนุมัติ -->
+                <div style="position:absolute;left:0%;width:16.67%;top:0;height:100%;background:var(--green);border-radius:4px;display:flex;align-items:center;padding:0 5px;overflow:hidden">
+                  <span style="font-size:9px;font-family:var(--mono);color:#fff;white-space:nowrap">นำเสนอ/อนุมัติ</span>
+                </div>
+                <!-- มี.ค. Trial -->
+                <div style="position:absolute;left:16.67%;width:8.33%;top:0;height:100%;background:var(--blue);border-radius:4px;display:flex;align-items:center;padding:0 4px;overflow:hidden">
+                  <span style="font-size:9px;font-family:var(--mono);color:#fff;white-space:nowrap">Trial ✓</span>
+                </div>
+                <!-- เม.ย. เริ่มใช้จริง -->
+                <div style="position:absolute;left:25%;width:8.33%;top:0;height:100%;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:4px;display:flex;align-items:center;padding:0 4px;overflow:hidden">
+                  <span style="font-size:9px;font-family:var(--mono);color:var(--blue);white-space:nowrap">Launch ●</span>
+                </div>
+                <!-- พ.ค.–มิ.ย. เพิ่มทีม + Integrate -->
+                <div style="position:absolute;left:33.33%;width:16.67%;top:0;height:100%;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:4px;display:flex;align-items:center;padding:0 4px;overflow:hidden">
+                  <span style="font-size:9px;font-family:var(--mono);color:var(--blue);white-space:nowrap">Expand + Integrate</span>
+                </div>
+                <!-- ก.ค. มาตรฐาน -->
+                <div style="position:absolute;left:50%;width:8.33%;top:0;height:100%;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:4px;display:flex;align-items:center;padding:0 4px;overflow:hidden">
+                  <span style="font-size:9px;font-family:var(--mono);color:var(--blue);white-space:nowrap">Standard</span>
+                </div>
+                <!-- ส.ค.–ก.ย. ติดตาม + Use Case -->
+                <div style="position:absolute;left:58.33%;width:16.67%;top:0;height:100%;background:rgba(26,110,199,0.08);border:1px solid rgba(26,110,199,0.15);border-radius:4px;display:flex;align-items:center;padding:0 4px;overflow:hidden">
+                  <span style="font-size:9px;font-family:var(--mono);color:var(--blue);white-space:nowrap;opacity:0.8">Monitor + Use Case</span>
+                </div>
+                <!-- ต.ค. ประเมินกลาง -->
+                <div style="position:absolute;left:75%;width:8.33%;top:0;height:100%;background:rgba(26,110,199,0.06);border:1px solid rgba(26,110,199,0.12);border-radius:4px;display:flex;align-items:center;padding:0 4px;overflow:hidden">
+                  <span style="font-size:9px;font-family:var(--mono);color:var(--blue);white-space:nowrap;opacity:0.7">Mid Eval</span>
+                </div>
+                <!-- พ.ย. ปรับปรุง -->
+                <div style="position:absolute;left:83.33%;width:8.33%;top:0;height:100%;background:rgba(26,110,199,0.06);border:1px solid rgba(26,110,199,0.12);border-radius:4px;display:flex;align-items:center;padding:0 4px;overflow:hidden">
+                  <span style="font-size:9px;font-family:var(--mono);color:var(--blue);white-space:nowrap;opacity:0.7">Improve</span>
+                </div>
+                <!-- ธ.ค. ประเมินสุดท้าย -->
+                <div style="position:absolute;left:91.67%;width:8.33%;top:0;height:100%;background:rgba(26,110,199,0.06);border:1px solid rgba(26,110,199,0.12);border-radius:4px;display:flex;align-items:center;padding:0 4px;overflow:hidden">
+                  <span style="font-size:9px;font-family:var(--mono);color:var(--blue);white-space:nowrap;opacity:0.7">Final Eval</span>
+                </div>
+              </div>
+              <!-- Month labels -->
+              <div style="display:flex;justify-content:space-between;padding:0 2px">
+                <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">ม.ค.</span>
+                <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">ก.พ.</span>
+                <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">มี.ค.</span>
+                <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">เม.ย.</span>
+                <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">พ.ค.</span>
+                <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">มิ.ย.</span>
+                <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">ก.ค.</span>
+                <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">ส.ค.</span>
+                <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">ก.ย.</span>
+                <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">ต.ค.</span>
+                <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">พ.ย.</span>
+                <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">ธ.ค.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 2: HR Data Control Hub -->
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-header-left">
+          <span class="project-number">PROJECT 02</span>
+          <span class="project-name">HR Data Control Hub</span>
+          <span class="project-pic">PIC: Pornpetch K.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+          <span class="badge badge-onprocess">● On Process</span>
+          <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q1 (+ Data Cleansing) &amp; Q3 active</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="progress-section">
+          <div class="progress-label"><span>Year progress</span><span style="color:var(--blue)">Q1 incl. Data Cleansing + Q3 active · Q2 &amp; Q4 pending</span></div>
+          <div class="progress-track" style="position:relative;height:8px;border-radius:6px;overflow:visible">
+            <!-- Q1 active fill -->
+            <div class="progress-fill fill-blue" style="width:25%;position:absolute;left:0;top:0;height:100%"></div>
+            <!-- Q3 active fill -->
+            <div style="position:absolute;left:50%;top:0;width:25%;height:100%;background:rgba(74,158,255,0.35);border-radius:0 6px 6px 0"></div>
+          </div>
+        </div>
+
+        <!-- Q1 On Process -->
+        <div class="phase-row">
+          <span class="phase-tag phase-tag-blue">Q1</span>
+          <div class="phase-content">
+            <span class="phase-title">Planning, Design, Implementation, Go-live</span>
+            <span class="phase-target">Target: มี.ค. 2026 — SharePoint + Notion Template</span>
+          </div>
+          <span class="badge badge-onprocess" style="font-size:9px;padding:3px 8px;flex-shrink:0">● On Process</span>
+        </div>
+
+        <!-- Q2 Pending -->
+        <div class="phase-row" style="opacity:0.7">
+          <span class="phase-tag phase-tag-gray">Q2</span>
+          <div class="phase-content">
+            <span class="phase-title">Data Cleansing — ให้พนักงาน Update ข้อมูลส่วนตัว</span>
+            <span class="phase-target">Target: สิ้น มี.ค. 2026 — ข้อมูลพนักงานครบถ้วนและเป็นปัจจุบัน</span>
+            <div class="phase-remark-red" style="margin-top:4px">⚠ ต้องการ Management Support — แจ้งพนักงานให้ Update ข้อมูลใน ESS โดยเร็ว</div>
+          </div>
+          <span class="badge badge-onprocess" style="font-size:9px;padding:3px 8px;flex-shrink:0;align-self:flex-start">● On Process</span>
+        </div>
+
+        <!-- Q3 On Process -->
+        <div class="phase-row">
+          <span class="phase-tag phase-tag-blue">Q3</span>
+          <div class="phase-content">
+            <span class="phase-title">HRIS Dashboard — Workforce Analytics</span>
+            <span class="phase-target">Target: ส.ค. 2026 — Adoption ≥90%</span>
+            <!-- Active dashboards note -->
+            <div style="margin-top:6px;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:3px">
+              <span style="font-size:10px;color:var(--blue);font-family:var(--mono);font-weight:500">📊 Dashboards ที่พัฒนาและใช้งานอยู่ ณ ปัจจุบัน (5 dashboards)</span>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:2px">
+                <span style="font-size:10px;background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border);border-radius:4px;padding:2px 8px">Retirement Dashboard</span>
+                <span style="font-size:10px;background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border);border-radius:4px;padding:2px 8px">T/O Dashboard</span>
+                <span style="font-size:10px;background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border);border-radius:4px;padding:2px 8px">HC &amp; WF Dashboard</span>
+                <span style="font-size:10px;background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border);border-radius:4px;padding:2px 8px">HRM-Monthly Dashboard</span>
+                <span style="font-size:10px;background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border);border-radius:4px;padding:2px 8px">Insurance Claim Dashboard</span>
+              </div>
+            </div>
+          </div>
+          <span class="badge badge-onprocess" style="font-size:9px;padding:3px 8px;flex-shrink:0;align-self:flex-start">● On Process</span>
+        </div>
+
+        <!-- Q4 Pending -->
+        <div class="phase-row" style="opacity:0.7">
+          <span class="phase-tag phase-tag-gray">Q4</span>
+          <div class="phase-content">
+            <span class="phase-title">ROI Review, KPI, PDPA &amp; Audit Ready</span>
+            <span class="phase-target">Target: ธ.ค. 2026 — Adoption ≥80% (KPI มาตรฐาน)</span>
+          </div>
+          <span class="badge" style="font-size:9px;padding:3px 8px;flex-shrink:0;background:rgba(255,255,255,0.05);color:var(--text-muted);border:1px solid var(--border)">⏸ Pending</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 3: HR Tech — full width -->
+    <div class="project-card full-width">
+      <div class="project-header">
+        <div class="project-header-left">
+          <span class="project-number">PROJECT 03 · Q1 2026 Active</span>
+          <span class="project-name">HR Tech Project</span>
+          <span class="project-pic">PIC: Pornpetch K. / Tech project team &nbsp;|&nbsp; Q2–Q4: TBC</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="badge badge-onprocess">● On Process</span>
+          <span class="badge badge-warning">4 Sub-Projects Active</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="sub-projects-grid">
+
+          <!-- Sub 1 -->
+          <div class="sub-project-card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+              <span class="sub-project-name">HR AI Recruitment v2</span>
+              <span class="badge badge-onprocess" style="font-size:9px;padding:3px 7px">On process</span>
+            </div>
+            <span class="sub-project-desc">ออกแบบ Unified Resume Pool + AI สรุป Resume รายบุคคล + กำหนด Workflow</span>
+
+            <!-- Go-live มี.ค. -->
+            <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:9px;font-family:var(--mono);color:var(--green);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">Go-Live มี.ค. 2026 ✓</span>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--green)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>
+                  AI Interview Assistance <span style="font-family:var(--mono);margin-left:auto">✓ Done</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--green)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>
+                  AI Interview ChatBot <span style="font-family:var(--mono);margin-left:auto">✓ Done</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--green)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>
+                  EA DNA Fix Question <span style="font-family:var(--mono);margin-left:auto">✓ Done</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Go-live เม.ย. -->
+            <div style="background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:9px;font-family:var(--mono);color:var(--blue);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">Go-Live เม.ย. 2026 — On Process</span>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--blue)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0"></span>
+                  AI Interview Summary Report <span style="font-family:var(--mono);margin-left:auto">● On process</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--blue)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0"></span>
+                  Dashboard &amp; Analytics <span style="font-family:var(--mono);margin-left:auto">● On process</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="progress-section">
+              <div class="progress-label"><span>Overall progress</span><span style="color:var(--blue)">UAT ภายใน เม.ย. 2026</span></div>
+              <div class="progress-track">
+                <div class="progress-fill fill-green" style="width:60%"></div>
+              </div>
+            </div>
+            <div class="phase-remark">🔧 มี.ค. 3 features Go-Live แล้ว · เม.ย. UAT ระบบทั้งหมด</div>
+          </div>
+
+          <!-- Sub 2 -->
+          <div class="sub-project-card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+              <span class="sub-project-name">EASY — EA Smart Assistant</span>
+              <span class="badge badge-onprocess" style="font-size:9px;padding:3px 7px">● On process</span>
+            </div>
+            <span class="sub-project-desc">ออกแบบ Knowledge Base + โครงสร้าง Chatbot สำหรับ EA Support</span>
+
+            <!-- Done มี.ค. -->
+            <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:9px;font-family:var(--mono);color:var(--green);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">มี.ค. 2026</span>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--green)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>
+                  Update ข้อมูล HR ที่พนักงานควรรู้ <span style="font-family:var(--mono);margin-left:auto">✓ Done</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--amber)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--amber);flex-shrink:0"></span>
+                  Phase 1 — IT Test ข้อมูล <span style="font-family:var(--mono);margin-left:auto">● On process</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pending เม.ย. -->
+            <div style="background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:4px;opacity:0.8">
+              <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">เม.ย. 2026 — Pending</span>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--text-muted)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--text-muted);flex-shrink:0"></span>
+                  <span>Phase 2 — เชื่อมข้อมูลกับ SharePoint (ISO, Odoo ฯลฯ)</span> <span style="font-family:var(--mono);margin-left:auto;white-space:nowrap">⏸ Pending</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="progress-section">
+              <div class="progress-label"><span>Overall progress</span><span style="color:var(--blue)">Phase 1 IT Test</span></div>
+              <div class="progress-track">
+                <div class="progress-fill fill-blue" style="width:75%"></div>
+              </div>
+            </div>
+            <div class="phase-remark">✓ Knowledge Base ครบ · Phase 1 IT Test on process · Phase 2 Pending เม.ย.</div>
+          </div>
+
+          <!-- Sub 3 -->
+          <div class="sub-project-card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+              <span class="sub-project-name">Frappe Application Form</span>
+              <span class="badge badge-onprocess" style="font-size:9px;padding:3px 7px">On process</span>
+            </div>
+            <span class="sub-project-desc">ออกแบบ Application Form มาตรฐาน + โครงสร้างข้อมูลผู้สมัคร + เชื่อมต่อ HR AI</span>
+
+            <!-- Done มี.ค. -->
+            <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:9px;font-family:var(--mono);color:var(--green);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">Done มี.ค. 2026 ✓</span>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--green)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>
+                  Manual Import Template in @core <span style="font-family:var(--mono);margin-left:auto">✓ Done</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--green)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>
+                  Robot Import in @core <span style="font-family:var(--mono);margin-left:auto">✓ Done</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- On process เม.ย. -->
+            <div style="background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:9px;font-family:var(--mono);color:var(--blue);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">เม.ย. 2026 — On Process</span>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--blue)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0"></span>
+                  Edit Quick / Full Form <span style="font-family:var(--mono);margin-left:auto">● On process</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="progress-section">
+              <div class="progress-label"><span>Overall progress</span><span style="color:var(--blue)">Done เม.ย. 2026</span></div>
+              <div class="progress-track">
+                <div class="progress-fill fill-green" style="width:67%"></div>
+              </div>
+            </div>
+            <div class="phase-remark">🔧 มี.ค. 2 features Done · เม.ย. Edit Form — On process</div>
+          </div>
+
+          <!-- Sub 4: Genspark AI -->
+          <div class="sub-project-card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+              <div style="display:flex;flex-direction:column;gap:2px">
+                <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted);letter-spacing:0.06em">SUB-PROJECT 4</span>
+                <span class="sub-project-name">Genspark AI</span>
+              </div>
+              <span class="badge badge-onprocess" style="font-size:9px;padding:3px 7px">On process</span>
+            </div>
+            <span class="sub-project-desc">Digital Workforce Enhancement — นำ Genspark AI ประยุกต์ใช้ใน HR: Chatbot, Dashboard, วิเคราะห์ข้อมูล และประมวลผลเอกสารอัตโนมัติ</span>
+
+            <!-- มี.ค. On process -->
+            <div style="background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:9px;font-family:var(--mono);color:var(--blue);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">มี.ค. 2026 — On Process</span>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--blue)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0"></span>
+                  Trial และประเมินผลการใช้งาน <span style="font-family:var(--mono);margin-left:auto">● On process</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--blue)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0"></span>
+                  พิจารณา Launch + Expand <span style="font-family:var(--mono);margin-left:auto">● On process</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="progress-section">
+              <div class="progress-label"><span>Launch progress</span><span style="color:var(--blue)">7 users · ประเมินผล</span></div>
+              <div class="progress-track"><div class="progress-fill fill-blue" style="width:60%"></div></div>
+            </div>
+            <div class="phase-remark">🔬 Trial 7 users + ประเมินผล · พิจารณา Launch + Expand ต่อเนื่อง</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="timeline-section">
+    <div class="section-title">Project Timeline — ปี 2569 (Jan → Dec 2026)</div>
+    <style>
+      .tl2-wrap { font-family: var(--font); }
+      .tl2-header { display: grid; grid-template-columns: 190px 1fr; gap: 10px; margin-bottom: 4px; }
+      .tl2-months { display: flex; justify-content: space-between; padding: 0 2px; }
+      .tl2-month { font-size: 11px; color: var(--text-muted); font-family: var(--mono); }
+      .tl2-body { display: flex; flex-direction: column; gap: 3px; }
+      .tl2-group { display: grid; grid-template-columns: 190px 1fr; gap: 10px; align-items: center; margin: 10px 0 4px; }
+      .tl2-glabel { font-size: 11px; font-family: var(--mono); font-weight: 500; text-align: left; letter-spacing: 0.04em; padding-left: 2px; }
+      .tl2-gline { height: 1px; }
+      .tl2-row { display: grid; grid-template-columns: 190px 1fr; gap: 10px; align-items: center; }
+      .tl2-name { font-size: 11px; color: var(--text-secondary); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--mono); padding-left: 2px; }
+      .tl2-name.s { color: var(--text-muted); font-size: 10px; padding-left: 10px; }
+      .tl2-name.xs { color: var(--text-muted); font-size: 9px; padding-left: 20px; }
+      .tl2-track { position: relative; height: 22px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+      .tl2-track.thin { height: 15px; }
+      .tl2-now { position: absolute; top: 0; bottom: 0; width: 1.5px; background: var(--amber); opacity: 0.7; z-index: 5; left: 27%; }
+      .tl2-bar { position: absolute; top: 0; height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 6px; overflow: hidden; }
+      .tl2-bar span { font-size: 10px; font-family: var(--mono); white-space: nowrap; }
+      .b-g   { background: var(--green); } .b-g span { color: #fff; }
+      .b-gd  { background: var(--green-dim); border: 1px solid var(--green-border); } .b-gd span { color: var(--green); }
+      .b-b   { background: var(--blue); } .b-b span { color: #fff; }
+      .b-bd  { background: var(--blue-dim); border: 1px solid var(--blue-border); } .b-bd span { color: var(--blue); }
+      .b-bf  { background: rgba(26,110,199,0.06); border: 1px solid rgba(26,110,199,0.15); } .b-bf span { color: var(--blue); opacity: 0.7; }
+      .b-a   { background: var(--amber); } .b-a span { color: #fff; }
+      .b-ad  { background: var(--amber-dim); border: 1px solid var(--amber-border); } .b-ad span { color: var(--amber); }
+      .b-atbc{ background: none; border: 1px dashed var(--amber-border); } .b-atbc span { color: var(--text-muted); }
+      .b-mini{ background: var(--blue-dim); border: 1px solid var(--blue-border); } .b-mini span { font-size: 9px; color: var(--blue); }
+      .tl2-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+      .tl2-li { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text-muted); font-family: var(--mono); }
+      .tl2-dot { width: 12px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    
+/* FIX TIMELINE POSITIONING */
+.timeline-grid {
+  position: relative;
+}
+
+.timeline-today-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #f59e0b;
+  z-index: 10;
+  pointer-events: none;
+}
+
+</style>
+
+    <div class="tl2-wrap">
+      <div class="tl2-header">
+        <div></div>
+        <div class="tl2-months">
+          <span class="tl2-month">ม.ค.</span><span class="tl2-month">ก.พ.</span><span class="tl2-month">มี.ค.</span>
+          <span class="tl2-month">เม.ย.</span><span class="tl2-month">พ.ค.</span><span class="tl2-month">มิ.ย.</span>
+          <span class="tl2-month">ก.ค.</span><span class="tl2-month">ส.ค.</span><span class="tl2-month">ก.ย.</span>
+          <span class="tl2-month">ต.ค.</span><span class="tl2-month">พ.ย.</span><span class="tl2-month">ธ.ค.</span>
+        </div>
+      </div>
+      <div class="tl2-body">
+
+        <!-- GROUP 1 -->
+        <div class="tl2-group">
+          <span class="tl2-glabel" style="color:var(--green)">① Outsource Payroll</span>
+          <div class="tl2-gline" style="background:var(--green-border)"></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ PH1 Kick-Off &amp; Scope</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:8.33%"><span>ม.ค.</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ PH2 Setup + UAT</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:8.33%;width:8.33%"><span>ก.พ.</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ PH3 Go-Live &amp; Follow-Up</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-gd" style="left:8.33%;width:16.67%"><span>ก.พ.–มี.ค. ✓ รอ support</span></div></div>
+        </div>
+
+        <!-- GROUP 2 -->
+        <div class="tl2-group">
+          <span class="tl2-glabel" style="color:var(--blue)">② HR Data Control Hub</span>
+          <div class="tl2-gline" style="background:var(--blue-border)"></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ Q1 Planning → Go-live</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:0%;width:25%"><span>ม.ค.–มี.ค. Active</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Data Cleansing (Q1)</span>
+          <div class="tl2-track" style="height:15px"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:0%;width:25%;opacity:0.85"><span>ม.ค.–มี.ค. ⚠ Action</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ Q3 HRIS Dashboard</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:50%;width:25%;opacity:0.75"><span>ก.ค.–ส.ค. Active</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Retirement Dashboard</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-mini" style="left:50%;width:16.67%"><span>ใช้งานอยู่</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ T/O Dashboard</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-mini" style="left:50%;width:16.67%"><span>ใช้งานอยู่</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ HC &amp; WF Dashboard</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-mini" style="left:50%;width:16.67%"><span>ใช้งานอยู่</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ HRM-Monthly Dashboard</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-mini" style="left:50%;width:16.67%"><span>ใช้งานอยู่</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ Q4 ROI &amp; Audit Ready</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-bf" style="left:75%;width:25%"><span>ต.ค.–ธ.ค. Pending</span></div></div>
+        </div>
+
+        <!-- GROUP 3 -->
+        <div class="tl2-group">
+          <span class="tl2-glabel" style="color:var(--amber)">③ HR Tech Project</span>
+          <div class="tl2-gline" style="background:var(--amber-border)"></div>
+        </div>
+
+        <!-- AI Recruitment v2 -->
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ HR AI Recruitment v2</span>
+          <div class="tl2-track"><div class="tl2-now"></div>
+            <div class="tl2-bar b-g" style="left:0%;width:25%"><span>มี.ค. 3 features ✓</span></div>
+            <div class="tl2-bar b-bd" style="left:25%;width:8.33%"><span>เม.ย.</span></div>
+          </div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ AI Interview Assistance</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ AI Interview ChatBot</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ EA DNA Fix Question</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ AI Interview Summary Report</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:25%;width:8.33%"><span>● On process</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Dashboard &amp; Analytics</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:25%;width:8.33%"><span>● On process</span></div></div>
+        </div>
+
+        <!-- EASY Smart Assistant -->
+        <div class="tl2-row" style="margin-top:4px">
+          <span class="tl2-name s">↳ EASY Smart Assistant</span>
+          <div class="tl2-track"><div class="tl2-now"></div>
+            <div class="tl2-bar b-g" style="left:0%;width:25%"><span>มี.ค. KB ✓</span></div>
+            <div class="tl2-bar b-bd" style="left:25%;width:8.33%"><span>เม.ย.</span></div>
+          </div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Update ข้อมูล HR</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Phase 1 IT Test</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:16.67%;width:8.33%"><span>● On process</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Phase 2 SharePoint Connect</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-bd" style="left:25%;width:8.33%;opacity:0.6"><span>⏸ Pending</span></div></div>
+        </div>
+
+        <!-- Frappe Application Form -->
+        <div class="tl2-row" style="margin-top:4px">
+          <span class="tl2-name s">↳ Frappe App Form</span>
+          <div class="tl2-track"><div class="tl2-now"></div>
+            <div class="tl2-bar b-g" style="left:0%;width:25%"><span>มี.ค. 2 features ✓</span></div>
+            <div class="tl2-bar b-bd" style="left:25%;width:8.33%"><span>เม.ย.</span></div>
+          </div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Manual Import Template @core</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Robot Import @core</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Edit Quick / Full Form</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:25%;width:8.33%"><span>● On process</span></div></div>
+        </div>
+
+        <!-- Genspark separator -->
+        <div class="tl2-group" style="margin-top:4px">
+          <span class="tl2-glabel" style="color:var(--blue);font-size:10px">④ Genspark AI</span>
+          <div class="tl2-gline" style="background:var(--blue-border)"></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ นำเสนอ / อนุมัติ</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:16.67%"><span>ม.ค.–ก.พ. ✓</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ Trial 5 users</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:16.67%;width:8.33%"><span>มี.ค. Trial ✓ 5/5 98.2</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ Launch + Expand</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:25%;width:16.67%"><span>● เม.ย.–พ.ค. Active</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ Integrate + Standard</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-bd" style="left:41.67%;width:16.67%"><span>มิ.ย.–ก.ค.</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ Monitor + Use Cases</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-bf" style="left:58.33%;width:16.67%"><span>ส.ค.–ก.ย.</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ Eval + Improve</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-bf" style="left:75%;width:25%"><span>ต.ค.–ธ.ค.</span></div></div>
+        </div>
+
+      </div>
+
+      <div class="tl2-legend">
+        <div class="tl2-li"><div class="tl2-dot" style="background:var(--green)"></div>Completed</div>
+        <div class="tl2-li"><div class="tl2-dot" style="background:var(--green-dim);border:1px solid var(--green-border)"></div>Done · follow-up</div>
+        <div class="tl2-li"><div class="tl2-dot" style="background:var(--blue)"></div>Active</div>
+        <div class="tl2-li"><div class="tl2-dot" style="background:var(--blue-dim);border:1px solid var(--blue-border)"></div>Pending</div>
+        <div class="tl2-li"><div class="tl2-dot" style="background:var(--amber)"></div>UAT active</div>
+        <div class="tl2-li"><div class="tl2-dot" style="background:var(--amber-dim);border:1px solid var(--amber-border)"></div>รอข้อมูล</div>
+        <div class="tl2-li"><div class="tl2-dot" style="background:none;border:1px dashed var(--amber-border)"></div>TBC</div>
+        <div class="tl2-li"><div style="width:2px;height:10px;background:var(--amber);opacity:0.7;flex-shrink:0"></div>Today 8 เม.ย.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-left">
+    <span class="footer-item">Plan <span>L3-12</span></span>
+    <span class="footer-item">Type <span>Project</span></span>
+    <span class="footer-item">Measure <span>รายไตรมาส</span></span>
+    <span class="footer-item">Revision <span>0</span></span>
+    <span class="footer-item">Objective <span>HR Data Based</span></span>
+  </div>
+  <span class="footer-item" id="footerDate">อัพเดต — &nbsp;|&nbsp; For executive review</span>
+</div>
+</div>
+
+<!-- Site footer -->
+<div id="site-footer">
+  <span>HR Individual Action Plan · Plan No. L3-12 · Type: Project · วัดผล: รายไตรมาส · Revision: 0</span>
+  <span id="footerDate2">อัพเดต — &nbsp;|&nbsp; Main PIC: Pornpetch K. &nbsp;|&nbsp; Project support by: Thanutt K.</span>
+</div>
+
+<script>
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});
+  });
+});
+// Show current date & time dynamically
+(function updateTime(){
+  const MONTHS = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  function thaiNow(){
+    const d = new Date();
+    return d.getDate()+' '+MONTHS[d.getMonth()]+' '+(d.getFullYear()+543)+
+      ' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+' น.';
+  }
+  function thaiShort(){
+    const d = new Date();
+    return d.getDate()+' '+MONTHS[d.getMonth()]+' '+(d.getFullYear()+543);
+  }
+
+  // Topbar date
+  const tbDate = document.querySelector('.tb-date');
+  if(tbDate) tbDate.textContent = 'ณ วันนี้ ' + thaiNow();
+
+  // Footer dates
+  document.querySelectorAll('.footer-item, .footer span').forEach(el => {
+    if(el.textContent.includes('8 เม.ย. 2569') || el.textContent.includes('อัพเดต 8')) {
+      el.textContent = el.textContent.replace(/อัพเดต \d+ \S+\. \d+/g, 'อัพเดต ' + thaiNow());
+    }
+  });
+
+  // date-badge in header
+  document.querySelectorAll('.date-badge, #headerDate, #summaryDate').forEach(el => {
+    el.textContent = 'ณ ' + thaiShort();
+  });
+
+  // footerDate
+  const ftr = document.getElementById('footerDate');
+  if(ftr) ftr.textContent = 'อัพเดต ' + thaiNow() + ' | For executive review';
+  const ftr2 = document.getElementById('footerDate2');
+  if(ftr2) ftr2.textContent = 'อัพเดต ' + thaiNow() + ' | Main PIC: Pornpetch K. | Project support by: Thanutt K.';
+
+  // Update every minute
+  setTimeout(updateTime, 60000);
+})();
+</script>
+
+<script>
+(function () {
+  const today = new Date();
+  const start = new Date(today.getFullYear(), 0, 1);
+  const end = new Date(today.getFullYear(), 11, 31);
+  const percent = ((today - start) / (end - start)) * 100;
+
+  const line = document.querySelector('.timeline-today-line');
+  if (line) {
+    line.style.left = percent + '%';
+  }
+})();
+</script>
+
+</body>
+</html>
