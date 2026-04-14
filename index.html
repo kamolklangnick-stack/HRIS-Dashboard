@@ -683,6 +683,7 @@ body {
   #topbar { position: relative; backdrop-filter: none; background: #fff; }
   .kpi-card, .alert-banner, .overall-progress-section, .project-card, .timeline-section { animation: none; opacity: 1; transform: none; }
 }
+.proj-row:hover { background: rgba(26,110,199,0.04) !important; transition: background 0.15s; }
 
 /* FIX TIMELINE POSITIONING */
 .timeline-grid {
@@ -735,7 +736,7 @@ body {
       <span>Project support by</span>
       <strong>Thanutt K.</strong>
     </div>
-    <div class="date-badge">ณ 8 เม.ย. 2569</div>
+    <div class="date-badge">ณ 14 เม.ย. 2569</div>
   </div>
 </div>
 
@@ -757,7 +758,7 @@ body {
     <div class="kpi-card red">
       <span class="kpi-label">Action Needed</span>
       <span class="kpi-value">1</span>
-      <span class="kpi-sub">ต้องการ support จากฝ่ายที่เกี่ยวข้อง<br>Data Cleansing (Payroll แก้ไขครบแล้ว)</span>
+      <span class="kpi-sub">ไม่อนุมัติ 102 คน ต้องแก้ไขยื่นใหม่<br>Data Cleansing ดีขึ้นมาก 49.9% ↑</span>
     </div>
     <div class="kpi-card amber">
       <span class="kpi-label">Overall Progress</span>
@@ -767,14 +768,14 @@ body {
   </div>
 
   <!-- ACTION ALERT -->
-  <div class="alert-banner" style="background:var(--red-dim);border-color:var(--red-border)">
-    <span class="alert-icon">🔴</span>
+  <div class="alert-banner" style="background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%);border-color:#86efac">
+    <span class="alert-icon">✅</span>
     <div class="alert-content">
-      <div class="alert-title" style="color:var(--red)">⚡ Action Required — ต้องการการตัดสินใจจากผู้บริหาร (1 รายการ)</div>
+      <div class="alert-title" style="color:#166534">📈 Data Cleansing — ความคืบหน้าก้าวกระโดด! (ไฟล์ที่ 23 · 14 เม.ย. 2569)</div>
       <div class="alert-items">
         <div class="alert-item">
           <div class="alert-item-dot"></div>
-          <span><strong style="color:var(--red)">Data Cleansing — HR Data Control Hub (วิกฤต):</strong> ความคืบหน้าจริงเพียง <strong style="color:#6b0f08">11.8%</strong> จากพนักงานทั้งหมด 1,114 คน — Finished 101 คน (9.1%) · Submitted 31 คน (2.8%) · <strong style="color:#6b0f08">Pending 982 คน = 88.2%</strong> · กลุ่มเสี่ยงสูง: อมิตา+AAB รวม ~300 คน ยังไม่มี Submitted เลย — ต้องการให้ผู้บริหาร <strong style="color:#6b0f08">แจ้ง Department Head ทุก BU เร่งรัดพนักงานโดยด่วน</strong></span>
+          <span><strong style="color:var(--red)">Data Cleansing — HR Data Control Hub (อัพเดต 14 เม.ย.):</strong> ความคืบหน้าจริง <strong style="color:#0d8f52">49.9%</strong> จากพนักงานทั้งหมด 1,035 คน — Finished <strong style="color:#0d8f52">304 คน (29.4%)</strong> · Submitted 212 คน (20.5%) · <strong style="color:#6b0f08">Pending 519 คน = 50.1%</strong> · <strong style="color:#0d8f52">▲ ดีขึ้นมาก: Finished เพิ่ม +203 คน · Pending ลด -463 คน จากรอบก่อน (9 เม.ย.)</strong> · กลุ่มยังต้องติดตาม: ไม่อนุมัติ 102 คน ต้องแก้ไขและยื่นใหม่โดยด่วน</span>
         </div>
         <div class="alert-item" style="color:#1a5c3a">
           <div class="alert-item-dot" style="background:var(--green)"></div>
@@ -794,7 +795,7 @@ body {
       <div class="overall-title-block">
         <span class="section-title" style="margin-bottom:0">Overall Project Progress</span>
         <div style="display:flex;align-items:flex-end;gap:12px;margin-top:6px">
-          <span class="overall-pct">76<span>%</span></span>
+          <span class="overall-pct">78<span>%</span></span>
           <div style="display:flex;flex-direction:column;gap:3px;padding-bottom:6px">
             <span style="font-size:12px;color:var(--text-secondary)">ประเมินตาม % ความคืบหน้าของแต่ละ sub-task (รวม HR Tech Q2–Q4 TBC และ Genspark AI)</span>
             <span class="overall-note">Weighted average จาก 3 โครงการหลัก · น้ำหนักเท่ากัน (33.3% each) · HR Tech รวม 4 sub-projects</span>
@@ -803,7 +804,7 @@ body {
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
         <span class="badge badge-onprocess" style="font-size:11px;padding:5px 14px">● On Track</span>
-        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">ณ 8 เม.ย. 2569</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">ณ 14 เม.ย. 2569</span>
       </div>
     </div>
 
@@ -811,11 +812,11 @@ body {
     <div>
       <div style="display:flex;justify-content:space-between;margin-bottom:6px">
         <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">0%</span>
-        <span style="font-size:10px;color:var(--amber);font-family:var(--mono)">▼ ตอนนี้ 76%</span>
+        <span style="font-size:10px;color:var(--amber);font-family:var(--mono)">▼ ตอนนี้ 78%</span>
         <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">100%</span>
       </div>
       <div class="overall-main-track">
-        <div class="overall-main-fill" style="width:76%"></div>
+        <div class="overall-main-fill" style="width:78%"></div>
       </div>
 <!-- 🔽 Previous Progress Comparison -->
 <div style="margin-top:10px">
@@ -830,14 +831,14 @@ body {
   </div>
 
   <div style="font-size:10px;margin-top:4px;font-family:var(--mono);color:var(--green)">
-    ▲ +29% improvement (47% → 76%)
+    ▲ +31% improvement (47% → 78%)
   </div>
 
 </div>
 
       <div style="position:relative;height:18px;margin-top:2px">
         <!-- milestone ticks -->
-        <div style="position:absolute;left:76%;top:0;display:flex;flex-direction:column;align-items:center;gap:1px">
+        <div style="position:absolute;left:78%;top:0;display:flex;flex-direction:column;align-items:center;gap:1px">
           <div style="width:1px;height:5px;background:var(--amber)"></div>
           <span style="font-size:9px;color:var(--amber);font-family:var(--mono);white-space:nowrap;transform:translateX(-50%)">Now</span>
         </div>
@@ -875,13 +876,13 @@ body {
       <div class="breakdown-item">
         <div class="breakdown-label">
           <span class="breakdown-name">2. HR Data Control Hub</span>
-          <span class="breakdown-pct-label" style="color:var(--blue)">63%</span>
+          <span class="breakdown-pct-label" style="color:var(--green)">68%</span>
         </div>
-        <div class="breakdown-track"><div class="breakdown-fill fill-blue" style="width:63%"></div></div>
+        <div class="breakdown-track"><div class="breakdown-fill fill-green" style="width:68%"></div></div>
         <span class="breakdown-sub">
-          Q1 ✓ ครบ · Data Cleansing Pending 88.2% — ให้ความร่วมมือน้อย + Q3 ~30% (5 dashboards live) + Q2&amp;Q4 เริ่มดำเนินการ<br>
-          ประเมิน Q2 progress weighted = 63% · Q1 phases สมบูรณ์แล้ว<br>
-          <span style="color:var(--red);font-size:9px">⚠ Data Cleansing ความคืบหน้าจริง 11.8% (Finished 101/1,114 คน) — ต้องการ Management Enforce เร่งด่วน</span>
+          Q1 ✓ ครบ · Data Cleansing <strong style="color:#0d8f52">49.9%</strong> (Finished 304/1,035 คน ▲+203) · Q3 dashboards live · Q2 เริ่มแล้ว<br>
+          ประเมิน progress = 68% · ก้าวกระโดดใหญ่จาก 14 เม.ย.<br>
+          <span style="color:var(--green);font-size:9px">✅ Data Cleansing: Active 1,035 · Finished 304 (29.4%) · Submitted 212 (20.5%) · Pending 519 (50.1%) — ดีขึ้นจาก 11.8% → 49.9%</span>
         </span>
       </div>
 
@@ -939,10 +940,10 @@ body {
     <div class="calc-note">
       วิธีคำนวณ (Weighted avg · น้ำหนัก 1/3 ต่อโครงการ):
       Outsource Payroll 100% × 33.3% = 33.3% &nbsp;|&nbsp;
-      HR Data Hub 63% × 33.3% = 21.0% (Q1 ✓ ครบ · Data Cleansing Pending 88.2% ยังต้องเร่ง · Q2 เริ่มแล้ว) &nbsp;|&nbsp;
+      HR Data Hub <strong style="color:var(--green)">68%</strong> × 33.3% = 22.7% (Data Cleansing 49.9% ▲ · Active 1,035 · Finished 304 · Pending 519) &nbsp;|&nbsp;
       HR Tech 65% × 33.3% = 21.7% (Q2 avg 71% · AI Rec 65%·EASY 80%·Frappe 72%·Genspark 68% 🚀 Launch) &nbsp;|&nbsp;
-      รวม = <strong style="color:var(--text-secondary)">~76%</strong>
-      <span style="color:var(--green);margin-left:8px">▲ +29% จาก baseline 47% — Q1 ✓ ครบทุกโครงการ · Genspark 🚀 Launch Active · เข้าสู่ Q2 แล้ว</span>
+      รวม = <strong style="color:var(--text-secondary)">~78%</strong>
+      <span style="color:var(--green);margin-left:8px">▲ +31% จาก baseline 47% — Data Cleansing ก้าวกระโดด 11.8%→49.9% · Q1 ✓ · Genspark 🚀 Active</span>
     </div>
   </div>
 
@@ -1248,12 +1249,12 @@ body {
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
           <span class="badge badge-onprocess">● On Process</span>
-          <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q1 (+ Data Cleansing) &amp; Q3 active</span>
+          <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q1 ✓ + Data Cleansing 49.9% ▲ · Q3 active</span>
         </div>
       </div>
       <div class="project-body">
         <div class="progress-section">
-          <div class="progress-label"><span>Year progress</span><span style="color:var(--blue)">Q1 incl. Data Cleansing + Q3 active · Q2 &amp; Q4 pending</span></div>
+          <div class="progress-label"><span>Year progress</span><span style="color:var(--green)">Data Cleansing 49.9% ▲ · Q3 active · Q2 &amp; Q4 pending</span></div>
           <div class="progress-track" style="position:relative;height:8px;border-radius:6px;overflow:visible">
             <!-- Q1 active fill -->
             <div class="progress-fill fill-blue" style="width:25%;position:absolute;left:0;top:0;height:100%"></div>
@@ -1272,13 +1273,27 @@ body {
           <span class="badge badge-onprocess" style="font-size:9px;padding:3px 8px;flex-shrink:0">● On Process</span>
         </div>
 
-        <!-- Q2 Pending -->
-        <div class="phase-row" style="opacity:0.7">
-          <span class="phase-tag phase-tag-gray">Q2</span>
+        <!-- Q2 Data Cleansing - updated 14 Apr -->
+        <div class="phase-row" style="background:var(--green-dim);border-color:var(--green-border)">
+          <span class="phase-tag phase-tag-green">Q2</span>
           <div class="phase-content">
-            <span class="phase-title">Data Cleansing — ให้พนักงาน Update ข้อมูลส่วนตัว</span>
-            <span class="phase-target">Target: สิ้น มี.ค. 2026 — ข้อมูลพนักงานครบถ้วนและเป็นปัจจุบัน</span>
-            <div class="phase-remark-red" style="margin-top:4px">⚠ ต้องการ Management Support — แจ้งพนักงานให้ Update ข้อมูลใน ESS โดยเร็ว</div>
+            <span class="phase-title">Data Cleansing — ให้พนักงาน Update ข้อมูลส่วนตัว ✅ ความคืบหน้าก้าวกระโดด</span>
+            <span class="phase-target">ณ 14 เม.ย. 2569 — Active 1,035 คน · Finished 304 (29.4%) · Submitted 212 (20.5%) · Pending 519 (50.1%)</span>
+            <div style="margin-top:6px;background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:5px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:11px;color:var(--green);font-weight:600">ความคืบหน้า: 49.9% (Finished + Submitted)</span>
+                <span style="font-size:11px;color:var(--green);font-family:var(--mono);font-weight:700">▲ จาก 11.8% → 49.9%</span>
+              </div>
+              <div style="height:6px;background:rgba(13,143,82,0.15);border-radius:4px;overflow:hidden">
+                <div style="height:100%;width:49.9%;background:var(--green);border-radius:4px"></div>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:2px">
+                <span style="font-size:10px;background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);border-radius:4px;padding:2px 8px">✓ Finished 304 คน (+203)</span>
+                <span style="font-size:10px;background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border);border-radius:4px;padding:2px 8px">Submitted 212 คน</span>
+                <span style="font-size:10px;background:var(--red-dim);color:var(--red);border:1px solid var(--red-border);border-radius:4px;padding:2px 8px">⚠ Pending 519 คน (50.1%)</span>
+                <span style="font-size:10px;background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);border-radius:4px;padding:2px 8px">⚡ ไม่อนุมัติ 102 คน — แก้ไขด่วน</span>
+              </div>
+            </div>
           </div>
           <span class="badge badge-onprocess" style="font-size:9px;padding:3px 8px;flex-shrink:0;align-self:flex-start">● On Process</span>
         </div>
@@ -1744,12 +1759,358 @@ body {
         <div class="tl2-li"><div class="tl2-dot" style="background:var(--amber)"></div>UAT active</div>
         <div class="tl2-li"><div class="tl2-dot" style="background:var(--amber-dim);border:1px solid var(--amber-border)"></div>รอข้อมูล</div>
         <div class="tl2-li"><div class="tl2-dot" style="background:none;border:1px dashed var(--amber-border)"></div>TBC</div>
-        <div class="tl2-li"><div style="width:2px;height:10px;background:var(--amber);opacity:0.7;flex-shrink:0"></div>Today 8 เม.ย.</div>
+        <div class="tl2-li"><div style="width:2px;height:10px;background:var(--amber);opacity:0.7;flex-shrink:0"></div>Today 14 เม.ย.</div>
       </div>
     </div>
   </div>
 
 </div>
+
+<!-- ══════════════════════════════════════════════════════
+     18 PROJECTS OVERVIEW — ณ 14 เม.ย. 2569
+     ══════════════════════════════════════════════════════ -->
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;margin:0 0 24px;overflow:hidden">
+
+  <!-- Section header -->
+  <div style="padding:16px 24px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <span style="font-size:10px;font-family:var(--mono);letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted)">HR Department · 18 Projects Overview</span>
+      <span style="font-size:15px;font-weight:600;color:var(--text-primary)">สถานะโครงการทั้งหมด — แผนปี 2569</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <span style="font-size:10px;font-family:var(--mono);color:var(--text-muted)">ณ 14 เม.ย. 2569 · Q2 Active</span>
+      <span style="font-size:10px;font-family:var(--mono);padding:4px 12px;border-radius:20px;background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border)">● 17 On Process &nbsp;|&nbsp; 1 Completed</span>
+    </div>
+  </div>
+
+  <!-- Summary KPI strip -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--border)">
+    <div style="padding:12px 18px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:3px">
+      <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em">Total Projects</span>
+      <span style="font-size:26px;font-weight:600;color:var(--text-primary);line-height:1">18</span>
+    </div>
+    <div style="padding:12px 18px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:3px">
+      <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em">Completed</span>
+      <span style="font-size:26px;font-weight:600;color:var(--green);line-height:1">1</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Outsourcing Model 100%</span>
+    </div>
+    <div style="padding:12px 18px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:3px">
+      <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em">On Process (Q2)</span>
+      <span style="font-size:26px;font-weight:600;color:var(--blue);line-height:1">16</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">มีความคืบหน้า</span>
+    </div>
+    <div style="padding:12px 18px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:3px">
+      <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em">Pending (รอเอกสาร)</span>
+      <span style="font-size:26px;font-weight:600;color:var(--red);line-height:1">1</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">New Com. &amp; Ben. 0%</span>
+    </div>
+    <div style="padding:12px 18px;display:flex;flex-direction:column;gap:3px">
+      <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em">Avg Progress</span>
+      <span style="font-size:26px;font-weight:600;color:var(--amber);line-height:1">36<span style="font-size:14px;font-weight:400;color:var(--text-muted)">%</span></span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">avg ทุก 18 โครงการ</span>
+    </div>
+  </div>
+
+  <!-- Project rows -->
+  <div style="padding:0">
+
+    <!-- Header row -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:8px 16px;background:var(--bg3);border-bottom:1px solid var(--border)">
+      <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted)">#</span>
+      <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted)">No.</span>
+      <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">Project</span>
+      <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted);text-align:center">PIC</span>
+      <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted);text-align:center">Q1%</span>
+      <span style="font-size:9px;font-family:var(--mono);color:var(--green);text-align:center">+8APR</span>
+      <span style="font-size:9px;font-family:var(--mono);color:var(--amber);text-align:center">Total%</span>
+      <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted)">Progress Bar</span>
+    </div>
+
+    <!-- ① EA DNA Drive to Action -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center" class="proj-row">
+      <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">①</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">01</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--text-primary)">EA DNA Drive to Action</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q2 เริ่มแล้ว: สื่อสาร EA DNA ภาคปฏิบัติ เดินสาย BU</span>
+      </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);text-align:center">Chaiporn</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:500">22%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+3</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--amber);text-align:center;font-weight:600">35%</span>
+      <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:35%;background:var(--amber);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ② HR Transformation -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center" class="proj-row">
+      <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">②</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">02</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--text-primary)">HR Transformation</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q2: Process mapping HR Transformation กำลังดำเนินการ</span>
+      </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);text-align:center">Chaiporn</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:500">32%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+3</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--amber);text-align:center;font-weight:600">45%</span>
+      <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:45%;background:var(--amber);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ③ Engagement Boost Up -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center" class="proj-row">
+      <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">③</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">03</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--text-primary)">Engagement Boost Up</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q2: วิเคราะห์ผล Engagement Survey + จัดทำ Action Plan รายหน่วยงาน</span>
+      </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);text-align:center">Sontana</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:500">20%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+3</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--amber);text-align:center;font-weight:600">23%</span>
+      <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:23%;background:var(--amber);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ④ Associate Branding -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center" class="proj-row">
+      <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">④</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">04</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--text-primary)">Associate Branding</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q2: จัดทำ EVP document + เตรียม internal launch campaign</span>
+      </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);text-align:center">Pharadon</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:500">20%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+2</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--amber);text-align:center;font-weight:600">32%</span>
+      <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:32%;background:var(--amber);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ⑤ HR Well being -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center" class="proj-row">
+      <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">⑤</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">05</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--text-primary)">HR Well being &amp; Surrounding</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q2: จัดทำ Wellness calendar + สำรวจความต้องการพนักงาน</span>
+      </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);text-align:center">Chaiporn</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:500">12%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+2</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--amber);text-align:center;font-weight:600">24%</span>
+      <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:24%;background:var(--amber);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ⑥ Future Leader Program -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center" class="proj-row">
+      <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">⑥</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">06</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--text-primary)">Future Leader Program</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q2: Talent mapping + จัดทำ Successor slate เบื้องต้น</span>
+      </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);text-align:center">Chaiporn</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:500">12%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+2</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--amber);text-align:center;font-weight:600">24%</span>
+      <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:24%;background:var(--amber);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ⑦ Workforce Planning -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center" class="proj-row">
+      <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">⑦</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">07</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--text-primary)">Workforce Planning</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q2: เริ่ม framework Workforce Planning + ประชุม BU ครั้งแรก</span>
+      </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);text-align:center">Sapawan</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:500">11%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+1</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--amber);text-align:center;font-weight:600">11%</span>
+      <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:11%;background:var(--amber);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ⑧ Outsourcing Model — COMPLETED -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center;background:var(--green-dim)" class="proj-row">
+      <span style="font-size:9px;color:var(--green);font-family:var(--mono)">⑧</span>
+      <span style="font-size:10px;color:var(--green);font-family:var(--mono)">08</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:600;color:var(--green)">Outsourcing Model ✓</span>
+        <span style="font-size:10px;color:var(--green);font-family:var(--mono)">Payroll Q2 On track · ติดตามคุณภาพรอบเมษายน · Reconcile ตามกำหนด</span>
+      </div>
+      <span style="font-size:10px;color:var(--green);font-family:var(--mono);text-align:center">Chaiporn</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">75%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+5</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:700">100%</span>
+      <div style="height:6px;background:rgba(13,143,82,0.15);border-radius:4px;overflow:hidden"><div style="height:100%;width:100%;background:var(--green);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ⑨ Recruitment Strategy -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center" class="proj-row">
+      <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">⑨</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">09</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--text-primary)">Recruitment Strategy</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q2: จัดทำ Hiring Workflow + Selection Criteria รายตำแหน่ง</span>
+      </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);text-align:center">Chanudejh</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:500">23%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+3</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--amber);text-align:center;font-weight:600">46%</span>
+      <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:46%;background:var(--amber);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ⑩ Improve HR Internal Communication -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center" class="proj-row">
+      <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">⑩</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">10</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--text-primary)">Improve HR Internal Communication</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q2: จัดทำ HR Comms Calendar Q2 + ทดลองใช้ช่องทางใหม่</span>
+      </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);text-align:center">Chalita</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:500">22%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+2</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--amber);text-align:center;font-weight:600">34%</span>
+      <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:34%;background:var(--amber);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ⑪ Qualification Program -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center" class="proj-row">
+      <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">⑪</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">11</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--text-primary)">Qualification Program</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q2: Draft Career Path Dual Track + ประชุม HC ผู้บริหาร</span>
+      </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);text-align:center">Siraprapha</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:500">22%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+2</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--amber);text-align:center;font-weight:600">34%</span>
+      <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:34%;background:var(--amber);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ⑫ HR Data Based -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center;background:var(--green-dim)" class="proj-row">
+      <span style="font-size:9px;color:var(--green);font-family:var(--mono)">⑫</span>
+      <span style="font-size:10px;color:var(--green);font-family:var(--mono)">12</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:600;color:var(--green)">HR Data Based ★ ▲ Data Cleansing ก้าวกระโดด!</span>
+        <span style="font-size:10px;color:var(--green);font-family:var(--mono)">✅ Data Cleansing 49.9% (Finished 304/1,035) · Pending 519 ลดจาก 982 · ไม่อนุมัติ 102 คน แก้ไขด่วน</span>
+      </div>
+      <span style="font-size:10px;color:var(--green);font-family:var(--mono);text-align:center">Pornpetch</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">35%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+14▲</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:700">68%</span>
+      <div style="height:6px;background:rgba(13,143,82,0.15);border-radius:4px;overflow:hidden"><div style="height:100%;width:68%;background:var(--green);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ⑬ Proactive HR Risk & Compliance -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center" class="proj-row">
+      <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">⑬</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">13</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--text-primary)">Proactive HR Risk &amp; Compliance</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q2: อัพเดต HR Risk Register + ทบทวน Compliance Q2</span>
+      </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);text-align:center">Sapawan</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:500">22%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+2</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--amber);text-align:center;font-weight:600">34%</span>
+      <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:34%;background:var(--amber);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ⑭ New Com. & Ben. Structure — PENDING -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center;background:var(--red-dim)" class="proj-row">
+      <span style="font-size:9px;color:var(--red);font-family:var(--mono)">⑭</span>
+      <span style="font-size:10px;color:var(--red);font-family:var(--mono)">14</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--red)">New Com. &amp; Ben. Structure ⚠</span>
+        <span style="font-size:10px;color:var(--red);font-family:var(--mono)">รอรับ Proposal + Action Plan ที่มีลายเซ็น — ยังไม่มีความคืบหน้า</span>
+      </div>
+      <span style="font-size:10px;color:var(--red);font-family:var(--mono);text-align:center">Pharadon</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--red);text-align:center;font-weight:500">0%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--text-muted);text-align:center;font-weight:600">—</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--red);text-align:center;font-weight:700">0%</span>
+      <div style="height:6px;background:var(--red-dim);border-radius:4px;overflow:hidden;border:1px solid var(--red-border)"><div style="height:100%;width:0%;background:var(--red);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ⑮ HR Regulation Standardization -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center" class="proj-row">
+      <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">⑮</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">15</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--text-primary)">HR Regulation Standardization</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q2: ทบทวน HR Regulation ชุดแรก + ร่างนโยบายที่หมดอายุ</span>
+      </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);text-align:center">Siraprapha</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:500">12%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+2</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--amber);text-align:center;font-weight:600">24%</span>
+      <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:24%;background:var(--amber);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ⑯ New PMS Structure -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center" class="proj-row">
+      <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">⑯</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">16</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--text-primary)">New PMS Structure</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q2: เริ่ม framework PMS + ศึกษา Best Practice จากองค์กรอื่น</span>
+      </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);text-align:center">Thidaporn</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:500">11%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+1</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--amber);text-align:center;font-weight:600">12%</span>
+      <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:12%;background:var(--amber);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ⑰ Efficiency Hybrid Working Format -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center" class="proj-row">
+      <span style="font-size:9px;color:var(--text-muted);font-family:var(--mono)">⑰</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">17</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:500;color:var(--text-primary)">Efficiency Hybrid Working Format</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q2: ร่าง Hybrid Policy ฉบับแรก + ประชุมกับ IT และ Legal</span>
+      </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);text-align:center">Sapawan</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:500">11%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+1</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--amber);text-align:center;font-weight:600">22%</span>
+      <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:22%;background:var(--amber);border-radius:4px"></div></div>
+    </div>
+
+    <!-- ⑱ HR Tech Implementation -->
+    <div style="display:grid;grid-template-columns:28px 36px 1fr 100px 60px 70px 60px 200px;gap:0;padding:9px 16px;align-items:center;background:var(--blue-dim)" class="proj-row">
+      <span style="font-size:9px;color:var(--blue);font-family:var(--mono)">⑱</span>
+      <span style="font-size:10px;color:var(--blue);font-family:var(--mono)">18</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:600;color:var(--blue)">HR Tech Implementation 🚀</span>
+        <span style="font-size:10px;color:var(--blue);font-family:var(--mono)">Q2 Active: Genspark Launch · AI Recruitment UAT · EASY Phase1 IT Test · Frappe Edit Form</span>
+      </div>
+      <span style="font-size:10px;color:var(--blue);font-family:var(--mono);text-align:center">Pornpetch</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:600">52%</span>
+      <span style="font-size:11px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">+5</span>
+      <span style="font-size:13px;font-family:var(--mono);color:var(--blue);text-align:center;font-weight:700">77%</span>
+      <div style="height:6px;background:var(--blue-dim);border-radius:4px;overflow:hidden;border:1px solid var(--blue-border)"><div style="height:100%;width:77%;background:var(--blue);border-radius:4px"></div></div>
+    </div>
+
+  </div><!-- end project rows -->
+
+  <!-- Footer note -->
+  <div style="padding:10px 16px;background:var(--bg3);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);font-family:var(--mono)"><span style="width:10px;height:6px;background:var(--green);border-radius:2px;display:inline-block"></span>Completed (100%)</span>
+      <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);font-family:var(--mono)"><span style="width:10px;height:6px;background:var(--blue);border-radius:2px;display:inline-block"></span>Key project (Blue highlight)</span>
+      <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);font-family:var(--mono)"><span style="width:10px;height:6px;background:var(--amber);border-radius:2px;display:inline-block"></span>On Process</span>
+      <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);font-family:var(--mono)"><span style="width:10px;height:6px;background:var(--red);border-radius:2px;display:inline-block"></span>Pending / Action Required</span>
+    </div>
+    <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">+8APR = Q2 progress added ณ 14 เม.ย. 2569</span>
+  </div>
+
+</div>
+<!-- END 18 PROJECTS OVERVIEW -->
 
 <!-- FOOTER -->
 <div class="footer">
@@ -1797,7 +2158,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
   // Footer dates
   document.querySelectorAll('.footer-item, .footer span').forEach(el => {
-    if(el.textContent.includes('8 เม.ย. 2569') || el.textContent.includes('อัพเดต 8')) {
+    if(el.textContent.includes('14 เม.ย. 2569') || el.textContent.includes('อัพเดต 14')) {
       el.textContent = el.textContent.replace(/อัพเดต \d+ \S+\. \d+/g, 'อัพเดต ' + thaiNow());
     }
   });
