@@ -700,6 +700,105 @@ body {
   pointer-events: none;
 }
 
+
+/* ── Tabs + Summary dashboard additions ── */
+.tab-shell { padding: 0 36px 28px; }
+.tab-nav { display:flex; gap:10px; padding:18px 0 0; flex-wrap:wrap; }
+.tab-btn {
+  appearance:none; border:1px solid var(--border); background:rgba(255,255,255,0.72); color:var(--text-secondary);
+  border-radius:999px; padding:10px 16px; font-family:var(--font); font-size:13px; font-weight:600; cursor:pointer;
+  transition:all .18s ease;
+}
+.tab-btn:hover { border-color:var(--blue-border); color:var(--blue); }
+.tab-btn.active { background:linear-gradient(135deg,var(--blue-dim),rgba(255,255,255,.98)); border-color:var(--blue-border); color:var(--blue); box-shadow:0 6px 18px rgba(26,110,199,.08); }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+.summary-main { padding-top:22px !important; }
+.summary-hero-card {
+  background:linear-gradient(135deg,rgba(26,110,199,.08),rgba(13,143,82,.06)); border:1px solid var(--border); border-radius:16px;
+  padding:22px 24px; display:flex; justify-content:space-between; align-items:flex-start; gap:20px;
+}
+.summary-hero-title { font-size:26px; line-height:1.1; font-weight:600; color:var(--text-primary); letter-spacing:-0.02em; margin-top:6px; }
+.summary-hero-sub { margin-top:10px; font-size:13px; color:var(--text-secondary); max-width:860px; line-height:1.7; }
+.summary-hero-side { display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+.summary-stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.summary-stat-card { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:18px 18px 16px; display:flex; flex-direction:column; gap:6px; }
+.summary-stat-label { font-size:10px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.1em; color:var(--text-muted); }
+.summary-stat-value { font-size:34px; line-height:1; font-weight:600; color:var(--text-primary); }
+.summary-stat-sub { font-size:12px; line-height:1.6; color:var(--text-secondary); }
+.summary-banner {
+  background:linear-gradient(135deg,#fff7ed,#fffbeb); border:1px solid var(--amber-border); border-radius:14px; padding:18px 20px;
+  display:flex; gap:14px; align-items:flex-start;
+}
+.summary-banner-icon { font-size:20px; line-height:1; }
+.summary-banner-title { font-size:12px; font-family:var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--amber); margin-bottom:6px; }
+.summary-banner-text { font-size:13px; color:#7c4a04; line-height:1.7; }
+.tracker-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.tracker-card { background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:18px; display:flex; flex-direction:column; gap:14px; box-shadow:0 10px 24px rgba(17,24,39,.03); }
+.tracker-card.accent-green { border-color:rgba(13,143,82,.22); }
+.tracker-card.accent-blue { border-color:rgba(26,110,199,.2); }
+.tracker-card.accent-gray { border-color:rgba(0,0,0,.08); }
+.tracker-card.accent-amber { border-color:rgba(184,114,10,.25); }
+.tracker-card-top { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+.tracker-kpi-no { font-size:10px; font-family:var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--text-muted); display:block; margin-bottom:4px; }
+.tracker-card h3 { font-size:18px; line-height:1.35; font-weight:600; color:var(--text-primary); }
+.tracker-pill { display:inline-flex; align-items:center; gap:6px; font-size:10px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.08em; border-radius:999px; padding:6px 10px; border:1px solid var(--border); white-space:nowrap; }
+.tracker-pill.ontrack { color:var(--green); background:var(--green-dim); border-color:var(--green-border); }
+.tracker-pill.onprocess { color:var(--blue); background:var(--blue-dim); border-color:var(--blue-border); }
+.tracker-pill.pending { color:var(--text-muted); background:rgba(0,0,0,.03); border-color:var(--border); }
+.tracker-pill.atrisk { color:var(--amber); background:var(--amber-dim); border-color:var(--amber-border); }
+.tracker-meta-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+.tracker-meta-grid > div { background:var(--bg3); border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:5px; }
+.tracker-meta-label { font-size:10px; font-family:var(--mono); color:var(--text-muted); text-transform:uppercase; letter-spacing:.08em; }
+.tracker-callout { border-radius:12px; padding:12px 14px; display:flex; flex-direction:column; gap:4px; background:rgba(26,110,199,.05); border:1px solid rgba(26,110,199,.12); }
+.tracker-callout-label { font-size:10px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.1em; color:var(--blue); }
+.tracker-callout strong { font-size:13px; color:var(--text-primary); }
+.tracker-callout span:last-child { font-size:12px; color:var(--text-secondary); line-height:1.6; }
+.tracker-progress-row { display:flex; justify-content:space-between; align-items:center; font-size:11px; color:var(--text-secondary); font-family:var(--mono); }
+.tracker-progress { height:9px; background:var(--bg3); border-radius:999px; overflow:hidden; position:relative; }
+.tracker-progress-fill { height:100%; border-radius:999px; }
+.tracker-progress-fill.green { background:var(--green); }
+.tracker-progress-fill.blue { background:var(--blue); }
+.tracker-progress-fill.amber { background:var(--amber); }
+.tracker-progress-dashed { border:1px dashed var(--border2); background:transparent; }
+.tracker-note { font-size:12px; line-height:1.7; color:var(--text-secondary); }
+.tracker-actions { background:rgba(0,0,0,.02); border:1px solid rgba(0,0,0,.05); border-radius:12px; padding:12px 14px; }
+.tracker-actions-title { display:block; font-size:10px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.08em; color:var(--text-muted); margin-bottom:8px; }
+.tracker-actions ul { padding-left:16px; display:flex; flex-direction:column; gap:6px; }
+.tracker-actions li { font-size:12px; color:var(--text-secondary); line-height:1.55; }
+.summary-two-col { display:grid; grid-template-columns:1.15fr .85fr; gap:16px; }
+.summary-panel { background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:18px; display:flex; flex-direction:column; gap:14px; }
+.accel-grid, .chatbot-card-list { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.accel-item, .chatbot-item { border-radius:12px; padding:14px; border:1px solid var(--border); display:flex; flex-direction:column; gap:6px; min-height:120px; }
+.accel-label, .chatbot-item-label { font-size:10px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.1em; color:var(--text-muted); }
+.accel-item strong, .chatbot-item strong { font-size:13px; line-height:1.6; color:var(--text-primary); }
+.accel-item span:last-child, .chatbot-item span:last-child { font-size:12px; line-height:1.6; color:var(--text-secondary); }
+.chatbot-item.green { background:var(--green-dim); border-color:var(--green-border); }
+.chatbot-item.blue { background:var(--blue-dim); border-color:var(--blue-border); }
+.chatbot-item.amber { background:var(--amber-dim); border-color:var(--amber-border); }
+.chatbot-item.red { background:var(--red-dim); border-color:var(--red-border); }
+.plan-table-wrap { overflow:auto; border:1px solid var(--border); border-radius:14px; }
+.plan-table { width:100%; border-collapse:collapse; min-width:980px; }
+.plan-table th, .plan-table td { padding:14px 14px; border-bottom:1px solid var(--border); vertical-align:top; }
+.plan-table th { position:sticky; top:0; background:#fbfaf8; font-size:10px; font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); text-align:left; }
+.plan-num { font-size:20px; font-weight:600; color:var(--blue); width:70px; }
+.plan-title { font-size:14px; font-weight:600; color:var(--text-primary); line-height:1.5; }
+.plan-kpi { font-size:11px; color:var(--text-muted); margin-top:4px; line-height:1.6; }
+.plan-target { font-size:13px; font-weight:600; color:var(--green); }
+.plan-actions-wrap { display:flex; flex-direction:column; gap:8px; }
+.plan-bullet { display:flex; gap:8px; font-size:12px; color:var(--text-secondary); line-height:1.6; }
+.plan-footnote { font-size:12px; line-height:1.7; color:var(--text-secondary); }
+@media (max-width: 1100px) {
+  .summary-stat-grid, .tracker-grid, .summary-two-col, .accel-grid, .chatbot-card-list { grid-template-columns:1fr; }
+  .summary-hero-card { flex-direction:column; }
+  .summary-hero-side { align-items:flex-start; }
+}
+@media (max-width: 720px) {
+  .tab-shell { padding:0 18px 22px; }
+  .summary-hero-title { font-size:22px; }
+  .summary-stat-value { font-size:28px; }
+}
+
 </style>
 </head>
 <body>
@@ -725,7 +824,7 @@ body {
 <div class="header">
   <div class="header-left">
     <span class="header-label">Executive Dashboard · Plan L3-12</span>
-    <span class="header-title">HR Individual Action Plan — Overview</span>
+    <span class="header-title">HR Individual Action Plan — Overview &amp; Summary</span>
   </div>
   <div class="header-right">
     <div class="header-meta">
@@ -741,6 +840,13 @@ body {
 </div>
 
 <!-- MAIN -->
+<div class="tab-shell">
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="exec">Executive Dashboard</button>
+    <button class="tab-btn" data-tab="summary">HRIS Action Plan Summary</button>
+  </div>
+  <div class="tab-panels">
+    <section class="tab-panel active" data-panel="exec">
 <div class="main">
 
   <!-- KPI BAR -->
@@ -753,37 +859,37 @@ body {
     <div class="kpi-card blue">
       <span class="kpi-label">On Process</span>
       <span class="kpi-value">6</span>
-      <span class="kpi-sub">กำลังดำเนินการตามแผน<br>HR Data Hub Q2–Q4, HR Tech Q2 + Genspark 🚀 Launch</span>
+      <span class="kpi-sub">กำลังดำเนินการตามแผน<br>Data Cleansing acceleration, dashboards และ HR Tech workstreams</span>
     </div>
     <div class="kpi-card red">
       <span class="kpi-label">Action Needed</span>
-      <span class="kpi-value">1</span>
-      <span class="kpi-sub">ไม่อนุมัติ 102 คน ต้องแก้ไขยื่นใหม่<br>Data Cleansing Data Cleansing 55.8% ↑</span>
+      <span class="kpi-value">2</span>
+      <span class="kpi-sub">Submitted 70 + Not start 327 คน<br>Need action from Department Head เพื่อเร่งถึง 85%-90%</span>
     </div>
     <div class="kpi-card amber">
       <span class="kpi-label">Overall Progress</span>
       <span class="kpi-value">Q2</span>
-      <span class="kpi-sub">เข้าสู่ Q2 / 2026 แล้ว · Q1 ✓ ครบ<br>Genspark 🚀 Launch Active เม.ย.–พ.ค.</span>
+      <span class="kpi-sub">เข้าสู่ Q2 / 2026 แล้ว · ติดตาม milestone สำคัญ<br>EA Chatbot go-live revised: 11 พ.ค. 2026</span>
     </div>
   </div>
 
   <!-- ACTION ALERT -->
-  <div class="alert-banner" style="background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%);border-color:#86efac">
-    <span class="alert-icon">✅</span>
+  <div class="alert-banner" style="background:linear-gradient(135deg,#f8fafc 0%,#eef6ff 100%);border-color:rgba(26,110,199,0.22)">
+    <span class="alert-icon">📍</span>
     <div class="alert-content">
-      <div class="alert-title" style="color:#166534">📈 Data Cleansing — ความคืบหน้าก้าวกระโดด! (ไฟล์ที่ 30/27 · 19 เม.ย. 2569)</div>
+      <div class="alert-title" style="color:var(--blue)">Executive update — Data Cleansing & EA Chatbot (อัพเดต 4 พ.ค. 2569)</div>
       <div class="alert-items">
-        <div class="alert-item">
-          <div class="alert-item-dot"></div>
-          <span><strong style="color:var(--red)">Data Cleansing — HR Data Control Hub (อัพเดต 19 เม.ย.):</strong> ความคืบหน้า: <strong style="color:#0d8f52">55.8% (580/1,040 คน)</strong> — Finished <strong style="color:#0d8f52">329 คน (31.6%)</strong> · Unfinish 81 คน (7.8%) · Submitted 170 คน (16.3%) · <strong style="color:#6b0f08">Not start 460 คน (44.2%)</strong> · <strong style="color:#0d8f52">▲ ดีขึ้น: Finished +25 คน · Not start ลด -59 คน จาก 14 เม.ย.</strong> · กลุ่มเร่งด่วน: ไม่อนุมัติ 119 คน ต้องแก้ไขยื่นใหม่ · ไม่เริ่มเลย 460 คน</span>
+        <div class="alert-item" style="color:#1e3a5f">
+          <div class="alert-item-dot" style="background:var(--blue)"></div>
+          <span><strong style="color:var(--blue)">Data Cleansing — HR Data Control Hub:</strong> ความคืบหน้าล่าสุด <strong style="color:var(--green)">70.5% (780/1,107 คน)</strong> — Finished <strong style="color:var(--green)">656 คน (59.3%)</strong> · Submitted 70 คน (6.3%) · Unfinish 54 คน (4.9%) · <strong style="color:#7a1f18">Not start 327 คน (29.5%)</strong> · ต้องเร่งติดตามกับ Department Head และ owner list เพื่อดันให้ถึง <strong>85%-90%</strong></span>
         </div>
-        <div class="alert-item" style="color:#1a5c3a">
-          <div class="alert-item-dot" style="background:var(--green)"></div>
-          <span><strong style="color:var(--green)">🚀 Genspark AI — Launch Active เม.ย. 2569:</strong> 5/5 ผ่าน · คะแนนเฉลี่ย 98.2/100 · AI Leader ทุกคน (พี่ที 94 · พี่หน่อย 100 · พี่กวาง 97 · พี่แป๊ะ 100 · พี่บอย 100) — <strong style="color:var(--green)">🚀 Launch + Expand เม.ย.–พ.ค. เริ่มแล้ว!</strong></span>
+        <div class="alert-item" style="color:#7c4a04">
+          <div class="alert-item-dot" style="background:var(--amber)"></div>
+          <span><strong style="color:var(--amber)">EA Chatbot – Project Update:</strong> Target go-live ปรับเป็น <strong>11 พ.ค. 2569</strong> โดยมีประเด็นคงค้างจากฝั่ง <strong>Dev</strong> (hardening/UAT close list) และ <strong>Infra</strong> (production readiness + integration access)</span>
         </div>
-        <div class="alert-item" style="color:#1a5c3a">
+        <div class="alert-item" style="color:#166534">
           <div class="alert-item-dot" style="background:var(--green)"></div>
-          <span><strong style="color:var(--green)">✅ Outsource Payroll — ครบถ้วน 100%:</strong> Action Items ทั้ง 4 + กระบวนการทั้ง 3 รายการเรียบร้อย · คะแนนรอบสอง 75/100 ปรับปรุงจากรอบแรก (45/100)</span>
+          <span><strong style="color:var(--green)">Outsource Payroll:</strong> ครบถ้วน 100% และเป็น baseline ที่เสถียรแล้ว · ใช้เป็น reference สำหรับมาตรฐานงานข้ามทีมและงาน dashboard รอบถัดไป</span>
         </div>
       </div>
     </div>
@@ -880,9 +986,9 @@ body {
         </div>
         <div class="breakdown-track"><div class="breakdown-fill fill-green" style="width:72%"></div></div>
         <span class="breakdown-sub">
-          Q1 ✓ ครบ · Data Cleansing <strong style="color:#0d8f52">55.8%</strong> (Fin 329/1,040 คน ▲+25 · Unf 81) · Q3 dashboards live · Q2 ดำเนินการ<br>
-          ประเมิน progress = 72% · Data Cleansing 55.8% (+5.9pp จาก 14 เม.ย.)<br>
-          <span style="color:var(--green);font-size:9px">✅ Data Cleansing: Active 1,040 · Finished 329 (31.6%) · Unfinish 81 (7.8%) · Submitted 170 (16.3%) · Not start 460 (44.2%)</span>
+          Q1 ✓ ครบ · Data Cleansing <strong style="color:#0d8f52">70.5%</strong> (780/1,107 คน) · Q3 dashboards live · Q2 เร่งรัดต่อ<br>
+          ประเมิน project progress = 72% · ต้องดัน completion ให้ถึง 85%-90% ตาม timeline<br>
+          <span style="color:var(--green);font-size:9px">✅ Active 1,107 · Finished 656 (59.3%) · Submitted 70 (6.3%) · Unfinish 54 (4.9%) · Not start 327 (29.5%)</span>
         </span>
       </div>
 
@@ -940,10 +1046,10 @@ body {
     <div class="calc-note">
       วิธีคำนวณ (Weighted avg · น้ำหนัก 1/3 ต่อโครงการ):
       Outsource Payroll 100% × 33.3% = 33.3% &nbsp;|&nbsp;
-      HR Data Hub <strong style="color:var(--green)">72%</strong> × 33.3% = 24.0% (Data Cleansing 55.8% ▲ · Active 1,040 · Finished 329 · Not start 460) &nbsp;|&nbsp;
+      HR Data Hub <strong style="color:var(--green)">72%</strong> × 33.3% = 24.0% (Data Cleansing 70.5% ▲ · Active 1,107 · Finished 656 · Not start 327) &nbsp;|&nbsp;
       HR Tech 65% × 33.3% = 21.7% (Q2 avg 71% · AI Rec 65%·EASY 80%·Frappe 72%·Genspark 68% 🚀 Launch) &nbsp;|&nbsp;
       รวม = <strong style="color:var(--text-secondary)">~79%</strong>
-      <span style="color:var(--green);margin-left:8px">▲ +32% จาก baseline 47% — Data Cleansing 55.8% (+5.9pp) · Finished +25 คน · Not start -59 คน · Genspark 🚀 Active</span>
+      <span style="color:var(--green);margin-left:8px">▲ +32% จาก baseline 47% — Data Cleansing 70.5% (+14.7pp จากรอบก่อน) · Finished 656 คน · Not start 327 คน · EA Chatbot go-live 11 พ.ค.</span>
     </div>
   </div>
 
@@ -1249,21 +1355,18 @@ body {
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
           <span class="badge badge-onprocess">● On Process</span>
-          <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q1 ✓ + Data Cleansing 49.9% ▲ · Q3 active</span>
+          <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q1 ✓ + Data Cleansing 70.5% ▲ · Q3 active</span>
         </div>
       </div>
       <div class="project-body">
         <div class="progress-section">
-          <div class="progress-label"><span>Year progress</span><span style="color:var(--green)">Data Cleansing 49.9% ▲ · Q3 active · Q2 &amp; Q4 pending</span></div>
+          <div class="progress-label"><span>Year progress</span><span style="color:var(--green)">Data Cleansing 70.5% ▲ · Q3 active · Q2 acceleration mode</span></div>
           <div class="progress-track" style="position:relative;height:8px;border-radius:6px;overflow:visible">
-            <!-- Q1 active fill -->
             <div class="progress-fill fill-blue" style="width:25%;position:absolute;left:0;top:0;height:100%"></div>
-            <!-- Q3 active fill -->
             <div style="position:absolute;left:50%;top:0;width:25%;height:100%;background:rgba(74,158,255,0.35);border-radius:0 6px 6px 0"></div>
           </div>
         </div>
 
-        <!-- Q1 On Process -->
         <div class="phase-row">
           <span class="phase-tag phase-tag-blue">Q1</span>
           <div class="phase-content">
@@ -1273,38 +1376,46 @@ body {
           <span class="badge badge-onprocess" style="font-size:9px;padding:3px 8px;flex-shrink:0">● On Process</span>
         </div>
 
-        <!-- Q2 Data Cleansing - updated 14 Apr -->
         <div class="phase-row" style="background:var(--green-dim);border-color:var(--green-border)">
           <span class="phase-tag phase-tag-green">Q2</span>
           <div class="phase-content">
-            <span class="phase-title">Data Cleansing — ให้พนักงาน Update ข้อมูลส่วนตัว ✅ ความคืบหน้าก้าวกระโดด</span>
-            <span class="phase-target">ณ 19 เม.ย. 2569 — Active 1,040 คน · Finished 329 (31.6%) · Unfinish 81 (7.8%) · Submitted 170 (16.3%) · Not start 460 (44.2%)</span>
-            <div style="margin-top:6px;background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:5px">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <span style="font-size:11px;color:var(--green);font-weight:600">ความคืบหน้า: 55.8% (Finished + Unfinish + Submitted)</span>
-                <span style="font-size:11px;color:var(--green);font-family:var(--mono);font-weight:700">▲ 49.9% → 55.8% (+5.9pp ณ 19 เม.ย.)</span>
+            <span class="phase-title">Database – Data Cleansing Progress</span>
+            <span class="phase-target">ณ 4 พ.ค. 2569 — Active 1,107 คน · Finished 656 (59.3%) · Submitted 70 (6.3%) · Unfinish 54 (4.9%) · Not start 327 (29.5%)</span>
+            <div style="margin-top:6px;background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+                <span style="font-size:11px;color:var(--green);font-weight:600">ความคืบหน้า: 70.5% (Finished + Unfinish + Submitted)</span>
+                <span style="font-size:11px;color:var(--green);font-family:var(--mono);font-weight:700">Target next milestone: 85% → 90%</span>
               </div>
               <div style="height:6px;background:rgba(13,143,82,0.15);border-radius:4px;overflow:hidden">
-                <div style="height:100%;width:55.8%;background:var(--green);border-radius:4px"></div>
+                <div style="height:100%;width:70.5%;background:var(--green);border-radius:4px"></div>
               </div>
               <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:2px">
-                <span style="font-size:10px;background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);border-radius:4px;padding:2px 8px">✓ Finished 329 คน (+25)</span>
-                <span style="font-size:10px;background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border);border-radius:4px;padding:2px 8px">Unfinish 81 คน</span>
-                <span style="font-size:10px;background:var(--red-dim);color:var(--red);border:1px solid var(--red-border);border-radius:4px;padding:2px 8px">↑ Submitted 170 คน (16.3%)</span>
-                <span style="font-size:10px;background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);border-radius:4px;padding:2px 8px">⚠ Not start 460 คน (44.2%)</span>
+                <span style="font-size:10px;background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);border-radius:4px;padding:2px 8px">✓ Finished 656 คน</span>
+                <span style="font-size:10px;background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border);border-radius:4px;padding:2px 8px">Submitted 70 คน</span>
+                <span style="font-size:10px;background:rgba(91,33,182,0.08);color:#6d4fc2;border:1px solid rgba(109,79,194,0.22);border-radius:4px;padding:2px 8px">Unfinish 54 คน</span>
+                <span style="font-size:10px;background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);border-radius:4px;padding:2px 8px">⚠ Not start 327 คน</span>
               </div>
+            </div>
+            <div style="margin-top:8px;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:10px;color:var(--blue);font-family:var(--mono);font-weight:600">ACCELERATION PLAN TO 85%-90%</span>
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <span style="font-size:10px;background:#fff;color:var(--blue);border:1px solid var(--blue-border);border-radius:4px;padding:2px 8px">Needs action: Department Head follow-up</span>
+                <span style="font-size:10px;background:#fff;color:var(--blue);border:1px solid var(--blue-border);border-radius:4px;padding:2px 8px">Priority departments: pull top not-start list</span>
+                <span style="font-size:10px;background:#fff;color:var(--blue);border:1px solid var(--blue-border);border-radius:4px;padding:2px 8px">Priority companies: bottom completion companies</span>
+                <span style="font-size:10px;background:#fff;color:var(--blue);border:1px solid var(--blue-border);border-radius:4px;padding:2px 8px">Top missing fields: update from raw extract</span>
+              </div>
+              <span style="font-size:11px;color:var(--text-secondary);line-height:1.6">ใช้ owner list แยก Submitted / Unfinish / Not start และ review ร่วมกับ Department Head ทุกสัปดาห์ เพื่อเร่ง completion ให้ถึง 85%-90% ตามแผน</span>
+              <span style="font-size:11px;color:var(--blue);font-weight:600">Timeline: 85% ภายใน 31 พ.ค. 2569 · 90% ภายใน 15 มิ.ย. 2569</span>
             </div>
           </div>
           <span class="badge badge-onprocess" style="font-size:9px;padding:3px 8px;flex-shrink:0;align-self:flex-start">● On Process</span>
         </div>
 
-        <!-- Q3 On Process -->
         <div class="phase-row">
           <span class="phase-tag phase-tag-blue">Q3</span>
           <div class="phase-content">
             <span class="phase-title">HRIS Dashboard — Workforce Analytics</span>
             <span class="phase-target">Target: ส.ค. 2026 — Adoption ≥90%</span>
-            <!-- Active dashboards note -->
             <div style="margin-top:6px;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:3px">
               <span style="font-size:10px;color:var(--blue);font-family:var(--mono);font-weight:500">📊 Dashboards ที่พัฒนาและใช้งานอยู่ ณ ปัจจุบัน (5 dashboards)</span>
               <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:2px">
@@ -1319,7 +1430,6 @@ body {
           <span class="badge badge-onprocess" style="font-size:9px;padding:3px 8px;flex-shrink:0;align-self:flex-start">● On Process</span>
         </div>
 
-        <!-- Q4 Pending -->
         <div class="phase-row" style="opacity:0.7">
           <span class="phase-tag phase-tag-gray">Q4</span>
           <div class="phase-content">
@@ -1401,44 +1511,45 @@ body {
           <!-- Sub 2 -->
           <div class="sub-project-card">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
-              <span class="sub-project-name">EASY — EA Smart Assistant</span>
-              <span class="badge badge-onprocess" style="font-size:9px;padding:3px 7px">● On process</span>
+              <span class="sub-project-name">EA Chatbot – Project Update</span>
+              <span class="badge badge-warning" style="font-size:9px;padding:3px 7px">Milestone revised</span>
             </div>
-            <span class="sub-project-desc">ออกแบบ Knowledge Base + โครงสร้าง Chatbot สำหรับ EA Support</span>
+            <span class="sub-project-desc">Knowledge Base + Chatbot สำหรับ EA Support โดยปรับ target go-live เป็น 11 พ.ค. 2026 เพื่อปิดงานคงค้างฝั่ง Dev / Infra ให้พร้อมก่อนขึ้น production</span>
 
-            <!-- Done มี.ค. -->
             <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:4px">
-              <span style="font-size:9px;font-family:var(--mono);color:var(--green);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">มี.ค. 2026</span>
+              <span style="font-size:9px;font-family:var(--mono);color:var(--green);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">Developed / completed</span>
               <div style="display:flex;flex-direction:column;gap:3px">
-                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--green)">
-                  <span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>
-                  Update ข้อมูล HR ที่พนักงานควรรู้ <span style="font-family:var(--mono);margin-left:auto">✓ Done</span>
-                </div>
-                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--amber)">
-                  <span style="width:5px;height:5px;border-radius:50%;background:var(--amber);flex-shrink:0"></span>
-                  Phase 1 — IT Test ข้อมูล <span style="font-family:var(--mono);margin-left:auto">● On process</span>
-                </div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--green)"><span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>Knowledge base structure + HR content update <span style="font-family:var(--mono);margin-left:auto">✓ Done</span></div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--green)"><span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>Conversation flow / intent mapping <span style="font-family:var(--mono);margin-left:auto">✓ Done</span></div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--green)"><span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>Phase 1 test groundwork <span style="font-family:var(--mono);margin-left:auto">✓ Ready</span></div>
               </div>
             </div>
 
-            <!-- Pending เม.ย. -->
-            <div style="background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:4px;opacity:0.8">
-              <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">เม.ย. 2026 — Pending</span>
+            <div style="background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:9px;font-family:var(--mono);color:var(--blue);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">Next action to 11 May go-live</span>
               <div style="display:flex;flex-direction:column;gap:3px">
-                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--text-muted)">
-                  <span style="width:5px;height:5px;border-radius:50%;background:var(--text-muted);flex-shrink:0"></span>
-                  <span>Phase 2 — เชื่อมข้อมูลกับ SharePoint (ISO, Odoo ฯลฯ)</span> <span style="font-family:var(--mono);margin-left:auto;white-space:nowrap">⏸ Pending</span>
-                </div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--blue)"><span style="width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0"></span>Close defect / UAT items <span style="font-family:var(--mono);margin-left:auto">● On process</span></div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--blue)"><span style="width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0"></span>Finalize production package &amp; content freeze <span style="font-family:var(--mono);margin-left:auto">● On process</span></div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--blue)"><span style="width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0"></span>Go-live checkpoint with Infra <span style="font-family:var(--mono);margin-left:auto">● Scheduled</span></div>
+              </div>
+            </div>
+
+            <div style="background:var(--amber-dim);border:1px solid var(--amber-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:9px;font-family:var(--mono);color:var(--amber);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">Dev / Infra cause, risks &amp; mitigation</span>
+              <div style="display:flex;flex-direction:column;gap:5px;font-size:10px;color:#8a5a0a;line-height:1.55">
+                <div><strong>Dev:</strong> เก็บ defect / hardening logic / response quality ก่อนขึ้น production</div>
+                <div><strong>Infra:</strong> production readiness, access/config และ integration endpoint ยังต้อง confirm</div>
+                <div><strong>Mitigation:</strong> daily checkpoint, cut-off defect list, fallback KB/manual link และ sign-off ก่อน go-live</div>
               </div>
             </div>
 
             <div class="progress-section">
-              <div class="progress-label"><span>Overall progress</span><span style="color:var(--blue)">Phase 1 IT Test</span></div>
+              <div class="progress-label"><span>Overall progress</span><span style="color:var(--amber)">Revised go-live: 11 พ.ค. 2026</span></div>
               <div class="progress-track">
                 <div class="progress-fill fill-blue" style="width:75%"></div>
               </div>
             </div>
-            <div class="phase-remark">✓ Knowledge Base ครบ · Phase 1 IT Test on process · Phase 2 Pending เม.ย.</div>
+            <div class="phase-remark">สิ่งที่พัฒนาแล้วครบระดับพร้อมใช้งานหลัก ๆ แล้ว · ตอนนี้โฟกัส defect close, infra readiness และ go-live checkpoint</div>
           </div>
 
           <!-- Sub 3 -->
@@ -1996,8 +2107,8 @@ body {
       <span style="font-size:9px;color:var(--green);font-family:var(--mono)">⑫</span>
       <span style="font-size:10px;color:var(--green);font-family:var(--mono)">12</span>
       <div style="display:flex;flex-direction:column;gap:2px">
-        <span style="font-size:12px;font-weight:600;color:var(--green)">HR Data Based ★ ▲ Data Cleansing 55.8%!</span>
-        <span style="font-size:10px;color:var(--green);font-family:var(--mono)">✅ Data Cleansing 55.8% (Fin 329+Unf 81/1,040) · Not start 460 ลดลง -59 · ไม่อนุมัติ 119 คน แก้ไขด่วน</span>
+        <span style="font-size:12px;font-weight:600;color:var(--green)">HR Data Based ★ ▲ Data Cleansing 70.5%!</span>
+        <span style="font-size:10px;color:var(--green);font-family:var(--mono)">✅ Data Cleansing 70.5% (780/1,107) · Finished 656 · Submitted 70 · Unfinish 54 · Not start 327 · เร่ง Department Head follow-up</span>
       </div>
       <span style="font-size:10px;color:var(--green);font-family:var(--mono);text-align:center">Pornpetch</span>
       <span style="font-size:12px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">35%</span>
@@ -2106,9 +2217,332 @@ body {
       <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);font-family:var(--mono)"><span style="width:10px;height:6px;background:var(--amber);border-radius:2px;display:inline-block"></span>On Process</span>
       <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);font-family:var(--mono)"><span style="width:10px;height:6px;background:var(--red);border-radius:2px;display:inline-block"></span>Pending / Action Required</span>
     </div>
-    <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">+8APR = Q2 progress added ณ 19 เม.ย. 2569</span>
+    <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">+MAY = Data Cleansing acceleration + summary tab added ณ 4 พ.ค. 2569</span>
   </div>
 
+</div>
+    </section>
+
+<section class="tab-panel" data-panel="summary">
+  <div class="main summary-main">
+    <div class="summary-hero-card">
+      <div>
+        <span class="header-label">Action Plan Summary · From KPI_HRIS_Asst_Manager_2026.xlsx</span>
+        <h2 class="summary-hero-title">HRIS Action Plan Progress Dashboard Summary</h2>
+        <p class="summary-hero-sub">สรุปโครงสร้าง KPI จากไฟล์ Action Plan และผูกกับ progress ล่าสุดที่มีอยู่ใน dashboard เดิม เพื่อใช้เป็นหน้า summary สำหรับติดตามรายเดือน/รายไตรมาส</p>
+      </div>
+      <div class="summary-hero-side">
+        <span class="tracker-pill onprocess">Summary Tab</span>
+        <span class="date-badge" id="summaryDate">ณ 4 พ.ค. 2569</span>
+      </div>
+    </div>
+
+    <div class="summary-stat-grid">
+      <div class="summary-stat-card">
+      <span class="summary-stat-label">KPI Pillars</span>
+      <span class="summary-stat-value">5</span>
+      <span class="summary-stat-sub">5 กลุ่ม KPI จากไฟล์ Action Plan</span>
+    </div>
+<div class="summary-stat-card">
+      <span class="summary-stat-label">Supporting Actions</span>
+      <span class="summary-stat-value">19</span>
+      <span class="summary-stat-sub">19 initiatives ใต้ KPI ทั้งหมด</span>
+    </div>
+<div class="summary-stat-card">
+      <span class="summary-stat-label">Measured KPIs</span>
+      <span class="summary-stat-value">2</span>
+      <span class="summary-stat-sub">มี KPI ที่มีตัวเลข progress ล่าสุดชัดเจน 2 ส่วน</span>
+    </div>
+<div class="summary-stat-card">
+      <span class="summary-stat-label">Review Cadence</span>
+      <span class="summary-stat-value">12M</span>
+      <span class="summary-stat-sub">ติดตามรายเดือน + review รายไตรมาส</span>
+    </div>
+    </div>
+
+    <div class="summary-banner">
+      <div class="summary-banner-icon">📌</div>
+      <div>
+        <div class="summary-banner-title">Highlight ล่าสุดที่ต้องใช้ติดตามผู้บริหาร</div>
+        <div class="summary-banner-text">Data Cleansing progress ล่าสุดอยู่ที่ <strong>70.5%</strong> (780/1,107) และต้องเร่งต่อให้ถึง <strong>85% ภายใน 31 พ.ค. 2569</strong> และ <strong>90% ภายใน 15 มิ.ย. 2569</strong> ขณะที่ EA Chatbot ปรับ target go-live เป็น <strong>11 พ.ค. 2569</strong> และต้องปิดงานฝั่ง Dev/Infra ก่อนขึ้น production</div>
+      </div>
+    </div>
+
+    <div class="tracker-grid">
+      
+      <div class="tracker-card accent-green">
+        <div class="tracker-card-top">
+          <div>
+            <span class="tracker-kpi-no">KPI 1</span>
+            <h3>HRIS Data Quality &amp; Accuracy Rate</h3>
+          </div>
+          <span class="tracker-pill ontrack">Measured</span>
+        </div>
+        <div class="tracker-meta-grid">
+          <div><span class="tracker-meta-label">Target</span><strong>≥80%</strong></div>
+          <div><span class="tracker-meta-label">KPI</span><strong>%HR Data Accuracy Score</strong></div>
+        </div>
+        <div class="tracker-callout">
+          <span class="tracker-callout-label">Current signal</span>
+          <strong>Data cleansing measured progress</strong>
+          <span>Active 1,107 · Finished 656 · Submitted 70 · Unfinish 54 · Not start 327</span>
+        </div>
+        <div class="tracker-progress-row"><span>Progress</span><span>70.5%</span></div>
+            <div class="tracker-progress"><div class="tracker-progress-fill green" style="width:70.5%"></div></div>
+        <div class="tracker-note">Gap to target ≥80% = 9.5pp · stretch target 85–90% ต้องเร่งรัดต่อ</div>
+        <div class="tracker-actions">
+          <span class="tracker-actions-title">Key activities from source file</span>
+          <ul><li><strong>One on One / Monthly team Meeting</strong> — ประชุมทีมร่วมกันอย่างน้อย 2 ครั้งต่อเดือน</li><li><strong>Mentoring &amp; Coaching</strong> — มีการ Feedback และสอนงาน หรือเทคนิคต่างๆ ให้เมื่อมีโอกาส</li><li><strong>Find out area of improvement</strong> — ปรับปรุงจุดด้อยของตนเอง เรียนรู้เทคนิค ใหม่อย่างน้อย 3 ครั้ง/ไตรมาส</li><li><strong>Friend not Colleague ทำงานแบบเพื่อน ไม่ใช่แค่เพื่อนร่วมงาน</strong> — มีกิจกรรม หรือวาระสำคัญ เช่น ทานข้าวร่วมกัน BD Party แก่ทีม</li></ul>
+        </div>
+      </div>
+    
+
+      <div class="tracker-card accent-gray">
+        <div class="tracker-card-top">
+          <div>
+            <span class="tracker-kpi-no">KPI 2</span>
+            <h3>HRIS User Satisfaction - HR Staff, Line Managers &amp; Employees</h3>
+          </div>
+          <span class="tracker-pill pending">Awaiting actual</span>
+        </div>
+        <div class="tracker-meta-grid">
+          <div><span class="tracker-meta-label">Target</span><strong>≥90%</strong></div>
+          <div><span class="tracker-meta-label">KPI</span><strong>%Internal HRIS User Satisfaction</strong></div>
+        </div>
+        <div class="tracker-callout">
+          <span class="tracker-callout-label">Current signal</span>
+          <strong>User satisfaction &amp; SLA tracker</strong>
+          <span>ในไฟล์ Action Plan ยังไม่มี Actual Result / survey result ที่กรอกไว้</span>
+        </div>
+        <div class="tracker-progress-row"><span>Progress</span><span>Pending actual</span></div>
+            <div class="tracker-progress tracker-progress-dashed"></div>
+        <div class="tracker-note">ควรเติมคะแนนความพึงพอใจ, SLA 3 วันทำการ และ accuracy rate รายเดือน</div>
+        <div class="tracker-actions">
+          <span class="tracker-actions-title">Key activities from source file</span>
+          <ul><li><strong>ส่งมอบงานแก่ Internal &amp; External Customer ตามเวลาที่กำหนด</strong> — SLA ไม่เกิน 3 วันทำการ</li><li><strong>Accuracy rate</strong> — % Accuracy above 90% each month</li><li><strong>Excellent quolity</strong> — ส่งมอบงานที่มีคุณภาพ Reject &amp; Complaint &lt;10%</li></ul>
+        </div>
+      </div>
+    
+
+      <div class="tracker-card accent-blue">
+        <div class="tracker-card-top">
+          <div>
+            <span class="tracker-kpi-no">KPI 3</span>
+            <h3>HRIS Projects / System Enhancement Completion Rate</h3>
+          </div>
+          <span class="tracker-pill onprocess">Linked with Tab 1</span>
+        </div>
+        <div class="tracker-meta-grid">
+          <div><span class="tracker-meta-label">Target</span><strong>1</strong></div>
+          <div><span class="tracker-meta-label">KPI</span><strong>%HRIS Project Milestones Achievement</strong></div>
+        </div>
+        <div class="tracker-callout">
+          <span class="tracker-callout-label">Current signal</span>
+          <strong>Project milestone achievement proxy</strong>
+          <span>อ้างอิง Executive Dashboard ใน Tab 1 เพื่อสะท้อนความคืบหน้ารวมของ project milestones</span>
+        </div>
+        <div class="tracker-progress-row"><span>Progress</span><span>79.0%</span></div>
+            <div class="tracker-progress"><div class="tracker-progress-fill blue" style="width:79%"></div></div>
+        <div class="tracker-note">Current overall project progress baseline = 79%</div>
+        <div class="tracker-actions">
+          <span class="tracker-actions-title">Key activities from source file</span>
+          <ul><li><strong>ดำเนินการตามแผนที่ได้รับอนุมัติ</strong> — PDCA รายเดือน</li><li><strong>ดำเนินการตามแผนที่ได้รับอนุมัติ</strong> — PDCA รายเดือน</li></ul>
+        </div>
+      </div>
+    
+
+      <div class="tracker-card accent-gray">
+        <div class="tracker-card-top">
+          <div>
+            <span class="tracker-kpi-no">KPI 4</span>
+            <h3>HR Data Compliance &amp; Audit Pass Rate</h3>
+          </div>
+          <span class="tracker-pill pending">Awaiting actual</span>
+        </div>
+        <div class="tracker-meta-grid">
+          <div><span class="tracker-meta-label">Target</span><strong>≤12%</strong></div>
+          <div><span class="tracker-meta-label">KPI</span><strong>%HR Data Compliance Rate</strong></div>
+        </div>
+        <div class="tracker-callout">
+          <span class="tracker-callout-label">Current signal</span>
+          <strong>Compliance &amp; audit tracker</strong>
+          <span>ในไฟล์ Action Plan ยังไม่มี actual defect / audit pass rate ที่กรอกไว้</span>
+        </div>
+        <div class="tracker-progress-row"><span>Progress</span><span>Pending actual</span></div>
+            <div class="tracker-progress tracker-progress-dashed"></div>
+        <div class="tracker-note">ควรเติม defect leakage, audit findings และ backlog clearance รายเดือน</div>
+        <div class="tracker-actions">
+          <span class="tracker-actions-title">Key activities from source file</span>
+          <ul><li><strong>ปรับงาน ลดงานซ้ำ / กัน overload</strong> — งานเสร็จตามเป้าหมาย ไม่มีงานค้าง</li><li><strong>ชื่นชม/ให้เครดิตทันที</strong> — Recognition ≥ 1 ครั้ง/เดือน</li><li><strong>Coach + Support + Sponsor</strong> — ไม่มี conflict</li></ul>
+        </div>
+      </div>
+    
+
+      <div class="tracker-card accent-amber">
+        <div class="tracker-card-top">
+          <div>
+            <span class="tracker-kpi-no">KPI 5</span>
+            <h3>Digital &amp; AI Adoption Rate in HRIS Process</h3>
+          </div>
+          <span class="tracker-pill atrisk">Milestone revised</span>
+        </div>
+        <div class="tracker-meta-grid">
+          <div><span class="tracker-meta-label">Target</span><strong>&gt;80%</strong></div>
+          <div><span class="tracker-meta-label">KPI</span><strong>%HRIS Digital Tool Utilization &amp; Automation Rate</strong></div>
+        </div>
+        <div class="tracker-callout">
+          <span class="tracker-callout-label">Current signal</span>
+          <strong>Digital &amp; AI adoption milestone</strong>
+          <span>EA Chatbot target go-live revised to 11 พ.ค. 2569 จากการ hardening ฝั่ง Dev และ readiness ฝั่ง Infra</span>
+        </div>
+        <div class="tracker-progress-row"><span>Progress</span><span>Pending actual</span></div>
+            <div class="tracker-progress tracker-progress-dashed"></div>
+        <div class="tracker-note">ติดตาม go-live checkpoint, UAT close list และ production readiness แบบรายวัน</div>
+        <div class="tracker-actions">
+          <span class="tracker-actions-title">Key activities from source file</span>
+          <ul><li><strong>ใช้ AI ในงาน HRIS</strong></li><li><strong>ใช้ AI ในงานในแผนก HRIS ให้มากที่สุด</strong> — 2 งานขึ้นไปต่อไตรมาส</li><li><strong>Payroll</strong> — 2 งานขึ้นไปต่อไตรมาส</li><li><strong>Welfare &amp; Benefits</strong> — 2 งานขึ้นไปต่อไตรมาส</li><li><strong>HRIS</strong> — 2 งานขึ้นไปต่อไตรมาส</li></ul>
+        </div>
+      </div>
+    
+    </div>
+
+    <div class="summary-two-col">
+      <div class="summary-panel">
+        <div class="section-title">Data Cleansing Acceleration Plan</div>
+        <div class="accel-grid">
+          <div class="accel-item">
+            <span class="accel-label">Current mix</span>
+            <strong>Finished 656 · Submitted 70 · Unfinish 54 · Not start 327</strong>
+            <span>Completion rate (finished only) = 59.3% · participation progress = 70.5%</span>
+          </div>
+          <div class="accel-item">
+            <span class="accel-label">Needs action from Department Head</span>
+            <strong>Follow-up ผู้ที่ยังไม่เริ่ม + เร่ง approve/re-submit รายที่ค้าง</strong>
+            <span>ใช้ weekly war-room list แยก Submitted / Unfinish / Not start และไล่รายชื่อรายหน่วยงาน</span>
+          </div>
+          <div class="accel-item">
+            <span class="accel-label">Priority lens</span>
+            <strong>Departments / Companies / Top Missing Fields</strong>
+            <span>หน้า summary นี้เตรียม placeholder ให้แล้ว แต่ต้อง feed ข้อมูล drill-down จาก raw cleansing export ในรอบถัดไป</span>
+          </div>
+          <div class="accel-item">
+            <span class="accel-label">Target timeline</span>
+            <strong>85% by 31 พ.ค. 2569 · 90% by 15 มิ.ย. 2569</strong>
+            <span>หากต่ำกว่าแผน ให้ escalate owner list ทุกสัปดาห์และ review พร้อม Department Head</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-panel">
+        <div class="section-title">EA Chatbot — Go-live Readiness</div>
+        <div class="chatbot-card-list">
+          <div class="chatbot-item green">
+            <span class="chatbot-item-label">Developed</span>
+            <strong>Knowledge base structure, HR content update, chatbot flow และ Phase 1 test groundwork</strong>
+          </div>
+          <div class="chatbot-item blue">
+            <span class="chatbot-item-label">Next action</span>
+            <strong>Close defect/UAT list, finalize response content, freeze release package และเตรียม go-live checkpoint 11 พ.ค. 2569</strong>
+          </div>
+          <div class="chatbot-item amber">
+            <span class="chatbot-item-label">Dev / Infra causes</span>
+            <strong>Dev hardening ฝั่ง logic/response และ Infra readiness ฝั่ง production access + integration endpoint</strong>
+          </div>
+          <div class="chatbot-item red">
+            <span class="chatbot-item-label">Risks / mitigation</span>
+            <strong>เสี่ยงเรื่อง config/integration delay และ content mismatch → ใช้ daily checkpoint, cut-off defect list และ fallback KB/manual link ชั่วคราว</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-panel">
+      <div class="section-title">Action Plan Structure from Excel Source</div>
+      <div class="plan-table-wrap">
+        <table class="plan-table">
+          <thead>
+            <tr>
+              <th style="width:70px">No.</th>
+              <th style="width:32%">KPI Pillar</th>
+              <th style="width:130px">Target</th>
+              <th>Activities / Control Items</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+      <tr>
+        <td class="plan-num">1</td>
+        <td>
+          <div class="plan-title">HRIS Data Quality &amp; Accuracy Rate</div>
+          <div class="plan-kpi">%HR Data Accuracy Score</div>
+        </td>
+        <td class="plan-target">≥80%</td>
+        <td>
+          <div class="plan-actions-wrap"><div class="plan-bullet"><span>•</span><span><strong>One on One / Monthly team Meeting</strong> — ประชุมทีมร่วมกันอย่างน้อย 2 ครั้งต่อเดือน</span></div><div class="plan-bullet"><span>•</span><span><strong>Mentoring &amp; Coaching</strong> — มีการ Feedback และสอนงาน หรือเทคนิคต่างๆ ให้เมื่อมีโอกาส</span></div><div class="plan-bullet"><span>•</span><span><strong>Find out area of improvement</strong> — ปรับปรุงจุดด้อยของตนเอง เรียนรู้เทคนิค ใหม่อย่างน้อย 3 ครั้ง/ไตรมาส</span></div><div class="plan-bullet"><span>•</span><span><strong>Friend not Colleague ทำงานแบบเพื่อน ไม่ใช่แค่เพื่อนร่วมงาน</strong> — มีกิจกรรม หรือวาระสำคัญ เช่น ทานข้าวร่วมกัน BD Party แก่ทีม</span></div></div>
+        </td>
+      </tr>
+    
+
+      <tr>
+        <td class="plan-num">2</td>
+        <td>
+          <div class="plan-title">HRIS User Satisfaction - HR Staff, Line Managers &amp; Employees</div>
+          <div class="plan-kpi">%Internal HRIS User Satisfaction</div>
+        </td>
+        <td class="plan-target">≥90%</td>
+        <td>
+          <div class="plan-actions-wrap"><div class="plan-bullet"><span>•</span><span><strong>ส่งมอบงานแก่ Internal &amp; External Customer ตามเวลาที่กำหนด</strong> — SLA ไม่เกิน 3 วันทำการ</span></div><div class="plan-bullet"><span>•</span><span><strong>Accuracy rate</strong> — % Accuracy above 90% each month</span></div><div class="plan-bullet"><span>•</span><span><strong>Excellent quolity</strong> — ส่งมอบงานที่มีคุณภาพ Reject &amp; Complaint &lt;10%</span></div></div>
+        </td>
+      </tr>
+    
+
+      <tr>
+        <td class="plan-num">3</td>
+        <td>
+          <div class="plan-title">HRIS Projects / System Enhancement Completion Rate</div>
+          <div class="plan-kpi">%HRIS Project Milestones Achievement</div>
+        </td>
+        <td class="plan-target">1</td>
+        <td>
+          <div class="plan-actions-wrap"><div class="plan-bullet"><span>•</span><span><strong>ดำเนินการตามแผนที่ได้รับอนุมัติ</strong> — PDCA รายเดือน</span></div><div class="plan-bullet"><span>•</span><span><strong>ดำเนินการตามแผนที่ได้รับอนุมัติ</strong> — PDCA รายเดือน</span></div></div>
+        </td>
+      </tr>
+    
+
+      <tr>
+        <td class="plan-num">4</td>
+        <td>
+          <div class="plan-title">HR Data Compliance &amp; Audit Pass Rate</div>
+          <div class="plan-kpi">%HR Data Compliance Rate</div>
+        </td>
+        <td class="plan-target">≤12%</td>
+        <td>
+          <div class="plan-actions-wrap"><div class="plan-bullet"><span>•</span><span><strong>ปรับงาน ลดงานซ้ำ / กัน overload</strong> — งานเสร็จตามเป้าหมาย ไม่มีงานค้าง</span></div><div class="plan-bullet"><span>•</span><span><strong>ชื่นชม/ให้เครดิตทันที</strong> — Recognition ≥ 1 ครั้ง/เดือน</span></div><div class="plan-bullet"><span>•</span><span><strong>Coach + Support + Sponsor</strong> — ไม่มี conflict</span></div></div>
+        </td>
+      </tr>
+    
+
+      <tr>
+        <td class="plan-num">5</td>
+        <td>
+          <div class="plan-title">Digital &amp; AI Adoption Rate in HRIS Process</div>
+          <div class="plan-kpi">%HRIS Digital Tool Utilization &amp; Automation Rate</div>
+        </td>
+        <td class="plan-target">&gt;80%</td>
+        <td>
+          <div class="plan-actions-wrap"><div class="plan-bullet"><span>•</span><span><strong>ใช้ AI ในงาน HRIS</strong></span></div><div class="plan-bullet"><span>•</span><span><strong>ใช้ AI ในงานในแผนก HRIS ให้มากที่สุด</strong> — 2 งานขึ้นไปต่อไตรมาส</span></div><div class="plan-bullet"><span>•</span><span><strong>Payroll</strong> — 2 งานขึ้นไปต่อไตรมาส</span></div><div class="plan-bullet"><span>•</span><span><strong>Welfare &amp; Benefits</strong> — 2 งานขึ้นไปต่อไตรมาส</span></div><div class="plan-bullet"><span>•</span><span><strong>HRIS</strong> — 2 งานขึ้นไปต่อไตรมาส</span></div><div class="plan-bullet"><span>•</span><span><strong>HRBP</strong> — 2 งานขึ้นไปต่อไตรมาส</span></div><div class="plan-bullet"><span>•</span><span><strong>Documentation</strong> — 2 งานขึ้นไปต่อไตรมาส</span></div></div>
+        </td>
+      </tr>
+    
+          </tbody>
+        </table>
+      </div>
+      <div class="plan-footnote">หมายเหตุ: ในไฟล์ Action Plan ส่วนใหญ่ยังไม่ได้กรอก Actual Result รายเดือน จึงออกแบบหน้านี้ให้พร้อมสำหรับเติม progress% ภายหลัง โดยคงโครงสร้าง KPI / Target / Activities ให้ตรงกับ source file เดิม</div>
+    </div>
+  </div>
+</section>
+
+  </div>
 </div>
 <!-- END 18 PROJECTS OVERVIEW -->
 
@@ -2119,7 +2553,7 @@ body {
     <span class="footer-item">Type <span>Project</span></span>
     <span class="footer-item">Measure <span>รายไตรมาส</span></span>
     <span class="footer-item">Revision <span>0</span></span>
-    <span class="footer-item">Objective <span>HR Data Based</span></span>
+    <span class="footer-item">Objective <span>HR Data Based + Action Plan Summary</span></span>
   </div>
   <span class="footer-item" id="footerDate">อัพเดต — &nbsp;|&nbsp; For executive review</span>
 </div>
@@ -2193,5 +2627,25 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 })();
 </script>
 
+
+<script>
+(function(){
+  const buttons = Array.from(document.querySelectorAll('.tab-btn'));
+  const panels = Array.from(document.querySelectorAll('.tab-panel'));
+  function activate(tab){
+    buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tab));
+    panels.forEach(panel => panel.classList.toggle('active', panel.dataset.panel === tab));
+    try { localStorage.setItem('hrisActionPlanActiveTab', tab); } catch(e) {}
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  buttons.forEach(btn => btn.addEventListener('click', () => activate(btn.dataset.tab)));
+  try {
+    const saved = localStorage.getItem('hrisActionPlanActiveTab');
+    if (saved && buttons.some(btn => btn.dataset.tab === saved)) activate(saved);
+  } catch(e) {}
+})();
+</script>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
