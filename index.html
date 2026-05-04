@@ -799,9 +799,122 @@ body {
   .summary-stat-value { font-size:28px; }
 }
 
+
+/* ── Access lock popup ── */
+body.locked { overflow: hidden; }
+body.locked #topbar,
+body.locked #page-wrap,
+body.locked #site-footer {
+  filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+}
+#accessOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(240,239,232,0.76);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+#accessOverlay.hidden { display: none; }
+.access-modal {
+  width: min(460px, 100%);
+  background: rgba(255,255,255,0.96);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(15,23,42,0.16);
+  padding: 24px 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.access-badge {
+  align-self: flex-start;
+  font-size: 10px;
+  font-family: var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--blue-dim);
+  border: 1px solid var(--blue-border);
+  border-radius: 999px;
+  padding: 5px 10px;
+}
+.access-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+.access-desc {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+.access-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+.access-input {
+  width: 100%;
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  background: #fff;
+  padding: 14px 16px;
+  font-size: 18px;
+  font-family: var(--mono);
+  letter-spacing: 0.12em;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.access-input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(26,110,199,0.10);
+}
+.access-btn {
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--blue), #0d8f52);
+  color: #fff;
+  padding: 13px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.access-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+@media (max-width: 640px) {
+  .access-modal { padding: 20px 18px; }
+  .access-title { font-size: 21px; }
+}
+
 </style>
 </head>
-<body>
+<body class="locked">
+<div id="accessOverlay">
+  <div class="access-modal">
+    <span class="access-badge">Restricted Access</span>
+    <div class="access-title">กรอกรหัสเพื่อเข้าดู Dashboard</div>
+    <div class="access-desc">ไฟล์นี้ถูกตั้งค่าการเข้าถึงเพิ่มเติม กรุณากรอกรหัสผ่านเพื่อเข้าสู่หน้า Dashboard หากกรอกรหัสไม่ถูกต้อง ระบบจะแจ้งเตือนทันที</div>
+    <div class="access-form">
+      <input id="accessCodeInput" class="access-input" type="password" inputmode="numeric" placeholder="Enter access code" autocomplete="off" />
+      <button id="accessCodeBtn" class="access-btn" type="button">เข้าสู่ระบบ</button>
+    </div>
+    <div class="access-note">Authorized access only · HRIS Action Plan Dashboard</div>
+  </div>
+</div>
+
 
 <!-- Top navigation bar -->
 <div id="topbar">
@@ -2627,6 +2740,42 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 })();
 </script>
 
+
+<script>
+(function(){
+  const ACCESS_CODE = '134300';
+  const overlay = document.getElementById('accessOverlay');
+  const input = document.getElementById('accessCodeInput');
+  const button = document.getElementById('accessCodeBtn');
+
+  function unlockDashboard() {
+    document.body.classList.remove('locked');
+    overlay?.classList.add('hidden');
+    input?.blur();
+  }
+
+  function validateAccess() {
+    const code = (input?.value || '').trim();
+    if (code === ACCESS_CODE) {
+      unlockDashboard();
+    } else {
+      alert('รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง');
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+    }
+  }
+
+  if (button) button.addEventListener('click', validateAccess);
+  if (input) {
+    setTimeout(() => input.focus(), 250);
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') validateAccess();
+    });
+  }
+})();
+</script>
 
 <script>
 (function(){
