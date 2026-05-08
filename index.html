@@ -622,7 +622,7 @@ body {
       .tl2-name.xs { color: var(--text-muted); font-size: 9px; padding-left: 20px; }
       .tl2-track { position: relative; height: 22px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
       .tl2-track.thin { height: 15px; }
-      .tl2-now { position: absolute; top: 0; bottom: 0; width: 1.5px; background: var(--amber); opacity: 0.7; z-index: 5; left: 27%; }
+      .tl2-now { position: absolute; top: 0; bottom: 0; width: 1.5px; background: var(--amber); opacity: 0.7; z-index: 5; left: 35.5%; }
       .tl2-bar { position: absolute; top: 0; height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 6px; overflow: hidden; }
       .tl2-bar span { font-size: 10px; font-family: var(--mono); white-space: nowrap; }
       .b-g   { background: var(--green); } .b-g span { color: #fff; }
@@ -803,6 +803,101 @@ body {
 .plan-actions-wrap { display:flex; flex-direction:column; gap:8px; }
 .plan-bullet { display:flex; gap:8px; font-size:12px; color:var(--text-secondary); line-height:1.6; }
 .plan-footnote { font-size:12px; line-height:1.7; color:var(--text-secondary); }
+
+/* ── Excel Import Card (KPI Auto-Update) ── */
+.kpi-import-card {
+  background: linear-gradient(135deg, rgba(26,110,199,.06), rgba(13,143,82,.04));
+  border: 1px solid var(--blue-border);
+  border-radius: 16px;
+  padding: 20px 22px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+.kpi-import-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: linear-gradient(135deg, var(--green), #34d399);
+  display:flex; align-items:center; justify-content:center;
+  color: #fff; font-size: 22px; font-weight:700;
+  flex-shrink:0;
+  box-shadow: 0 6px 16px rgba(13,143,82,.25);
+}
+.kpi-import-text { flex:1; min-width: 260px; }
+.kpi-import-title { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom:4px; }
+.kpi-import-sub { font-size: 12px; color: var(--text-secondary); line-height:1.6; }
+.kpi-import-actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.kpi-import-btn {
+  appearance:none; border:none; cursor:pointer;
+  padding: 11px 18px; border-radius: 10px;
+  background: var(--blue); color:#fff; font-size:13px; font-weight:600;
+  display:inline-flex; align-items:center; gap:8px;
+  transition: all .18s ease;
+  box-shadow: 0 4px 12px rgba(26,110,199,.18);
+  font-family: inherit;
+}
+.kpi-import-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(26,110,199,.25); }
+.kpi-import-btn.ghost { background:#fff; color: var(--text-secondary); border:1px solid var(--border); box-shadow:none; }
+.kpi-import-btn.ghost:hover { color: var(--blue); border-color: var(--blue-border); }
+.kpi-import-btn[disabled] { opacity:.55; cursor: wait; }
+.kpi-import-status {
+  font-size: 11px; color: var(--text-muted); font-family: var(--mono);
+  letter-spacing: .04em; margin-top:8px; line-height:1.6;
+  display: flex; align-items: center; gap: 6px;
+}
+.kpi-import-status .dot { width:7px; height:7px; border-radius:999px; background: var(--text-muted); display:inline-block; }
+.kpi-import-status.ok { color: var(--green); }
+.kpi-import-status.ok .dot { background: var(--green); }
+.kpi-import-status.err { color: var(--red); }
+.kpi-import-status.err .dot { background: var(--red); }
+.kpi-import-status.processing { color: var(--blue); }
+.kpi-import-status.processing .dot { background: var(--blue); animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.kpi-import-dropzone {
+  flex-basis: 100%;
+  border: 2px dashed var(--border2); border-radius: 12px;
+  padding: 12px 16px; font-size: 12px; color: var(--text-muted); text-align:center;
+  background: rgba(255,255,255,.55);
+  transition: all .15s ease;
+}
+.kpi-import-dropzone.dragover { border-color: var(--blue); background: var(--blue-dim); color: var(--blue); border-style: solid; }
+.kpi-import-summary {
+  flex-basis: 100%;
+  display: none;
+  grid-template-columns: repeat(4, 1fr); gap:10px;
+  margin-top: 6px;
+}
+.kpi-import-summary.show { display: grid; }
+.kpi-import-summary-cell {
+  background: #fff; border:1px solid var(--border); border-radius:10px;
+  padding: 10px 12px; display:flex; flex-direction:column; gap:3px;
+}
+.kpi-import-summary-cell .lbl { font-size:10px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.08em; color: var(--text-muted); }
+.kpi-import-summary-cell .val { font-size:18px; font-weight:600; color: var(--text-primary); }
+.kpi-import-summary-cell .sub { font-size:11px; color: var(--text-secondary); }
+.tracker-actual-line {
+  font-size: 11px; color: var(--text-secondary); font-family: var(--mono);
+  margin-top: -4px; line-height:1.5;
+  display:none;
+}
+.tracker-actual-line.show { display:block; }
+.tracker-actual-line strong { color: var(--blue); font-weight:600; }
+.tracker-month-strip {
+  display:grid; grid-template-columns: repeat(12, 1fr); gap:3px;
+  margin-top: 4px;
+}
+.tracker-month-cell {
+  font-size: 8.5px; padding: 4px 1px; text-align:center; border-radius: 4px;
+  background: var(--bg3); color: var(--text-muted); font-family: var(--mono);
+  border: 1px solid transparent; line-height:1.2;
+}
+.tracker-month-cell .m { font-weight:500; opacity:.7; display:block; font-size:7.5px; }
+.tracker-month-cell.has-data { background: var(--green-dim); color: var(--green); border-color: var(--green-border); font-weight:600; }
+@media (max-width: 900px) {
+  .kpi-import-summary { grid-template-columns: repeat(2, 1fr); }
+}
+
 @media (max-width: 1100px) {
   .summary-stat-grid, .tracker-grid, .summary-two-col, .accel-grid, .chatbot-card-list { grid-template-columns:1fr; }
   .summary-hero-card { flex-direction:column; }
@@ -963,7 +1058,7 @@ body.locked #site-footer {
       <span>Project support by</span>
       <strong>Thanutt K.</strong>
     </div>
-    <div class="date-badge">ณ 19 เม.ย. 2569</div>
+    <div class="date-badge">ณ 9 พ.ค. 2569</div>
   </div>
 </div>
 
@@ -993,7 +1088,7 @@ body.locked #site-footer {
     <div class="kpi-card red">
       <span class="kpi-label">Action Needed</span>
       <span class="kpi-value">2</span>
-      <span class="kpi-sub">Submitted 70 + Not start 327 คน<br>Need action from Department Head เพื่อเร่งถึง 85%-90%</span>
+      <span class="kpi-sub">Submitted 17 + Not start 222 คน<br>Need action from Department Head เพื่อเร่งถึง 85%-90%</span>
     </div>
     <div class="kpi-card amber">
       <span class="kpi-label">Overall Progress</span>
@@ -1006,11 +1101,11 @@ body.locked #site-footer {
   <div class="alert-banner" style="background:linear-gradient(135deg,#f8fafc 0%,#eef6ff 100%);border-color:rgba(26,110,199,0.22)">
     <span class="alert-icon">📍</span>
     <div class="alert-content">
-      <div class="alert-title" style="color:var(--blue)">Executive update — Data Cleansing & EA Chatbot (อัพเดต 4 พ.ค. 2569)</div>
+      <div class="alert-title" style="color:var(--blue)">Executive update — Data Cleansing, EA Chatbot &amp; AI Interview Summary (อัพเดต 9 พ.ค. 2569)</div>
       <div class="alert-items">
         <div class="alert-item" style="color:#1e3a5f">
           <div class="alert-item-dot" style="background:var(--blue)"></div>
-          <span><strong style="color:var(--blue)">Data Cleansing — HR Data Control Hub:</strong> ความคืบหน้าล่าสุด <strong style="color:var(--green)">70.5% (780/1,107 คน)</strong> — Finished <strong style="color:var(--green)">656 คน (59.3%)</strong> · Submitted 70 คน (6.3%) · Unfinish 54 คน (4.9%) · <strong style="color:#7a1f18">Not start 327 คน (29.5%)</strong> · ต้องเร่งติดตามกับ Department Head และ owner list เพื่อดันให้ถึง <strong>85%-90%</strong></span>
+          <span><strong style="color:var(--blue)">Data Cleansing — HR Data Control Hub:</strong> ความคืบหน้าล่าสุด <strong style="color:var(--green)">79.3% (848/1,070 คน)</strong> — Finished <strong style="color:var(--green)">774 คน (72.3%)</strong> · Submitted 17 คน (1.6%) · Unfinish 57 คน (5.3%) · <strong style="color:#7a1f18">Not start 222 คน (20.7%)</strong> · ต้องเร่งติดตามกับ Department Head และ owner list เพื่อดันให้ถึง <strong>85%-90%</strong></span>
         </div>
         <div class="alert-item" style="color:#7c4a04">
           <div class="alert-item-dot" style="background:var(--amber)"></div>
@@ -1030,7 +1125,7 @@ body.locked #site-footer {
       <div class="overall-title-block">
         <span class="section-title" style="margin-bottom:0">Overall Project Progress</span>
         <div style="display:flex;align-items:flex-end;gap:12px;margin-top:6px">
-          <span class="overall-pct">79<span>%</span></span>
+          <span class="overall-pct">87<span>%</span></span>
           <div style="display:flex;flex-direction:column;gap:3px;padding-bottom:6px">
             <span style="font-size:12px;color:var(--text-secondary)">ประเมินตาม % ความคืบหน้าของแต่ละ sub-task (รวม HR Tech Q2–Q4 TBC และ Genspark AI)</span>
             <span class="overall-note">Weighted average จาก 3 โครงการหลัก · น้ำหนักเท่ากัน (33.3% each) · HR Tech รวม 4 sub-projects</span>
@@ -1039,7 +1134,7 @@ body.locked #site-footer {
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
         <span class="badge badge-onprocess" style="font-size:11px;padding:5px 14px">● On Track</span>
-        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">ณ 19 เม.ย. 2569</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">ณ 9 พ.ค. 2569</span>
       </div>
     </div>
 
@@ -1047,11 +1142,11 @@ body.locked #site-footer {
     <div>
       <div style="display:flex;justify-content:space-between;margin-bottom:6px">
         <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">0%</span>
-        <span style="font-size:10px;color:var(--amber);font-family:var(--mono)">▼ ตอนนี้ 79%</span>
+        <span style="font-size:10px;color:var(--green);font-family:var(--mono)">▲ ตอนนี้ 87%</span>
         <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">100%</span>
       </div>
       <div class="overall-main-track">
-        <div class="overall-main-fill" style="width:79%"></div>
+        <div class="overall-main-fill" style="width:87%"></div>
       </div>
 <!-- 🔽 Previous Progress Comparison -->
 <div style="margin-top:10px">
@@ -1066,14 +1161,14 @@ body.locked #site-footer {
   </div>
 
   <div style="font-size:10px;margin-top:4px;font-family:var(--mono);color:var(--green)">
-    ▲ +32% improvement (47% → 79%)
+    ▲ +40% improvement (47% → 87%)
   </div>
 
 </div>
 
       <div style="position:relative;height:18px;margin-top:2px">
         <!-- milestone ticks -->
-        <div style="position:absolute;left:79%;top:0;display:flex;flex-direction:column;align-items:center;gap:1px">
+        <div style="position:absolute;left:87%;top:0;display:flex;flex-direction:column;align-items:center;gap:1px">
           <div style="width:1px;height:5px;background:var(--amber)"></div>
           <span style="font-size:9px;color:var(--amber);font-family:var(--mono);white-space:nowrap;transform:translateX(-50%)">Now</span>
         </div>
@@ -1111,26 +1206,26 @@ body.locked #site-footer {
       <div class="breakdown-item">
         <div class="breakdown-label">
           <span class="breakdown-name">2. HR Data Control Hub</span>
-          <span class="breakdown-pct-label" style="color:var(--green)">72%</span>
+          <span class="breakdown-pct-label" style="color:var(--green)">80%</span>
         </div>
-        <div class="breakdown-track"><div class="breakdown-fill fill-green" style="width:72%"></div></div>
+        <div class="breakdown-track"><div class="breakdown-fill fill-green" style="width:80%"></div></div>
         <span class="breakdown-sub">
-          Q1 ✓ ครบ · Data Cleansing <strong style="color:#0d8f52">70.5%</strong> (780/1,107 คน) · Q3 dashboards live · Q2 เร่งรัดต่อ<br>
-          ประเมิน project progress = 72% · ต้องดัน completion ให้ถึง 85%-90% ตาม timeline<br>
-          <span style="color:var(--green);font-size:9px">✅ Active 1,107 · Finished 656 (59.3%) · Submitted 70 (6.3%) · Unfinish 54 (4.9%) · Not start 327 (29.5%)</span>
+          Q1 ✓ ครบ · Data Cleansing <strong style="color:#0d8f52">79.3%</strong> (848/1,070 คน) · Q3 dashboards live · Q2 เร่งรัดต่อ<br>
+          ประเมิน project progress = 80% · ต้องดัน completion ให้ถึง 85%-90% ตาม timeline<br>
+          <span style="color:var(--green);font-size:9px">✅ Active 1,070 · Finished 774 (72.3%) · Submitted 17 (1.6%) · Unfinish 57 (5.3%) · Not start 222 (20.7%)</span>
         </span>
       </div>
 
       <div class="breakdown-item">
         <div class="breakdown-label">
           <span class="breakdown-name">3. HR Tech Project</span>
-          <span class="breakdown-pct-label" style="color:var(--blue)">65%</span>
+          <span class="breakdown-pct-label" style="color:var(--green)">82%</span>
         </div>
-        <div class="breakdown-track"><div class="breakdown-fill fill-blue" style="width:65%"></div></div>
+        <div class="breakdown-track"><div class="breakdown-fill fill-green" style="width:82%"></div></div>
         <span class="breakdown-sub">
-          Q2 avg 71%: AI Rec 65%·EASY 80%·Frappe 72%·Genspark 68%<br>
+          Q2 avg 82%: AI Rec 80%·EASY 90% ✓·Frappe 72%·Genspark 85% 🚀+Cowork<br>
           Q1 ✓ ครบ · Q2 contribution เริ่มแล้ว · Genspark 🚀 Launch Active<br>
-          <span style="color:var(--green);font-size:9px">🚀 Genspark Launch เริ่มแล้ว เม.ย. · EASY Phase 1 IT Test ใกล้เสร็จ · Frappe Edit Form Active</span>
+          <span style="color:var(--green);font-size:9px">🚀 Genspark Expand + Claude Cowork ✓ Active พ.ค. (Full HR Dept) · EASY Phase 1 IT Test ✓ Done → Go-live 11 พ.ค. · Frappe Edit Form Active</span>
         </span>
       </div>
 
@@ -1140,20 +1235,20 @@ body.locked #site-footer {
     <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <span style="font-size:10px;font-family:var(--mono);color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase">HR Tech — Sub-task breakdown (4 projects) · Q2 Active</span>
-        <span style="font-size:10px;font-family:var(--mono);color:var(--text-secondary)">avg <strong style="color:var(--blue)">71%</strong></span>
+        <span style="font-size:10px;font-family:var(--mono);color:var(--text-secondary)">avg <strong style="color:var(--green)">82%</strong></span>
       </div>
       <div style="display:flex;flex-direction:column;gap:7px">
         <div style="display:grid;grid-template-columns:200px 1fr 36px;align-items:center;gap:10px">
           <span style="font-size:11px;color:var(--text-secondary);font-family:var(--mono)">AI Recruitment v2</span>
-          <div class="breakdown-track"><div class="breakdown-fill fill-blue" style="width:65%"></div></div>
-          <span style="font-size:11px;color:var(--blue);font-family:var(--mono);text-align:right">65%</span>
+          <div class="breakdown-track"><div class="breakdown-fill fill-green" style="width:80%"></div></div>
+          <span style="font-size:11px;color:var(--green);font-family:var(--mono);text-align:right">80%</span>
         </div>
         <div style="display:grid;grid-template-columns:200px 1fr 36px;align-items:center;gap:10px">
           <span style="font-size:11px;color:var(--text-secondary);font-family:var(--mono)">EASY Smart Assistant</span>
           <div class="breakdown-track">
-            <div class="breakdown-fill fill-blue" style="width:80%"></div>
+            <div class="breakdown-fill fill-green" style="width:90%"></div>
           </div>
-          <span style="font-size:11px;color:var(--blue);font-family:var(--mono);text-align:right">80%</span>
+          <span style="font-size:11px;color:var(--green);font-family:var(--mono);text-align:right">90%</span>
         </div>
         <div style="display:grid;grid-template-columns:200px 1fr 36px;align-items:center;gap:10px">
           <span style="font-size:11px;color:var(--text-secondary);font-family:var(--mono)">Frappe App Form</span>
@@ -1162,12 +1257,12 @@ body.locked #site-footer {
         </div>
         <div style="height:1px;background:var(--border)"></div>
         <div style="display:grid;grid-template-columns:200px 1fr 36px;align-items:center;gap:10px">
-          <span style="font-size:11px;color:var(--text-secondary);font-family:var(--mono)">Genspark AI (Launch & Expansion)</span>
-          <div class="breakdown-track"><div class="breakdown-fill fill-blue" style="width:68%"></div></div>
-          <span style="font-size:11px;color:var(--blue);font-family:var(--mono);text-align:right">68%</span>
+          <span style="font-size:11px;color:var(--text-secondary);font-family:var(--mono)">Genspark AI + Claude Cowork 🆕</span>
+          <div class="breakdown-track"><div class="breakdown-fill fill-green" style="width:85%"></div></div>
+          <span style="font-size:11px;color:var(--green);font-family:var(--mono);text-align:right">85%</span>
         </div>
         <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:5px;padding:5px 9px;font-size:10px;color:var(--green)">
-          🚀 Genspark AI: Launch Active เม.ย. 2569 · Trial 5/5 ผ่าน · คะแนนเฉลี่ย 98.2/100 · ทุกคนระดับ AI Leader · Expand พ.ค. ต่อไป
+          🚀 Genspark AI + Claude Cowork 🆕: Trial 5/5 ผ่าน 98.2/100 ✓ · Launch ✓ · Expand Active พ.ค. — Full HR Department deployment + Claude Cowork co-rollout (เริ่มต้นสัปดาห์ พ.ค. 2569)
         </div>
       </div>
     </div>
@@ -1175,10 +1270,10 @@ body.locked #site-footer {
     <div class="calc-note">
       วิธีคำนวณ (Weighted avg · น้ำหนัก 1/3 ต่อโครงการ):
       Outsource Payroll 100% × 33.3% = 33.3% &nbsp;|&nbsp;
-      HR Data Hub <strong style="color:var(--green)">72%</strong> × 33.3% = 24.0% (Data Cleansing 70.5% ▲ · Active 1,107 · Finished 656 · Not start 327) &nbsp;|&nbsp;
-      HR Tech 65% × 33.3% = 21.7% (Q2 avg 71% · AI Rec 65%·EASY 80%·Frappe 72%·Genspark 68% 🚀 Launch) &nbsp;|&nbsp;
-      รวม = <strong style="color:var(--text-secondary)">~79%</strong>
-      <span style="color:var(--green);margin-left:8px">▲ +32% จาก baseline 47% — Data Cleansing 70.5% (+14.7pp จากรอบก่อน) · Finished 656 คน · Not start 327 คน · EA Chatbot go-live 11 พ.ค.</span>
+      HR Data Hub <strong style="color:var(--green)">80%</strong> × 33.3% = 26.7% (Data Cleansing 79.3% ▲ · Active 1,070 · Finished 774 · Not start 222) &nbsp;|&nbsp;
+      HR Tech 82% × 33.3% = 27.3% (Q2 avg 82% · AI Rec 80% · EASY 90% ✓ · Frappe 72% · Genspark 85% 🚀+Cowork 🆕) &nbsp;|&nbsp;
+      รวม = <strong style="color:var(--text-secondary)">~87%</strong>
+      <span style="color:var(--green);margin-left:8px">▲ +40% จาก baseline 47% — Data Cleansing 79.3% (+8.6pp จากรอบก่อน) · Finished 774 คน · Not start 222 คน · AI Interview Summary Report ✓ · EA Chatbot go-live 11 พ.ค.</span>
     </div>
   </div>
 
@@ -1393,28 +1488,28 @@ body.locked #site-footer {
           </div>
 
 
-          <!-- Sub 4: Genspark AI -->
+          <!-- Sub 4: Genspark AI + Claude Cowork -->
           <div class="sub-project-card" style="grid-column:1/-1">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap">
               <div style="display:flex;flex-direction:column;gap:2px">
                 <span style="font-size:10px;font-family:var(--mono);color:var(--text-muted);letter-spacing:0.06em">SUB-PROJECT 4</span>
-                <span class="sub-project-name">Digital Workforce Enhancement Project — Genspark AI</span>
+                <span class="sub-project-name">Digital Workforce Enhancement Project — Genspark AI + Claude Cowork 🆕</span>
               </div>
-              <span class="badge badge-onprocess" style="font-size:9px;padding:3px 7px">On process</span>
+              <span class="badge badge-completed" style="font-size:9px;padding:3px 7px">🚀 Expand Active</span>
             </div>
-            <span class="sub-project-desc">นำ Genspark AI เข้ามาประยุกต์ใช้ในงาน HR เช่น Chatbot, Dashboard, วิเคราะห์ข้อมูล และประมวลผลเอกสารอัตโนมัติ</span>
+            <span class="sub-project-desc">นำ Genspark AI + Claude Cowork (เริ่มใช้คู่กันต้นสัปดาห์ที่ผ่านมา) ประยุกต์ใช้ในงาน HR ทั้งแผนก: Chatbot, Dashboard, วิเคราะห์ข้อมูล, ประมวลผลเอกสารอัตโนมัติ, และ Cowork co-deployment</span>
             <div class="progress-section">
-              <div class="progress-label"><span>Launch progress</span><span style="color:var(--blue)">7 users ทดลองใช้งาน</span></div>
-              <div class="progress-track"><div class="progress-fill fill-blue" style="width:20%"></div></div>
+              <div class="progress-label"><span>Launch progress</span><span style="color:var(--green)">Full HR Dept rollout · Genspark + Claude Cowork ✓</span></div>
+              <div class="progress-track"><div class="progress-fill fill-green" style="width:85%"></div></div>
             </div>
-            <div class="phase-remark">🔬 ✓ Trial completed · Entering Launch phase → Early rollout & preparing enterprise expansion — เพื่อประเมินผลก่อนขยายผล</div>
+            <div class="phase-remark">🚀 ✓ Trial 5/5 ผ่าน (98.2/100) · ✓ Launch เม.ย. ครบ · Expand + Integrate Active เริ่มต้นสัปดาห์ พ.ค. 2569 — Full HR Department deployment พร้อม Claude Cowork เป็น AI ตัวที่สอง</div>
 
             <!-- Timeline mini -->
             <div style="margin-top:6px;display:flex;flex-direction:column;gap:6px">
               <span style="font-size:10px;font-family:var(--mono);color:var(--text-muted);letter-spacing:0.06em;text-transform:uppercase">Timeline 2569</span>
               <div style="position:relative;height:28px;background:var(--bg3);border-radius:6px;overflow:hidden">
                 <!-- Now line -->
-                <div style="position:absolute;top:0;bottom:0;left:27%;width:1.5px;background:var(--amber);opacity:0.7;z-index:5"></div>
+                <div style="position:absolute;top:0;bottom:0;left:35.5%;width:1.5px;background:var(--amber);opacity:0.7;z-index:5"></div>
                 <!-- ม.ค.–ก.พ. นำเสนอ/ขออนุมัติ -->
                 <div style="position:absolute;left:0%;width:16.67%;top:0;height:100%;background:var(--green);border-radius:4px;display:flex;align-items:center;padding:0 5px;overflow:hidden">
                   <span style="font-size:9px;font-family:var(--mono);color:#fff;white-space:nowrap">นำเสนอ/อนุมัติ</span>
@@ -1423,13 +1518,13 @@ body.locked #site-footer {
                 <div style="position:absolute;left:16.67%;width:8.33%;top:0;height:100%;background:var(--blue);border-radius:4px;display:flex;align-items:center;padding:0 4px;overflow:hidden">
                   <span style="font-size:9px;font-family:var(--mono);color:#fff;white-space:nowrap">Trial ✓</span>
                 </div>
-                <!-- เม.ย. เริ่มใช้จริง -->
-                <div style="position:absolute;left:25%;width:8.33%;top:0;height:100%;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:4px;display:flex;align-items:center;padding:0 4px;overflow:hidden">
-                  <span style="font-size:9px;font-family:var(--mono);color:var(--blue);white-space:nowrap">Launch ●</span>
+                <!-- เม.ย. Launch ✓ -->
+                <div style="position:absolute;left:25%;width:8.33%;top:0;height:100%;background:var(--blue);border-radius:4px;display:flex;align-items:center;padding:0 4px;overflow:hidden">
+                  <span style="font-size:9px;font-family:var(--mono);color:#fff;white-space:nowrap">Launch ✓</span>
                 </div>
-                <!-- พ.ค.–มิ.ย. เพิ่มทีม + Integrate -->
-                <div style="position:absolute;left:33.33%;width:16.67%;top:0;height:100%;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:4px;display:flex;align-items:center;padding:0 4px;overflow:hidden">
-                  <span style="font-size:9px;font-family:var(--mono);color:var(--blue);white-space:nowrap">Expand + Integrate</span>
+                <!-- พ.ค.–มิ.ย. Expand + Integrate (Active — Full HR Dept + Claude Cowork) -->
+                <div style="position:absolute;left:33.33%;width:16.67%;top:0;height:100%;background:var(--green);border-radius:4px;display:flex;align-items:center;padding:0 4px;overflow:hidden">
+                  <span style="font-size:9px;font-family:var(--mono);color:#fff;white-space:nowrap">Expand + Cowork ●</span>
                 </div>
                 <!-- ก.ค. มาตรฐาน -->
                 <div style="position:absolute;left:50%;width:8.33%;top:0;height:100%;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:4px;display:flex;align-items:center;padding:0 4px;overflow:hidden">
@@ -1484,12 +1579,12 @@ body.locked #site-footer {
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
           <span class="badge badge-onprocess">● On Process</span>
-          <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q1 ✓ + Data Cleansing 70.5% ▲ · Q3 active</span>
+          <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Q1 ✓ + Data Cleansing 79.3% ▲ · Q3 active</span>
         </div>
       </div>
       <div class="project-body">
         <div class="progress-section">
-          <div class="progress-label"><span>Year progress</span><span style="color:var(--green)">Data Cleansing 70.5% ▲ · Q3 active · Q2 acceleration mode</span></div>
+          <div class="progress-label"><span>Year progress</span><span style="color:var(--green)">Data Cleansing 79.3% ▲ · Q3 active · Q2 acceleration mode</span></div>
           <div class="progress-track" style="position:relative;height:8px;border-radius:6px;overflow:visible">
             <div class="progress-fill fill-blue" style="width:25%;position:absolute;left:0;top:0;height:100%"></div>
             <div style="position:absolute;left:50%;top:0;width:25%;height:100%;background:rgba(74,158,255,0.35);border-radius:0 6px 6px 0"></div>
@@ -1509,20 +1604,20 @@ body.locked #site-footer {
           <span class="phase-tag phase-tag-green">Q2</span>
           <div class="phase-content">
             <span class="phase-title">Database – Data Cleansing Progress</span>
-            <span class="phase-target">ณ 4 พ.ค. 2569 — Active 1,107 คน · Finished 656 (59.3%) · Submitted 70 (6.3%) · Unfinish 54 (4.9%) · Not start 327 (29.5%)</span>
+            <span class="phase-target">ณ 9 พ.ค. 2569 — Active 1,070 คน · Finished 774 (72.3%) · Submitted 17 (1.6%) · Unfinish 57 (5.3%) · Not start 222 (20.7%)</span>
             <div style="margin-top:6px;background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:6px">
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-                <span style="font-size:11px;color:var(--green);font-weight:600">ความคืบหน้า: 70.5% (Finished + Unfinish + Submitted)</span>
+                <span style="font-size:11px;color:var(--green);font-weight:600">ความคืบหน้า: 79.3% (Finished + Unfinish + Submitted)</span>
                 <span style="font-size:11px;color:var(--green);font-family:var(--mono);font-weight:700">Target next milestone: 85% → 90%</span>
               </div>
               <div style="height:6px;background:rgba(13,143,82,0.15);border-radius:4px;overflow:hidden">
-                <div style="height:100%;width:70.5%;background:var(--green);border-radius:4px"></div>
+                <div style="height:100%;width:79.3%;background:var(--green);border-radius:4px"></div>
               </div>
               <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:2px">
-                <span style="font-size:10px;background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);border-radius:4px;padding:2px 8px">✓ Finished 656 คน</span>
-                <span style="font-size:10px;background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border);border-radius:4px;padding:2px 8px">Submitted 70 คน</span>
-                <span style="font-size:10px;background:rgba(91,33,182,0.08);color:#6d4fc2;border:1px solid rgba(109,79,194,0.22);border-radius:4px;padding:2px 8px">Unfinish 54 คน</span>
-                <span style="font-size:10px;background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);border-radius:4px;padding:2px 8px">⚠ Not start 327 คน</span>
+                <span style="font-size:10px;background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);border-radius:4px;padding:2px 8px">✓ Finished 774 คน</span>
+                <span style="font-size:10px;background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border);border-radius:4px;padding:2px 8px">Submitted 17 คน</span>
+                <span style="font-size:10px;background:rgba(91,33,182,0.08);color:#6d4fc2;border:1px solid rgba(109,79,194,0.22);border-radius:4px;padding:2px 8px">Unfinish 57 คน</span>
+                <span style="font-size:10px;background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);border-radius:4px;padding:2px 8px">⚠ Not start 222 คน</span>
               </div>
             </div>
             <div style="margin-top:8px;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:6px">
@@ -1617,9 +1712,9 @@ body.locked #site-footer {
             <div style="background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:4px">
               <span style="font-size:9px;font-family:var(--mono);color:var(--blue);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">Go-Live เม.ย. 2026 — On Process</span>
               <div style="display:flex;flex-direction:column;gap:3px">
-                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--blue)">
-                  <span style="width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0"></span>
-                  AI Interview Summary Report <span style="font-family:var(--mono);margin-left:auto">● On process</span>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--green)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>
+                  AI Interview Summary Report <span style="font-family:var(--mono);margin-left:auto">✓ Done</span>
                 </div>
                 <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--blue)">
                   <span style="width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0"></span>
@@ -1724,37 +1819,52 @@ body.locked #site-footer {
             <div class="phase-remark">🔧 มี.ค. 2 features Done · เม.ย. Edit Form — On process</div>
           </div>
 
-          <!-- Sub 4: Genspark AI -->
+          <!-- Sub 4: Genspark AI + Claude Cowork -->
           <div class="sub-project-card">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
               <div style="display:flex;flex-direction:column;gap:2px">
                 <span style="font-size:9px;font-family:var(--mono);color:var(--text-muted);letter-spacing:0.06em">SUB-PROJECT 4</span>
-                <span class="sub-project-name">Genspark AI</span>
+                <span class="sub-project-name">Genspark AI + Claude Cowork 🆕</span>
               </div>
-              <span class="badge badge-onprocess" style="font-size:9px;padding:3px 7px">On process</span>
+              <span class="badge badge-completed" style="font-size:9px;padding:3px 7px">🚀 Expand Active</span>
             </div>
-            <span class="sub-project-desc">Digital Workforce Enhancement — นำ Genspark AI ประยุกต์ใช้ใน HR: Chatbot, Dashboard, วิเคราะห์ข้อมูล และประมวลผลเอกสารอัตโนมัติ</span>
+            <span class="sub-project-desc">Digital Workforce Enhancement — Genspark AI + Claude Cowork (เริ่มใช้คู่กันต้นสัปดาห์ พ.ค.) สำหรับงาน HR ทั้งแผนก: Chatbot, Dashboard, วิเคราะห์ข้อมูล, ประมวลผลเอกสาร และ Cowork co-deployment</span>
 
-            <!-- มี.ค. On process -->
+            <!-- มี.ค.–เม.ย. Done -->
+            <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:9px;font-family:var(--mono);color:var(--green);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">มี.ค.–เม.ย. 2026 ✓ Done</span>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--green)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>
+                  Trial 5/5 ผ่าน · 98.2/100 <span style="font-family:var(--mono);margin-left:auto">✓ Done</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--green)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>
+                  Launch + Pilot rollout <span style="font-family:var(--mono);margin-left:auto">✓ Done</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- พ.ค. Active -->
             <div style="background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:4px">
-              <span style="font-size:9px;font-family:var(--mono);color:var(--blue);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">มี.ค. 2026 — On Process</span>
+              <span style="font-size:9px;font-family:var(--mono);color:var(--blue);font-weight:500;text-transform:uppercase;letter-spacing:0.06em">พ.ค. 2026 — Expand Active</span>
               <div style="display:flex;flex-direction:column;gap:3px">
                 <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--blue)">
                   <span style="width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0"></span>
-                  Trial และประเมินผลการใช้งาน <span style="font-family:var(--mono);margin-left:auto">● On process</span>
+                  Full HR Dept rollout (ทุกคน) <span style="font-family:var(--mono);margin-left:auto">● Active</span>
                 </div>
                 <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--blue)">
                   <span style="width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0"></span>
-                  พิจารณา Launch + Expand <span style="font-family:var(--mono);margin-left:auto">● On process</span>
+                  Claude Cowork co-deployment 🆕 <span style="font-family:var(--mono);margin-left:auto">● Active</span>
                 </div>
               </div>
             </div>
 
             <div class="progress-section">
-              <div class="progress-label"><span>Launch progress</span><span style="color:var(--blue)">7 users · ประเมินผล</span></div>
-              <div class="progress-track"><div class="progress-fill fill-blue" style="width:60%"></div></div>
+              <div class="progress-label"><span>Launch progress</span><span style="color:var(--green)">Full HR Dept · Genspark + Claude Cowork ✓</span></div>
+              <div class="progress-track"><div class="progress-fill fill-green" style="width:85%"></div></div>
             </div>
-            <div class="phase-remark">🔬 Trial 7 users + ประเมินผล · พิจารณา Launch + Expand ต่อเนื่อง</div>
+            <div class="phase-remark">🚀 Trial ✓ Launch ✓ Expand Active · Full HR Dept ใช้งาน Genspark + Claude Cowork (เริ่ม พ.ค. 2569)</div>
           </div>
 
         </div>
@@ -1781,7 +1891,7 @@ body.locked #site-footer {
       .tl2-name.xs { color: var(--text-muted); font-size: 9px; padding-left: 20px; }
       .tl2-track { position: relative; height: 22px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
       .tl2-track.thin { height: 15px; }
-      .tl2-now { position: absolute; top: 0; bottom: 0; width: 1.5px; background: var(--amber); opacity: 0.7; z-index: 5; left: 27%; }
+      .tl2-now { position: absolute; top: 0; bottom: 0; width: 1.5px; background: var(--amber); opacity: 0.7; z-index: 5; left: 35.5%; }
       .tl2-bar { position: absolute; top: 0; height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 6px; overflow: hidden; }
       .tl2-bar span { font-size: 10px; font-family: var(--mono); white-space: nowrap; }
       .b-g   { background: var(--green); } .b-g span { color: #fff; }
@@ -1892,7 +2002,7 @@ body.locked #site-footer {
         <div class="tl2-row">
           <span class="tl2-name s">↳ HR AI Recruitment v2</span>
           <div class="tl2-track"><div class="tl2-now"></div>
-            <div class="tl2-bar b-g" style="left:0%;width:25%"><span>มี.ค. 3 features ✓</span></div>
+            <div class="tl2-bar b-g" style="left:0%;width:33.33%"><span>เม.ย. 4 features ✓</span></div>
             <div class="tl2-bar b-bd" style="left:25%;width:8.33%"><span>เม.ย.</span></div>
           </div>
         </div>
@@ -1910,7 +2020,7 @@ body.locked #site-footer {
         </div>
         <div class="tl2-row">
           <span class="tl2-name xs">↳ ↳ AI Interview Summary Report</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:25%;width:8.33%"><span>● On process</span></div></div>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:25%;width:8.33%"><span>✓ Done</span></div></div>
         </div>
         <div class="tl2-row">
           <span class="tl2-name xs">↳ ↳ Dashboard &amp; Analytics</span>
@@ -1921,8 +2031,8 @@ body.locked #site-footer {
         <div class="tl2-row" style="margin-top:4px">
           <span class="tl2-name s">↳ EASY Smart Assistant</span>
           <div class="tl2-track"><div class="tl2-now"></div>
-            <div class="tl2-bar b-g" style="left:0%;width:25%"><span>มี.ค. KB ✓</span></div>
-            <div class="tl2-bar b-bd" style="left:25%;width:8.33%"><span>เม.ย.</span></div>
+            <div class="tl2-bar b-g" style="left:0%;width:33.33%"><span>มี.ค.–เม.ย. KB+IT ✓</span></div>
+            <div class="tl2-bar b-b" style="left:33.33%;width:8.33%"><span>พ.ค. Go-live 11</span></div>
           </div>
         </div>
         <div class="tl2-row">
@@ -1931,7 +2041,7 @@ body.locked #site-footer {
         </div>
         <div class="tl2-row">
           <span class="tl2-name xs">↳ ↳ Phase 1 IT Test</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:16.67%;width:8.33%"><span>● On process</span></div></div>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:16.67%;width:16.67%"><span>✓ Done</span></div></div>
         </div>
         <div class="tl2-row">
           <span class="tl2-name xs">↳ ↳ Phase 2 SharePoint Connect</span>
@@ -2007,7 +2117,7 @@ body.locked #site-footer {
 </div>
 
 <!-- ══════════════════════════════════════════════════════
-     18 PROJECTS OVERVIEW — ณ 19 เม.ย. 2569
+     18 PROJECTS OVERVIEW — ณ 9 พ.ค. 2569
      ══════════════════════════════════════════════════════ -->
 <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;margin:0 0 24px;overflow:hidden">
 
@@ -2018,7 +2128,7 @@ body.locked #site-footer {
       <span style="font-size:15px;font-weight:600;color:var(--text-primary)">สถานะโครงการทั้งหมด — แผนปี 2569</span>
     </div>
     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-      <span style="font-size:10px;font-family:var(--mono);color:var(--text-muted)">ณ 19 เม.ย. 2569 · Q2 Active</span>
+      <span style="font-size:10px;font-family:var(--mono);color:var(--text-muted)">ณ 9 พ.ค. 2569 · Q2 Active</span>
       <span style="font-size:10px;font-family:var(--mono);padding:4px 12px;border-radius:20px;background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border)">● 17 On Process &nbsp;|&nbsp; 1 Completed</span>
     </div>
   </div>
@@ -2236,8 +2346,8 @@ body.locked #site-footer {
       <span style="font-size:9px;color:var(--green);font-family:var(--mono)">⑫</span>
       <span style="font-size:10px;color:var(--green);font-family:var(--mono)">12</span>
       <div style="display:flex;flex-direction:column;gap:2px">
-        <span style="font-size:12px;font-weight:600;color:var(--green)">HR Data Based ★ ▲ Data Cleansing 70.5%!</span>
-        <span style="font-size:10px;color:var(--green);font-family:var(--mono)">✅ Data Cleansing 70.5% (780/1,107) · Finished 656 · Submitted 70 · Unfinish 54 · Not start 327 · เร่ง Department Head follow-up</span>
+        <span style="font-size:12px;font-weight:600;color:var(--green)">HR Data Based ★ ▲ Data Cleansing 79.3%!</span>
+        <span style="font-size:10px;color:var(--green);font-family:var(--mono)">✅ Data Cleansing 79.3% (848/1,070) · Finished 774 · Submitted 17 · Unfinish 57 · Not start 222 · เร่ง Department Head follow-up</span>
       </div>
       <span style="font-size:10px;color:var(--green);font-family:var(--mono);text-align:center">Pornpetch</span>
       <span style="font-size:12px;font-family:var(--mono);color:var(--green);text-align:center;font-weight:600">35%</span>
@@ -2346,7 +2456,7 @@ body.locked #site-footer {
       <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);font-family:var(--mono)"><span style="width:10px;height:6px;background:var(--amber);border-radius:2px;display:inline-block"></span>On Process</span>
       <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);font-family:var(--mono)"><span style="width:10px;height:6px;background:var(--red);border-radius:2px;display:inline-block"></span>Pending / Action Required</span>
     </div>
-    <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">+MAY = Data Cleansing acceleration + summary tab added ณ 4 พ.ค. 2569</span>
+    <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">+MAY = HR Data Master refresh + AI Interview Summary ✓ + Excel Auto-Import added ณ 9 พ.ค. 2569</span>
   </div>
 
 </div>
@@ -2362,7 +2472,7 @@ body.locked #site-footer {
       </div>
       <div class="summary-hero-side">
         <span class="tracker-pill onprocess">Summary Tab</span>
-        <span class="date-badge" id="summaryDate">ณ 4 พ.ค. 2569</span>
+        <span class="date-badge" id="summaryDate">ณ 9 พ.ค. 2569</span>
       </div>
     </div>
 
@@ -2393,19 +2503,45 @@ body.locked #site-footer {
       <div class="summary-banner-icon">📌</div>
       <div>
         <div class="summary-banner-title">Highlight ล่าสุดที่ต้องใช้ติดตามผู้บริหาร</div>
-        <div class="summary-banner-text">Data Cleansing progress ล่าสุดอยู่ที่ <strong>70.5%</strong> (780/1,107) และต้องเร่งต่อให้ถึง <strong>85% ภายใน 31 พ.ค. 2569</strong> และ <strong>90% ภายใน 15 มิ.ย. 2569</strong> ขณะที่ EA Chatbot ปรับ target go-live เป็น <strong>11 พ.ค. 2569</strong> และต้องปิดงานฝั่ง Dev/Infra ก่อนขึ้น production</div>
+        <div class="summary-banner-text">Data Cleansing progress ล่าสุดอยู่ที่ <strong>79.3%</strong> (848/1,070) และต้องเร่งต่อให้ถึง <strong>85% ภายใน 31 พ.ค. 2569</strong> และ <strong>90% ภายใน 15 มิ.ย. 2569</strong> ขณะที่ EA Chatbot ปรับ target go-live เป็น <strong>11 พ.ค. 2569</strong> และต้องปิดงานฝั่ง Dev/Infra ก่อนขึ้น production</div>
+      </div>
+    </div>
+
+    <!-- ── KPI Excel Auto-Import Card ── -->
+    <div class="kpi-import-card" id="kpiImportCard">
+      <div class="kpi-import-icon">XLS</div>
+      <div class="kpi-import-text">
+        <div class="kpi-import-title">Import KPI Action Plan (Excel) — Auto-Update Progress</div>
+        <div class="kpi-import-sub">เลือกไฟล์ <strong>KPI_HRIS_Asst_Manager_2026.xlsx</strong> เพื่อให้ระบบประมวลผล Actual Result &amp; Monthly Tracking โดยอัตโนมัติ — % progress ของแต่ละ KPI Pillar จะถูกอัพเดตทันทีเมื่อมีข้อมูลใหม่</div>
+        <div class="kpi-import-status" id="kpiImportStatus"><span class="dot"></span><span id="kpiImportStatusText">ยังไม่ได้นำเข้าไฟล์ — ใช้ค่า baseline เดิม</span></div>
+      </div>
+      <div class="kpi-import-actions">
+        <label class="kpi-import-btn" for="kpiImportFile">
+          <span>📂</span><span>Browse Excel…</span>
+        </label>
+        <input type="file" id="kpiImportFile" accept=".xlsx,.xls,.xlsm" style="display:none">
+        <button type="button" class="kpi-import-btn ghost" id="kpiImportReset">↺ Reset</button>
+      </div>
+      <div class="kpi-import-dropzone" id="kpiImportDropzone">
+        หรือ ลาก-วางไฟล์ <strong>KPI_HRIS_Asst_Manager_2026.xlsx</strong> มาที่นี่ — ระบบจะอ่าน Sheet "Action Plan" และคำนวณ % progress ให้ทุก KPI โดยอัตโนมัติ
+      </div>
+      <div class="kpi-import-summary" id="kpiImportSummary">
+        <div class="kpi-import-summary-cell"><span class="lbl">KPIs Detected</span><span class="val" id="kpiSumDetected">–</span><span class="sub">จากไฟล์ Excel</span></div>
+        <div class="kpi-import-summary-cell"><span class="lbl">Avg Progress</span><span class="val" id="kpiSumAvg">–</span><span class="sub">เฉลี่ยทุก KPI</span></div>
+        <div class="kpi-import-summary-cell"><span class="lbl">On Track</span><span class="val" id="kpiSumOnTrack">–</span><span class="sub">ผ่านเป้า ≥ 80% ของ target</span></div>
+        <div class="kpi-import-summary-cell"><span class="lbl">Last Update</span><span class="val" id="kpiSumDate">–</span><span class="sub" id="kpiSumFile">–</span></div>
       </div>
     </div>
 
     <div class="tracker-grid">
       
-      <div class="tracker-card accent-green">
+      <div class="tracker-card accent-green" data-kpi-no="1">
         <div class="tracker-card-top">
           <div>
             <span class="tracker-kpi-no">KPI 1</span>
             <h3>HRIS Data Quality &amp; Accuracy Rate</h3>
           </div>
-          <span class="tracker-pill ontrack">Measured</span>
+          <span class="tracker-pill ontrack" data-kpi-pill>Measured</span>
         </div>
         <div class="tracker-meta-grid">
           <div><span class="tracker-meta-label">Target</span><strong>≥80%</strong></div>
@@ -2414,10 +2550,10 @@ body.locked #site-footer {
         <div class="tracker-callout">
           <span class="tracker-callout-label">Current signal</span>
           <strong>Data cleansing measured progress</strong>
-          <span>Active 1,107 · Finished 656 · Submitted 70 · Unfinish 54 · Not start 327</span>
+          <span>Active 1,070 · Finished 774 · Submitted 17 · Unfinish 57 · Not start 222</span>
         </div>
-        <div class="tracker-progress-row"><span>Progress</span><span>70.5%</span></div>
-            <div class="tracker-progress"><div class="tracker-progress-fill green" style="width:70.5%"></div></div>
+        <div class="tracker-progress-row"><span>Progress</span><span>79.3%</span></div>
+            <div class="tracker-progress"><div class="tracker-progress-fill green" style="width:79.3%"></div></div>
         <div class="tracker-note">Gap to target ≥80% = 9.5pp · stretch target 85–90% ต้องเร่งรัดต่อ</div>
         <div class="tracker-actions">
           <span class="tracker-actions-title">Key activities from source file</span>
@@ -2426,13 +2562,13 @@ body.locked #site-footer {
       </div>
     
 
-      <div class="tracker-card accent-gray">
+      <div class="tracker-card accent-gray" data-kpi-no="2">
         <div class="tracker-card-top">
           <div>
             <span class="tracker-kpi-no">KPI 2</span>
             <h3>HRIS User Satisfaction - HR Staff, Line Managers &amp; Employees</h3>
           </div>
-          <span class="tracker-pill pending">Awaiting actual</span>
+          <span class="tracker-pill pending" data-kpi-pill>Awaiting actual</span>
         </div>
         <div class="tracker-meta-grid">
           <div><span class="tracker-meta-label">Target</span><strong>≥90%</strong></div>
@@ -2453,13 +2589,13 @@ body.locked #site-footer {
       </div>
     
 
-      <div class="tracker-card accent-blue">
+      <div class="tracker-card accent-blue" data-kpi-no="3">
         <div class="tracker-card-top">
           <div>
             <span class="tracker-kpi-no">KPI 3</span>
             <h3>HRIS Projects / System Enhancement Completion Rate</h3>
           </div>
-          <span class="tracker-pill onprocess">Linked with Tab 1</span>
+          <span class="tracker-pill onprocess" data-kpi-pill>Linked with Tab 1</span>
         </div>
         <div class="tracker-meta-grid">
           <div><span class="tracker-meta-label">Target</span><strong>1</strong></div>
@@ -2470,9 +2606,9 @@ body.locked #site-footer {
           <strong>Project milestone achievement proxy</strong>
           <span>อ้างอิง Executive Dashboard ใน Tab 1 เพื่อสะท้อนความคืบหน้ารวมของ project milestones</span>
         </div>
-        <div class="tracker-progress-row"><span>Progress</span><span>79.0%</span></div>
-            <div class="tracker-progress"><div class="tracker-progress-fill blue" style="width:79%"></div></div>
-        <div class="tracker-note">Current overall project progress baseline = 79%</div>
+        <div class="tracker-progress-row"><span>Progress</span><span>87.0%</span></div>
+            <div class="tracker-progress"><div class="tracker-progress-fill blue" style="width:87%"></div></div>
+        <div class="tracker-note">Current overall project progress baseline = 87% (รวม HR Data Master refresh + AI Interview Summary ✓)</div>
         <div class="tracker-actions">
           <span class="tracker-actions-title">Key activities from source file</span>
           <ul><li><strong>ดำเนินการตามแผนที่ได้รับอนุมัติ</strong> — PDCA รายเดือน</li><li><strong>ดำเนินการตามแผนที่ได้รับอนุมัติ</strong> — PDCA รายเดือน</li></ul>
@@ -2480,13 +2616,13 @@ body.locked #site-footer {
       </div>
     
 
-      <div class="tracker-card accent-gray">
+      <div class="tracker-card accent-gray" data-kpi-no="4">
         <div class="tracker-card-top">
           <div>
             <span class="tracker-kpi-no">KPI 4</span>
             <h3>HR Data Compliance &amp; Audit Pass Rate</h3>
           </div>
-          <span class="tracker-pill pending">Awaiting actual</span>
+          <span class="tracker-pill pending" data-kpi-pill>Awaiting actual</span>
         </div>
         <div class="tracker-meta-grid">
           <div><span class="tracker-meta-label">Target</span><strong>≤12%</strong></div>
@@ -2507,13 +2643,13 @@ body.locked #site-footer {
       </div>
     
 
-      <div class="tracker-card accent-amber">
+      <div class="tracker-card accent-amber" data-kpi-no="5">
         <div class="tracker-card-top">
           <div>
             <span class="tracker-kpi-no">KPI 5</span>
             <h3>Digital &amp; AI Adoption Rate in HRIS Process</h3>
           </div>
-          <span class="tracker-pill atrisk">Milestone revised</span>
+          <span class="tracker-pill atrisk" data-kpi-pill>Milestone revised</span>
         </div>
         <div class="tracker-meta-grid">
           <div><span class="tracker-meta-label">Target</span><strong>&gt;80%</strong></div>
@@ -2541,8 +2677,8 @@ body.locked #site-footer {
         <div class="accel-grid">
           <div class="accel-item">
             <span class="accel-label">Current mix</span>
-            <strong>Finished 656 · Submitted 70 · Unfinish 54 · Not start 327</strong>
-            <span>Completion rate (finished only) = 59.3% · participation progress = 70.5%</span>
+            <strong>Finished 774 · Submitted 17 · Unfinish 57 · Not start 222</strong>
+            <span>Completion rate (finished only) = 72.3% · participation progress = 79.3%</span>
           </div>
           <div class="accel-item">
             <span class="accel-label">Needs action from Department Head</span>
@@ -27191,7 +27327,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
   // Footer dates
   document.querySelectorAll('.footer-item, .footer span').forEach(el => {
-    if(el.textContent.includes('19 เม.ย. 2569') || el.textContent.includes('อัพเดต 19')) {
+    if(el.textContent.includes('19 เม.ย. 2569') || el.textContent.includes('อัพเดต 19') || el.textContent.includes('4 พ.ค. 2569')) {
       el.textContent = el.textContent.replace(/อัพเดต \d+ \S+\. \d+/g, 'อัพเดต ' + thaiNow());
     }
   });
@@ -27304,6 +27440,365 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     const saved = localStorage.getItem('hrisActionPlanActiveTab');
     if (saved && buttons.some(btn => btn.dataset.tab === saved)) activate(saved);
   } catch(e) {}
+})();
+</script>
+
+<!-- ── KPI Excel Auto-Import & Auto-Calculate Progress ── -->
+<script>
+(function(){
+  'use strict';
+
+  const SHEETJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+  const STORAGE_KEY = 'hrisKpiImportSnapshot';
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  // KPI row map in the Excel "Action Plan" sheet (1-indexed).
+  // Header rows 4-6, data rows 7..30.
+  // KPI Pillar header rows + activity sub-rows.
+  const KPI_DEFINITIONS = [
+    { no: 1, headerRow: 7,  activityRows: [8,9,10,11],     defaultTarget: 80, mode: 'gte', label: 'HRIS Data Quality & Accuracy Rate' },
+    { no: 2, headerRow: 12, activityRows: [13,14,15],      defaultTarget: 90, mode: 'gte', label: 'HRIS User Satisfaction' },
+    { no: 3, headerRow: 16, activityRows: [17,18],         defaultTarget: 100,mode: 'gte', label: 'HRIS Projects / System Enhancement' },
+    { no: 4, headerRow: 19, activityRows: [20,21,22],      defaultTarget: 12, mode: 'lte', label: 'HR Data Compliance & Audit Pass Rate' },
+    { no: 5, headerRow: 23, activityRows: [24,25,26,27,28,29,30], defaultTarget: 80, mode: 'gte', label: 'Digital & AI Adoption Rate' }
+  ];
+
+  // Baseline progress (used when no Excel data is filled in / for Reset)
+  const BASELINE = {
+    1: { progress: 79.3, label: '79.3%',     pill: { cls:'ontrack',   text:'Measured' },        actual: 'Active 1,070 · Finished 774 · Submitted 17 · Unfinish 57 · Not start 222' },
+    2: { progress: null, label: 'Pending actual', pill: { cls:'pending', text:'Awaiting actual' }, actual: 'ในไฟล์ Action Plan ยังไม่มี Actual Result / survey result ที่กรอกไว้' },
+    3: { progress: 87,   label: '87.0%',     pill: { cls:'onprocess', text:'Linked with Tab 1' },actual: 'อ้างอิง Executive Dashboard ใน Tab 1 — Overall 87% (HR Data Hub 80% · HR Tech 80% · Outsource Payroll 100%)' },
+    4: { progress: null, label: 'Pending actual', pill: { cls:'pending', text:'Awaiting actual' }, actual: 'ในไฟล์ Action Plan ยังไม่มี actual defect / audit pass rate ที่กรอกไว้' },
+    5: { progress: 82,   label: '82.0%',     pill: { cls:'ontrack', text:'On Track' },        actual: 'Genspark + Claude Cowork Expand ✓ · AI Rec 80% · EASY 90% ✓ (Phase 1 IT Test ✓ → Go-live 11 พ.ค.) · Frappe 72% · Genspark 85% 🚀' }
+  };
+
+  const fillColors = { 1:'green', 2:'blue', 3:'blue', 4:'green', 5:'amber' };
+
+  let SheetJSLoadPromise = null;
+  function loadSheetJS(){
+    if (window.XLSX) return Promise.resolve(window.XLSX);
+    if (SheetJSLoadPromise) return SheetJSLoadPromise;
+    SheetJSLoadPromise = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = SHEETJS_CDN;
+      s.onload = () => resolve(window.XLSX);
+      s.onerror = () => reject(new Error('โหลด SheetJS จาก CDN ไม่สำเร็จ — กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต'));
+      document.head.appendChild(s);
+    });
+    return SheetJSLoadPromise;
+  }
+
+  // ── Helpers ──────────────────────────────────────────────────────────────
+  function setStatus(text, cls){
+    const wrap = document.getElementById('kpiImportStatus');
+    const t = document.getElementById('kpiImportStatusText');
+    if (!wrap || !t) return;
+    wrap.classList.remove('ok','err','processing');
+    if (cls) wrap.classList.add(cls);
+    t.textContent = text;
+  }
+
+  function parseTargetNumber(raw){
+    if (raw == null) return null;
+    if (typeof raw === 'number') return raw;
+    const s = String(raw).replace(/[^\d.\-]/g,'');
+    if (!s) return null;
+    const v = parseFloat(s);
+    return isNaN(v) ? null : v;
+  }
+  function parseActualNumber(raw){
+    if (raw == null || raw === '') return null;
+    if (typeof raw === 'number') return raw;
+    const s = String(raw).replace(/[^\d.\-]/g,'');
+    if (!s) return null;
+    const v = parseFloat(s);
+    return isNaN(v) ? null : v;
+  }
+
+  // Convert workbook → 2D array of "Action Plan" sheet
+  // CRITICAL FIX: !ref of this sheet is "B2:S31" — without forcing range, sheet_to_json
+  // returns rows offset by the start row (rows[6] = Excel row 8 instead of row 7).
+  // We force range to A1 origin so absolute Excel row numbers (7,12,16,19,23) map directly.
+  function readActionPlan(workbook){
+    const sheet = workbook.Sheets['Action Plan'] || workbook.Sheets[Object.keys(workbook.Sheets).find(n => /action.*plan/i.test(n))];
+    if (!sheet) throw new Error('ไม่พบ sheet "Action Plan" ในไฟล์');
+    let forcedRange;
+    try {
+      const r = XLSX.utils.decode_range(sheet['!ref']);
+      forcedRange = XLSX.utils.encode_range({ s:{ r:0, c:0 }, e:{ r:r.e.r, c:r.e.c } });
+    } catch(e) {
+      forcedRange = 'A1:S31';
+    }
+    return XLSX.utils.sheet_to_json(sheet, { header:1, defval:'', raw:true, blankrows:true, range: forcedRange });
+  }
+
+  // For one KPI row, extract { target, actualOverall, monthly[12], rawTarget, rawActual }
+  function extractKpiRow(rows, def){
+    const r = rows[def.headerRow - 1] || [];
+    // Columns: A=0, B=1, C=2, D=3, E=4, F=5(Target), G=6(Actual Result), H..S = 7..18 (Jan..Dec)
+    const target = parseTargetNumber(r[5]);
+    const actualOverall = parseActualNumber(r[6]);
+    const monthly = [];
+    for (let i=0; i<12; i++){
+      monthly.push(parseActualNumber(r[7+i]));
+    }
+    // If header row has no actual, look at activity rows and use latest filled value
+    let derivedActual = actualOverall;
+    let derivedMonthly = monthly.slice();
+    if (derivedActual == null) {
+      // Try to take the latest non-null monthly from header row
+      for (let i=11; i>=0; i--){ if (monthly[i] != null){ derivedActual = monthly[i]; break; } }
+    }
+    if (derivedActual == null) {
+      // Look at activity rows: average non-null actuals
+      const acts = [];
+      for (const ar of def.activityRows){
+        const arow = rows[ar - 1] || [];
+        const v = parseActualNumber(arow[6]);
+        if (v != null) acts.push(v);
+        for (let i=0; i<12; i++){
+          const mv = parseActualNumber(arow[7+i]);
+          if (mv != null && derivedMonthly[i] == null) derivedMonthly[i] = mv;
+        }
+      }
+      if (acts.length){
+        derivedActual = acts.reduce((a,b)=>a+b,0) / acts.length;
+      } else {
+        for (let i=11; i>=0; i--){ if (derivedMonthly[i] != null){ derivedActual = derivedMonthly[i]; break; } }
+      }
+    }
+    return {
+      target: target != null ? target : def.defaultTarget,
+      actual: derivedActual,
+      monthly: derivedMonthly,
+      rawTarget: r[5],
+      rawActual: r[6]
+    };
+  }
+
+  function computeProgress(actual, target, mode){
+    if (actual == null || target == null || target === 0) return null;
+    if (mode === 'lte') {
+      // Lower is better. If actual ≤ target → 100% pass.
+      if (actual <= target) return 100;
+      const overshoot = (actual - target) / target;
+      return Math.max(0, 100 - overshoot * 100);
+    }
+    // gte: higher is better
+    let p = (actual / target) * 100;
+    if (!isFinite(p)) return null;
+    return Math.max(0, Math.min(100, p));
+  }
+
+  function pillFor(progress){
+    if (progress == null) return { cls:'pending', text:'Awaiting actual' };
+    if (progress >= 80)   return { cls:'ontrack',   text:'On Track' };
+    if (progress >= 50)   return { cls:'onprocess', text:'In Progress' };
+    return { cls:'atrisk', text:'At Risk' };
+  }
+
+  // ── Render ──────────────────────────────────────────────────────────────
+  function applyToCard(no, info){
+    const card = document.querySelector('.tracker-card[data-kpi-no="'+no+'"]');
+    if (!card) return;
+
+    const progRow = card.querySelector('.tracker-progress-row');
+    const progBar = card.querySelector('.tracker-progress');
+    const pill    = card.querySelector('[data-kpi-pill]');
+
+    // Update progress label
+    if (progRow){
+      const spans = progRow.querySelectorAll('span');
+      if (spans.length >= 2){
+        spans[1].textContent = info.label;
+      }
+    }
+
+    // Update progress bar
+    if (progBar){
+      progBar.classList.remove('tracker-progress-dashed');
+      progBar.innerHTML = '';
+      if (info.progress != null){
+        const fill = document.createElement('div');
+        fill.className = 'tracker-progress-fill ' + (fillColors[no] || 'blue');
+        fill.style.width = Math.max(0, Math.min(100, info.progress)).toFixed(1) + '%';
+        progBar.appendChild(fill);
+      } else {
+        progBar.classList.add('tracker-progress-dashed');
+      }
+    }
+
+    // Update pill
+    if (pill){
+      pill.classList.remove('ontrack','onprocess','pending','atrisk');
+      pill.classList.add(info.pill.cls);
+      pill.textContent = info.pill.text;
+    }
+
+    // Insert / update an "actual line" beneath progress bar
+    let actualLine = card.querySelector('.tracker-actual-line');
+    if (!actualLine){
+      actualLine = document.createElement('div');
+      actualLine.className = 'tracker-actual-line';
+      progBar && progBar.parentNode.insertBefore(actualLine, progBar.nextSibling);
+    }
+    if (info.actualLineHtml){
+      actualLine.innerHTML = info.actualLineHtml;
+      actualLine.classList.add('show');
+    } else {
+      actualLine.classList.remove('show');
+      actualLine.innerHTML = '';
+    }
+
+    // Monthly strip
+    let monthStrip = card.querySelector('.tracker-month-strip');
+    if (info.monthly){
+      if (!monthStrip){
+        monthStrip = document.createElement('div');
+        monthStrip.className = 'tracker-month-strip';
+        actualLine.parentNode.insertBefore(monthStrip, actualLine.nextSibling);
+      }
+      monthStrip.innerHTML = '';
+      for (let i=0; i<12; i++){
+        const cell = document.createElement('div');
+        cell.className = 'tracker-month-cell' + (info.monthly[i] != null ? ' has-data' : '');
+        cell.title = MONTHS[i] + (info.monthly[i] != null ? ': ' + info.monthly[i] : ' — ไม่มีข้อมูล');
+        cell.innerHTML = '<span class="m">'+MONTHS[i].toUpperCase()+'</span>' + (info.monthly[i] != null ? Math.round(info.monthly[i]) : '·');
+        monthStrip.appendChild(cell);
+      }
+    } else if (monthStrip){
+      monthStrip.remove();
+    }
+  }
+
+  function applyAll(snapshot){
+    const onTrack = [];
+    const progresses = [];
+    for (const def of KPI_DEFINITIONS){
+      const k = snapshot.kpis[def.no];
+      if (!k) { applyToCard(def.no, BASELINE[def.no]); continue; }
+      const info = {
+        progress: k.progress,
+        label: k.progress != null ? (k.progress.toFixed(1) + '%') : 'Pending actual',
+        pill: pillFor(k.progress),
+        actualLineHtml: k.actual != null
+          ? 'Actual จากไฟล์ Excel: <strong>' + (typeof k.actual==='number'?k.actual.toFixed(2).replace(/\.?0+$/,''):k.actual) + '</strong> · Target ' + (def.mode==='lte'?'≤':'≥') + ' ' + k.target
+          : null,
+        monthly: k.monthly
+      };
+      applyToCard(def.no, info);
+      if (k.progress != null) {
+        progresses.push(k.progress);
+        if (k.progress >= 80) onTrack.push(def.no);
+      }
+    }
+
+    // Update summary header card
+    const detected = Object.keys(snapshot.kpis).length;
+    const avg = progresses.length ? (progresses.reduce((a,b)=>a+b,0) / progresses.length) : null;
+    document.getElementById('kpiSumDetected').textContent = detected + ' / 5';
+    document.getElementById('kpiSumAvg').textContent      = avg != null ? avg.toFixed(1) + '%' : '–';
+    document.getElementById('kpiSumOnTrack').textContent  = onTrack.length + ' / ' + (progresses.length || 5);
+    document.getElementById('kpiSumDate').textContent     = snapshot.dateLabel || '–';
+    document.getElementById('kpiSumFile').textContent     = snapshot.fileName || '–';
+    document.getElementById('kpiImportSummary').classList.add('show');
+
+    // Update measured-KPIs stat tile
+    const measuredEl = document.querySelector('.summary-stat-card .summary-stat-label');
+    document.querySelectorAll('.summary-stat-card').forEach(card => {
+      const lbl = card.querySelector('.summary-stat-label');
+      if (lbl && lbl.textContent.trim() === 'Measured KPIs'){
+        const v = card.querySelector('.summary-stat-value');
+        if (v) v.textContent = String(progresses.length);
+        const sub = card.querySelector('.summary-stat-sub');
+        if (sub) sub.textContent = 'จากไฟล์ Excel ล่าสุด — มีข้อมูล progress ที่กรอกแล้ว ' + progresses.length + ' KPI';
+      }
+    });
+  }
+
+  function applyBaseline(){
+    const snapshot = { kpis: {}, dateLabel:'baseline', fileName:'(default)' };
+    // Apply baseline directly without summary update overwrite of measured count
+    for (const def of KPI_DEFINITIONS){
+      applyToCard(def.no, BASELINE[def.no]);
+    }
+    document.getElementById('kpiImportSummary').classList.remove('show');
+    setStatus('ยังไม่ได้นำเข้าไฟล์ — ใช้ค่า baseline เดิม', '');
+  }
+
+  // ── File handling ──
+  function processFile(file){
+    if (!file) return;
+    setStatus('กำลังอ่านไฟล์ ' + file.name + '…', 'processing');
+    loadSheetJS()
+      .then(XLSX => {
+        return file.arrayBuffer().then(buf => {
+          const wb = XLSX.read(buf, { type:'array' });
+          const rows = readActionPlan(wb);
+          const snapshot = { kpis:{}, dateLabel: new Date().toLocaleString('th-TH', { dateStyle:'medium', timeStyle:'short' }), fileName: file.name };
+          for (const def of KPI_DEFINITIONS){
+            const ext = extractKpiRow(rows, def);
+            const progress = computeProgress(ext.actual, ext.target, def.mode);
+            snapshot.kpis[def.no] = {
+              progress, target: ext.target, actual: ext.actual, monthly: ext.monthly,
+              mode: def.mode
+            };
+          }
+          applyAll(snapshot);
+          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot)); } catch(e) {}
+          const have = Object.values(snapshot.kpis).filter(k => k.progress != null).length;
+          if (have === 0){
+            setStatus('นำเข้าไฟล์ ' + file.name + ' สำเร็จ — แต่คอลัมน์ Actual Result ทั้ง 5 KPI ยังว่าง (ระบบรอข้อมูล)', 'ok');
+          } else {
+            setStatus('อัพเดต % progress สำเร็จ ' + have + '/5 KPI · ไฟล์: ' + file.name, 'ok');
+          }
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        setStatus('นำเข้าไฟล์ไม่สำเร็จ: ' + (err && err.message ? err.message : err), 'err');
+      });
+  }
+
+  // ── Wiring ──
+  document.addEventListener('DOMContentLoaded', function(){
+    const fileInput = document.getElementById('kpiImportFile');
+    const dropzone  = document.getElementById('kpiImportDropzone');
+    const resetBtn  = document.getElementById('kpiImportReset');
+    if (!fileInput) return;
+
+    fileInput.addEventListener('change', e => {
+      const f = e.target.files && e.target.files[0];
+      if (f) processFile(f);
+      fileInput.value = '';
+    });
+
+    if (dropzone){
+      ['dragenter','dragover'].forEach(ev => dropzone.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.add('dragover'); }));
+      ['dragleave','drop'].forEach(ev => dropzone.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('dragover'); }));
+      dropzone.addEventListener('drop', e => {
+        const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+        if (f) processFile(f);
+      });
+    }
+
+    if (resetBtn){
+      resetBtn.addEventListener('click', () => {
+        try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+        applyBaseline();
+      });
+    }
+
+    // Restore last snapshot if available
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved){
+        const snapshot = JSON.parse(saved);
+        applyAll(snapshot);
+        setStatus('โหลดข้อมูล KPI จากการนำเข้าครั้งก่อน · ไฟล์: ' + (snapshot.fileName || '–') + ' · ' + (snapshot.dateLabel || ''), 'ok');
+      }
+    } catch(e) {}
+  });
 })();
 </script>
 
