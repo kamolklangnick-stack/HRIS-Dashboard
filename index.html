@@ -8,6 +8,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+<style>:root { --hris-today-pos: 35.5%; }</style>
+<script>
+(function(){
+  var d = new Date(), m = d.getMonth(), day = d.getDate();
+  var lastDay = new Date(d.getFullYear(), m+1, 0).getDate();
+  var pct = ((m + (day-1)/lastDay) * 100/12).toFixed(2) + '%';
+  document.documentElement.style.setProperty('--hris-today-pos', pct);
+})();
+</script>
 <style>
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -478,11 +487,14 @@ body {
   }
   .tl-now {
     position: absolute;
-    top: 0; height: 100%;
-    width: 1.5px;
+    top: -4px; height: calc(100% + 8px);
+    width: 2.5px;
     background: var(--amber);
-    opacity: 0.7;
+    opacity: 0.95;
     z-index: 10;
+    left: var(--hris-today-pos, 35.5%);
+    box-shadow: 0 0 6px rgba(217,119,6,0.5);
+    pointer-events: none;
   }
   /* month markers */
   .tl-months {
@@ -610,8 +622,18 @@ body {
 
       .tl2-wrap { font-family: var(--font); }
       .tl2-header { display: grid; grid-template-columns: 190px 1fr; gap: 10px; margin-bottom: 4px; }
-      .tl2-months { display: flex; justify-content: space-between; padding: 0 2px; }
-      .tl2-month { font-size: 11px; color: var(--text-muted); font-family: var(--mono); }
+      .tl2-quarters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding: 0; margin-bottom: 3px; position: relative; }
+      .tl2-quarter { font-size: 9px; font-family: var(--mono); font-weight: 600; letter-spacing: 0.08em; color: var(--blue); text-align: center; padding: 3px 0; border: 1px solid rgba(26,110,199,0.18); border-bottom: 2px solid var(--blue); background: rgba(26,110,199,0.04); border-radius: 4px 4px 0 0; }
+      .tl2-quarter:nth-child(1) { background: rgba(13,143,82,0.05); border-color: rgba(13,143,82,0.18); border-bottom-color: var(--green); color: var(--green); }
+      .tl2-quarter:nth-child(2) { background: rgba(26,110,199,0.05); border-color: rgba(26,110,199,0.2); border-bottom-color: var(--blue); color: var(--blue); }
+      .tl2-quarter:nth-child(3) { background: rgba(184,114,10,0.05); border-color: rgba(184,114,10,0.2); border-bottom-color: var(--amber); color: var(--amber); }
+      .tl2-quarter:nth-child(4) { background: rgba(124,58,237,0.05); border-color: rgba(124,58,237,0.2); border-bottom-color: #7c3aed; color: #7c3aed; }
+      .tl2-months { display: grid; grid-template-columns: repeat(12, 1fr); padding: 0; margin-bottom: 4px; }
+      .tl2-month { font-size: 11px; color: var(--text-muted); font-family: var(--mono); text-align: center; padding: 2px 0; border-right: 1px dotted rgba(0,0,0,0.06); }
+      .tl2-month:nth-child(3n) { border-right: 1px solid rgba(26,110,199,0.18); }
+      .tl2-month:last-child { border-right: none; }
+      .tl2-now-label { position: absolute; top: -28px; transform: translateX(-50%); background: var(--amber); color: #fff; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 4px; white-space: nowrap; box-shadow: 0 2px 8px rgba(217,119,6,0.3); z-index: 6; pointer-events: none; }
+      .tl2-now-label::after { content: ""; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 6px; height: 6px; background: var(--amber); }
       .tl2-body { display: flex; flex-direction: column; gap: 3px; }
       .tl2-group { display: grid; grid-template-columns: 190px 1fr; gap: 10px; align-items: center; margin: 10px 0 4px; }
       .tl2-glabel { font-size: 11px; font-family: var(--mono); font-weight: 500; text-align: left; letter-spacing: 0.04em; padding-left: 2px; }
@@ -622,7 +644,7 @@ body {
       .tl2-name.xs { color: var(--text-muted); font-size: 9px; padding-left: 20px; }
       .tl2-track { position: relative; height: 22px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
       .tl2-track.thin { height: 15px; }
-      .tl2-now { position: absolute; top: 0; bottom: 0; width: 1.5px; background: var(--amber); opacity: 0.7; z-index: 5; left: 35.5%; }
+      .tl2-now { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #e8a542; opacity: 0.85; z-index: 5; left: var(--hris-today-pos, 35.5%); box-shadow: 0 0 5px rgba(232,165,66,0.35); pointer-events: none; }
       .tl2-bar { position: absolute; top: 0; height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 6px; overflow: hidden; }
       .tl2-bar span { font-size: 10px; font-family: var(--mono); white-space: nowrap; }
       .b-g   { background: var(--green); } .b-g span { color: #fff; }
@@ -1058,7 +1080,7 @@ body.locked #site-footer {
       <span>Project support by</span>
       <strong>Thanutt K.</strong>
     </div>
-    <div class="date-badge">ณ 9 พ.ค. 2569</div>
+    <div class="date-badge" data-hris-bind="todayDate">ณ 9 พ.ค. 2569</div>
   </div>
 </div>
 
@@ -1105,15 +1127,15 @@ body.locked #site-footer {
       <div class="alert-items">
         <div class="alert-item" style="color:#1e3a5f">
           <div class="alert-item-dot" style="background:var(--blue)"></div>
-          <span><strong style="color:var(--blue)">Data Cleansing — HR Data Control Hub:</strong> ความคืบหน้าล่าสุด <strong style="color:var(--green)">79.3% (848/1,070 คน)</strong> — Finished <strong style="color:var(--green)">774 คน (72.3%)</strong> · Submitted 17 คน (1.6%) · Unfinish 57 คน (5.3%) · <strong style="color:#7a1f18">Not start 222 คน (20.7%)</strong> · ต้องเร่งติดตามกับ Department Head และ owner list เพื่อดันให้ถึง <strong>85%-90%</strong></span>
+          <span data-hris-bind="alertDataCleansing"><strong style="color:var(--blue)">Data Cleansing — HR Data Control Hub:</strong> ความคืบหน้าล่าสุด <strong style="color:var(--green)">79.3% (848/1,070 คน)</strong> — Finished <strong style="color:var(--green)">774 คน (72.3%)</strong> · Submitted 17 คน (1.6%) · Unfinish 57 คน (5.3%) · <strong style="color:#7a1f18">Not start 222 คน (20.7%)</strong> · ต้องเร่งติดตามกับ Department Head และ owner list เพื่อดันให้ถึง <strong>85%-90%</strong></span>
         </div>
         <div class="alert-item" style="color:#7c4a04">
           <div class="alert-item-dot" style="background:var(--amber)"></div>
-          <span><strong style="color:var(--amber)">EA Chatbot – Project Update:</strong> Target go-live ปรับเป็น <strong>11 พ.ค. 2569</strong> โดยมีประเด็นคงค้างจากฝั่ง <strong>Dev</strong> (hardening/UAT close list) และ <strong>Infra</strong> (production readiness + integration access)</span>
+          <span data-hris-bind="alertChatbot"><strong style="color:var(--amber)">EA Chatbot – Project Update:</strong> Target go-live ปรับเป็น <strong>11 พ.ค. 2569</strong> โดยมีประเด็นคงค้างจากฝั่ง <strong>Dev</strong> (hardening/UAT close list) และ <strong>Infra</strong> (production readiness + integration access)</span>
         </div>
         <div class="alert-item" style="color:#166534">
           <div class="alert-item-dot" style="background:var(--green)"></div>
-          <span><strong style="color:var(--green)">Outsource Payroll:</strong> ครบถ้วน 100% และเป็น baseline ที่เสถียรแล้ว · ใช้เป็น reference สำหรับมาตรฐานงานข้ามทีมและงาน dashboard รอบถัดไป</span>
+          <span data-hris-bind="alertPayroll"><strong style="color:var(--green)">Outsource Payroll:</strong> ครบถ้วน 100% และเป็น baseline ที่เสถียรแล้ว · ใช้เป็น reference สำหรับมาตรฐานงานข้ามทีมและงาน dashboard รอบถัดไป</span>
         </div>
       </div>
     </div>
@@ -1134,7 +1156,7 @@ body.locked #site-footer {
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
         <span class="badge badge-onprocess" style="font-size:11px;padding:5px 14px">● On Track</span>
-        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">ณ 9 พ.ค. 2569</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)" data-hris-bind="todayDate">ณ 9 พ.ค. 2569</span>
       </div>
     </div>
 
@@ -1209,7 +1231,7 @@ body.locked #site-footer {
           <span class="breakdown-pct-label" style="color:var(--green)">80%</span>
         </div>
         <div class="breakdown-track"><div class="breakdown-fill fill-green" style="width:80%"></div></div>
-        <span class="breakdown-sub">
+        <span class="breakdown-sub" data-hris-bind="dataHubBreakdownSub">
           Q1 ✓ ครบ · Data Cleansing <strong style="color:#0d8f52">79.3%</strong> (848/1,070 คน) · Q3 dashboards live · Q2 เร่งรัดต่อ<br>
           ประเมิน project progress = 80% · ต้องดัน completion ให้ถึง 85%-90% ตาม timeline<br>
           <span style="color:var(--green);font-size:9px">✅ Active 1,070 · Finished 774 (72.3%) · Submitted 17 (1.6%) · Unfinish 57 (5.3%) · Not start 222 (20.7%)</span>
@@ -1222,7 +1244,7 @@ body.locked #site-footer {
           <span class="breakdown-pct-label" style="color:var(--green)">82%</span>
         </div>
         <div class="breakdown-track"><div class="breakdown-fill fill-green" style="width:82%"></div></div>
-        <span class="breakdown-sub">
+        <span class="breakdown-sub" data-hris-bind="hrTechBreakdownSub">
           Q2 avg 82%: AI Rec 80%·EASY 90% ✓·Frappe 72%·Genspark 85% 🚀+Cowork<br>
           Q1 ✓ ครบ · Q2 contribution เริ่มแล้ว · Genspark 🚀 Launch Active<br>
           <span style="color:var(--green);font-size:9px">🚀 Genspark Expand + Claude Cowork ✓ Active พ.ค. (Full HR Dept) · EASY Phase 1 IT Test ✓ Done → Go-live 11 พ.ค. · Frappe Edit Form Active</span>
@@ -1267,7 +1289,7 @@ body.locked #site-footer {
       </div>
     </div>
 
-    <div class="calc-note">
+    <div class="calc-note" data-hris-bind="calcNote">
       วิธีคำนวณ (Weighted avg · น้ำหนัก 1/3 ต่อโครงการ):
       Outsource Payroll 100% × 33.3% = 33.3% &nbsp;|&nbsp;
       HR Data Hub <strong style="color:var(--green)">80%</strong> × 33.3% = 26.7% (Data Cleansing 79.3% ▲ · Active 1,070 · Finished 774 · Not start 222) &nbsp;|&nbsp;
@@ -1509,7 +1531,7 @@ body.locked #site-footer {
               <span style="font-size:10px;font-family:var(--mono);color:var(--text-muted);letter-spacing:0.06em;text-transform:uppercase">Timeline 2569</span>
               <div style="position:relative;height:28px;background:var(--bg3);border-radius:6px;overflow:hidden">
                 <!-- Now line -->
-                <div style="position:absolute;top:0;bottom:0;left:35.5%;width:1.5px;background:var(--amber);opacity:0.7;z-index:5"></div>
+                <div data-hris-now style="position:absolute;top:-4px;bottom:-4px;left:var(--hris-today-pos, 35.5%);width:2.5px;background:var(--amber);opacity:0.95;z-index:5;box-shadow:0 0 6px rgba(217,119,6,0.5);pointer-events:none"></div>
                 <!-- ม.ค.–ก.พ. นำเสนอ/ขออนุมัติ -->
                 <div style="position:absolute;left:0%;width:16.67%;top:0;height:100%;background:var(--green);border-radius:4px;display:flex;align-items:center;padding:0 5px;overflow:hidden">
                   <span style="font-size:9px;font-family:var(--mono);color:#fff;white-space:nowrap">นำเสนอ/อนุมัติ</span>
@@ -1584,7 +1606,7 @@ body.locked #site-footer {
       </div>
       <div class="project-body">
         <div class="progress-section">
-          <div class="progress-label"><span>Year progress</span><span style="color:var(--green)">Data Cleansing 79.3% ▲ · Q3 active · Q2 acceleration mode</span></div>
+          <div class="progress-label"><span>Year progress</span><span style="color:var(--green)" data-hris-bind="yearProgressDataHub">Data Cleansing 79.3% ▲ · Q3 active · Q2 acceleration mode</span></div>
           <div class="progress-track" style="position:relative;height:8px;border-radius:6px;overflow:visible">
             <div class="progress-fill fill-blue" style="width:25%;position:absolute;left:0;top:0;height:100%"></div>
             <div style="position:absolute;left:50%;top:0;width:25%;height:100%;background:rgba(74,158,255,0.35);border-radius:0 6px 6px 0"></div>
@@ -1604,7 +1626,7 @@ body.locked #site-footer {
           <span class="phase-tag phase-tag-green">Q2</span>
           <div class="phase-content">
             <span class="phase-title">Database – Data Cleansing Progress</span>
-            <span class="phase-target">ณ 9 พ.ค. 2569 — Active 1,070 คน · Finished 774 (72.3%) · Submitted 17 (1.6%) · Unfinish 57 (5.3%) · Not start 222 (20.7%)</span>
+            <span class="phase-target" data-hris-bind="phaseTargetCleansing">ณ 9 พ.ค. 2569 — Active 1,070 คน · Finished 774 (72.3%) · Submitted 17 (1.6%) · Unfinish 57 (5.3%) · Not start 222 (20.7%)</span>
             <div style="margin-top:6px;background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:6px">
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
                 <span style="font-size:11px;color:var(--green);font-weight:600">ความคืบหน้า: 79.3% (Finished + Unfinish + Submitted)</span>
@@ -1879,8 +1901,18 @@ body.locked #site-footer {
     <style>
       .tl2-wrap { font-family: var(--font); }
       .tl2-header { display: grid; grid-template-columns: 190px 1fr; gap: 10px; margin-bottom: 4px; }
-      .tl2-months { display: flex; justify-content: space-between; padding: 0 2px; }
-      .tl2-month { font-size: 11px; color: var(--text-muted); font-family: var(--mono); }
+      .tl2-quarters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding: 0; margin-bottom: 3px; position: relative; }
+      .tl2-quarter { font-size: 9px; font-family: var(--mono); font-weight: 600; letter-spacing: 0.08em; color: var(--blue); text-align: center; padding: 3px 0; border: 1px solid rgba(26,110,199,0.18); border-bottom: 2px solid var(--blue); background: rgba(26,110,199,0.04); border-radius: 4px 4px 0 0; }
+      .tl2-quarter:nth-child(1) { background: rgba(13,143,82,0.05); border-color: rgba(13,143,82,0.18); border-bottom-color: var(--green); color: var(--green); }
+      .tl2-quarter:nth-child(2) { background: rgba(26,110,199,0.05); border-color: rgba(26,110,199,0.2); border-bottom-color: var(--blue); color: var(--blue); }
+      .tl2-quarter:nth-child(3) { background: rgba(184,114,10,0.05); border-color: rgba(184,114,10,0.2); border-bottom-color: var(--amber); color: var(--amber); }
+      .tl2-quarter:nth-child(4) { background: rgba(124,58,237,0.05); border-color: rgba(124,58,237,0.2); border-bottom-color: #7c3aed; color: #7c3aed; }
+      .tl2-months { display: grid; grid-template-columns: repeat(12, 1fr); padding: 0; margin-bottom: 4px; }
+      .tl2-month { font-size: 11px; color: var(--text-muted); font-family: var(--mono); text-align: center; padding: 2px 0; border-right: 1px dotted rgba(0,0,0,0.06); }
+      .tl2-month:nth-child(3n) { border-right: 1px solid rgba(26,110,199,0.18); }
+      .tl2-month:last-child { border-right: none; }
+      .tl2-now-label { position: absolute; top: -28px; transform: translateX(-50%); background: var(--amber); color: #fff; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 4px; white-space: nowrap; box-shadow: 0 2px 8px rgba(217,119,6,0.3); z-index: 6; pointer-events: none; }
+      .tl2-now-label::after { content: ""; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 6px; height: 6px; background: var(--amber); }
       .tl2-body { display: flex; flex-direction: column; gap: 3px; }
       .tl2-group { display: grid; grid-template-columns: 190px 1fr; gap: 10px; align-items: center; margin: 10px 0 4px; }
       .tl2-glabel { font-size: 11px; font-family: var(--mono); font-weight: 500; text-align: left; letter-spacing: 0.04em; padding-left: 2px; }
@@ -1891,7 +1923,44 @@ body.locked #site-footer {
       .tl2-name.xs { color: var(--text-muted); font-size: 9px; padding-left: 20px; }
       .tl2-track { position: relative; height: 22px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
       .tl2-track.thin { height: 15px; }
-      .tl2-now { position: absolute; top: 0; bottom: 0; width: 1.5px; background: var(--amber); opacity: 0.7; z-index: 5; left: 35.5%; }
+      .tl2-now { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #e8a542; opacity: 0.85; z-index: 5; left: var(--hris-today-pos, 35.5%); box-shadow: 0 0 5px rgba(232,165,66,0.35); pointer-events: none; }
+      .tl2-track::before { content: ""; position: absolute; top: 0; bottom: 0; left: 25%; width: 1px; background: rgba(15,23,42,0.06); pointer-events: none; z-index: 1; }
+      .tl2-track::after  { content: ""; position: absolute; top: 0; bottom: 0; left: 75%; width: 1px; background: rgba(15,23,42,0.06); pointer-events: none; z-index: 1; }
+      .tl2-track-mid     { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(26,110,199,0.18); pointer-events: none; z-index: 1; }
+      /* Now label container — floats above the timeline body, positioned by CSS variable */
+      .tl2-now-pin { position: absolute; top: 0; left: var(--hris-today-pos, 35.5%); transform: translateX(-50%); z-index: 7; pointer-events: none; }
+      .tl2-now-pin .pin-label { background: #d49340; color: #fff; font-family: var(--mono); font-size: 9.5px; font-weight: 600; letter-spacing: 0.06em; padding: 4px 9px; border-radius: 5px; white-space: nowrap; box-shadow: 0 2px 8px rgba(212,147,64,0.28); position: relative; }
+      .tl2-now-pin .pin-label::after { content: ""; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 7px; height: 7px; background: #d49340; }
+      /* ── Today highlight on month + quarter ── */
+      .tl2-month.is-today {
+        background: linear-gradient(180deg, rgba(232,165,66,0.10) 0%, rgba(232,165,66,0.03) 100%);
+        color: #b87b27; font-weight: 700;
+        border-radius: 4px;
+        box-shadow: 0 0 0 1px rgba(232,165,66,0.22) inset;
+      }
+      .tl2-quarter.is-today {
+        background: linear-gradient(180deg, rgba(232,165,66,0.13), rgba(232,165,66,0.04)) !important;
+        border-color: rgba(232,165,66,0.55) !important;
+        border-bottom-color: #d49340 !important;
+        color: #b87b27 !important;
+        box-shadow: 0 0 0 1px rgba(232,165,66,0.28) inset;
+      }
+      /* Shaded vertical band across all timeline rows for current month */
+      .tl2-today-band {
+        position: absolute; top: 0; bottom: 0;
+        left: var(--hris-today-band-left, 33.33%);
+        width: var(--hris-today-band-width, 8.33%);
+        background: linear-gradient(180deg, rgba(99,102,241,0.05), rgba(99,102,241,0.015));
+        z-index: 0; pointer-events: none;
+        border-left: 1px dashed rgba(99,102,241,0.22);
+        border-right: 1px dashed rgba(99,102,241,0.22);
+      }
+      /* Zebra stripe — alternating row backgrounds for readability */
+      .tl2-row:nth-child(odd) .tl2-track { background: #f7f6f0; }
+      .tl2-row:nth-child(even) .tl2-track { background: #fbfaf5; }
+      .tl2-body { background: #fcfbf7; padding: 8px 0; border-radius: 8px; }
+      .tl2-track { transition: background-color 0.2s; }
+      .tl2-row:hover .tl2-track { background: rgba(99,102,241,0.05); }
       .tl2-bar { position: absolute; top: 0; height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 6px; overflow: hidden; }
       .tl2-bar span { font-size: 10px; font-family: var(--mono); white-space: nowrap; }
       .b-g   { background: var(--green); } .b-g span { color: #fff; }
@@ -1927,14 +1996,30 @@ body.locked #site-footer {
     <div class="tl2-wrap">
       <div class="tl2-header">
         <div></div>
-        <div class="tl2-months">
-          <span class="tl2-month">ม.ค.</span><span class="tl2-month">ก.พ.</span><span class="tl2-month">มี.ค.</span>
-          <span class="tl2-month">เม.ย.</span><span class="tl2-month">พ.ค.</span><span class="tl2-month">มิ.ย.</span>
-          <span class="tl2-month">ก.ค.</span><span class="tl2-month">ส.ค.</span><span class="tl2-month">ก.ย.</span>
-          <span class="tl2-month">ต.ค.</span><span class="tl2-month">พ.ย.</span><span class="tl2-month">ธ.ค.</span>
+        <div>
+          <div class="tl2-quarters">
+            <div class="tl2-quarter">Q1 ▸ ม.ค.–มี.ค.</div>
+            <div class="tl2-quarter">Q2 ▸ เม.ย.–มิ.ย.</div>
+            <div class="tl2-quarter">Q3 ▸ ก.ค.–ก.ย.</div>
+            <div class="tl2-quarter">Q4 ▸ ต.ค.–ธ.ค.</div>
+          </div>
+          <div class="tl2-months" data-hris-bind="tlMonthsHeader">
+            <span class="tl2-month">ม.ค.</span><span class="tl2-month">ก.พ.</span><span class="tl2-month">มี.ค.</span>
+            <span class="tl2-month">เม.ย.</span><span class="tl2-month">พ.ค.</span><span class="tl2-month">มิ.ย.</span>
+            <span class="tl2-month">ก.ค.</span><span class="tl2-month">ส.ค.</span><span class="tl2-month">ก.ย.</span>
+            <span class="tl2-month">ต.ค.</span><span class="tl2-month">พ.ย.</span><span class="tl2-month">ธ.ค.</span>
+          </div>
         </div>
       </div>
-      <div class="tl2-body">
+      <!-- Now-pin row aligned to grid (same 190px/1fr columns as tl2-row) -->
+      <div style="display:grid;grid-template-columns:190px 1fr;gap:10px;align-items:center;margin-bottom:6px;height:28px">
+        <div></div>
+        <div style="position:relative;height:28px">
+          <div class="tl2-now-pin" id="tlNowPin" data-hris-bind="tlNowPin" style="position:absolute;top:0;left:var(--hris-today-pos, 35.5%);transform:translateX(-50%);z-index:50;pointer-events:none"><div class="pin-label">Sat 9 พ.ค. · W19</div></div>
+        </div>
+      </div>
+      <div class="tl2-body" style="position:relative">
+        <div class="tl2-today-band" id="tlTodayBand"></div>
 
         <!-- GROUP 1 -->
         <div class="tl2-group">
@@ -2117,7 +2202,7 @@ body.locked #site-footer {
 </div>
 
 <!-- ══════════════════════════════════════════════════════
-     18 PROJECTS OVERVIEW — ณ 9 พ.ค. 2569
+     <span data-hris-bind="todayProjectsHeader">18 PROJECTS OVERVIEW — ณ 9 พ.ค. 2569</span>
      ══════════════════════════════════════════════════════ -->
 <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;margin:0 0 24px;overflow:hidden">
 
@@ -2128,7 +2213,7 @@ body.locked #site-footer {
       <span style="font-size:15px;font-weight:600;color:var(--text-primary)">สถานะโครงการทั้งหมด — แผนปี 2569</span>
     </div>
     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-      <span style="font-size:10px;font-family:var(--mono);color:var(--text-muted)">ณ 9 พ.ค. 2569 · Q2 Active</span>
+      <span style="font-size:10px;font-family:var(--mono);color:var(--text-muted)" data-hris-bind="todayQ">ณ 9 พ.ค. 2569 · Q2 Active</span>
       <span style="font-size:10px;font-family:var(--mono);padding:4px 12px;border-radius:20px;background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border)">● 17 On Process &nbsp;|&nbsp; 1 Completed</span>
     </div>
   </div>
@@ -2472,7 +2557,7 @@ body.locked #site-footer {
       </div>
       <div class="summary-hero-side">
         <span class="tracker-pill onprocess">Summary Tab</span>
-        <span class="date-badge" id="summaryDate">ณ 9 พ.ค. 2569</span>
+        <span class="date-badge" id="summaryDate" data-hris-bind="todayDate">ณ 9 พ.ค. 2569</span>
       </div>
     </div>
 
@@ -27415,6 +27500,16 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     try {
       frame.srcdoc = decodeBase64Utf8(source.textContent || '');
       frame.dataset.loaded = '1';
+      // Propagate today CSS variable into iframe
+      frame.addEventListener('load', function(){
+        try {
+          const root = frame.contentDocument && frame.contentDocument.documentElement;
+          if (root) {
+            const pos = getComputedStyle(document.documentElement).getPropertyValue('--hris-today-pos') || '35.5%';
+            root.style.setProperty('--hris-today-pos', pos.trim());
+          }
+        } catch(e){}
+      }, { once: true });
     } catch(e) {
       console.error('Unable to load HR Data Master tab', e);
     }
@@ -27746,6 +27841,10 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
           }
           applyAll(snapshot);
           try { localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot)); } catch(e) {}
+          // Push into central HRIS store so other tabs auto-update
+          if (window.HRIS && typeof window.HRIS.importKpiSnapshot === 'function'){
+            try { window.HRIS.importKpiSnapshot(snapshot); } catch(e) { console.warn(e); }
+          }
           const have = Object.values(snapshot.kpis).filter(k => k.progress != null).length;
           if (have === 0){
             setStatus('นำเข้าไฟล์ ' + file.name + ' สำเร็จ — แต่คอลัมน์ Actual Result ทั้ง 5 KPI ยังว่าง (ระบบรอข้อมูล)', 'ok');
@@ -27801,6 +27900,482 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 })();
 </script>
+
+
+<!-- ── HRIS Central Data Store + Auto-Sync ── -->
+<script>
+(function(){
+  'use strict';
+  const STORAGE_KEY = 'HRIS_GLOBAL_STATE_v1';
+
+  const INITIAL_STATE = {
+    dataMaster: {
+      active: 1070, finished: 774, submitted: 17, unfinish: 57, notStart: 222,
+      coverage: 79.3, finishedPct: 72.3, submittedPct: 1.6, unfinishPct: 5.3, notStartPct: 20.7,
+      defectRate: 5.5, fieldFillRate: 94.5,
+      lastSync: 'na 9 phwa khaw 2569'
+    },
+    kpiExcel: {
+      kpis: {
+        1: { actual: 79.3, target: 80, mode: 'gte', monthly: [52,60,68,74,79.3], q1Score: 3 },
+        2: { actual: null, target: 90, mode: 'gte', monthly: [null,null,null,null,null], q1Score: 3 },
+        3: { actual: 0.87, target: 1, mode: 'gte', monthly: [0.50,0.60,0.70,0.79,0.87], q1Score: 5 },
+        4: { actual: 5.5, target: 12, mode: 'lte', monthly: [12,10,8.5,7,5.5], q1Score: 5 },
+        5: { actual: 82, target: 80, mode: 'gte', monthly: [45,55,65,75,82], q1Score: 5 }
+      },
+      lastImport: '-'
+    },
+    projects: {
+      payroll: 100, dataHub: 80, hrTech: 82,
+      aiRecruitment: 80, easy: 90, frappe: 72, genspark: 85,
+      overall: 87
+    },
+    meta: { lastRefresh: '-', status: 'ok' }
+  };
+
+  function deepMerge(a, b){
+    if (!b) return a;
+    for (const k in b){
+      if (b[k] && typeof b[k] === 'object' && !Array.isArray(b[k])){
+        a[k] = deepMerge(a[k] || {}, b[k]);
+      } else { a[k] = b[k]; }
+    }
+    return a;
+  }
+  function loadState(){
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return deepMerge(JSON.parse(JSON.stringify(INITIAL_STATE)), JSON.parse(saved));
+    } catch(e) {}
+    return JSON.parse(JSON.stringify(INITIAL_STATE));
+  }
+  function saveState(state){
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  function recompute(state){
+    const kp = state.kpiExcel.kpis;
+    const dm = state.dataMaster;
+    const pr = state.projects;
+    if (kp[1] && dm.coverage != null) kp[1].actual = dm.coverage;
+    if (kp[4] && dm.defectRate != null) kp[4].actual = dm.defectRate;
+    pr.dataHub = Math.round(Math.min(100, dm.coverage));
+    pr.hrTech = Math.round((pr.aiRecruitment + pr.easy + pr.frappe + pr.genspark) / 4);
+    pr.overall = Math.round((pr.payroll + pr.dataHub + pr.hrTech) / 3);
+    if (kp[3]) kp[3].actual = pr.overall / 100;
+    if (kp[5]) kp[5].actual = pr.hrTech;
+    return state;
+  }
+
+  const BINDINGS = [
+    { sel: '.kpi-card.red .kpi-sub', html: s => 'Submitted ' + s.dataMaster.submitted + ' + Not start ' + s.dataMaster.notStart + ' &#3588;&#3609;<br>Need action from Department Head' },
+    { sel: '.overall-pct', html: s => s.projects.overall + '<span>%</span>' },
+    { sel: '.overall-main-fill', styleWidth: s => s.projects.overall + '%' },
+    { sel: '.breakdown-item:nth-child(1) .breakdown-pct-label', text: s => s.projects.payroll + '%' },
+    { sel: '.breakdown-item:nth-child(1) .breakdown-fill', styleWidth: s => s.projects.payroll + '%' },
+    { sel: '.breakdown-item:nth-child(2) .breakdown-pct-label', text: s => s.projects.dataHub + '%' },
+    { sel: '.breakdown-item:nth-child(2) .breakdown-fill', styleWidth: s => s.projects.dataHub + '%' },
+    { sel: '.breakdown-item:nth-child(3) .breakdown-pct-label', text: s => s.projects.hrTech + '%' },
+    { sel: '.breakdown-item:nth-child(3) .breakdown-fill', styleWidth: s => s.projects.hrTech + '%' },
+    { sel: '[data-kpi-no="1"] .tracker-progress-row span:last-child', text: s => s.kpiExcel.kpis[1].actual != null ? s.kpiExcel.kpis[1].actual.toFixed(1) + '%' : 'Pending actual' },
+    { sel: '[data-kpi-no="1"] .tracker-progress-fill', styleWidth: s => s.kpiExcel.kpis[1].actual != null ? s.kpiExcel.kpis[1].actual.toFixed(1) + '%' : '0%' },
+    { sel: '[data-kpi-no="3"] .tracker-progress-row span:last-child', text: s => s.kpiExcel.kpis[3].actual != null ? (s.kpiExcel.kpis[3].actual * 100).toFixed(1) + '%' : 'Pending actual' },
+    { sel: '[data-kpi-no="3"] .tracker-progress-fill', styleWidth: s => s.kpiExcel.kpis[3].actual != null ? (s.kpiExcel.kpis[3].actual * 100).toFixed(1) + '%' : '0%' },
+    { sel: '[data-kpi-no="5"] .tracker-progress-row span:last-child', text: s => s.kpiExcel.kpis[5].actual != null ? s.kpiExcel.kpis[5].actual.toFixed(1) + '%' : 'Pending actual' },
+    { sel: '[data-kpi-no="5"] .tracker-progress-fill', styleWidth: s => s.kpiExcel.kpis[5].actual != null ? s.kpiExcel.kpis[5].actual.toFixed(1) + '%' : '0%' },
+
+    // ── Project 2 (HR Data Control Hub) breakdown-sub — full analysis text rebuild ──
+    { sel: '[data-hris-bind="dataHubBreakdownSub"]', html: s => {
+        const dm = s.dataMaster, p = s.projects;
+        const cov = (dm.coverage != null ? dm.coverage.toFixed(1) : '–');
+        const totalCov = (dm.finished + dm.submitted + dm.unfinish);
+        return 'Q1 ✓ ครบ · Data Cleansing <strong style="color:#0d8f52">' + cov + '%</strong> (' + totalCov.toLocaleString('en-US') + '/' + dm.active.toLocaleString('en-US') + ' คน) · Q3 dashboards live · Q2 เร่งรัดต่อ<br>' +
+               'ประเมิน project progress = ' + p.dataHub + '% · ต้องดัน completion ให้ถึง 85%-90% ตาม timeline<br>' +
+               '<span style="color:var(--green);font-size:9px">✅ Active ' + dm.active.toLocaleString('en-US') + ' · Finished ' + dm.finished + ' (' + dm.finishedPct.toFixed(1) + '%) · Submitted ' + dm.submitted + ' (' + dm.submittedPct.toFixed(1) + '%) · Unfinish ' + dm.unfinish + ' (' + dm.unfinishPct.toFixed(1) + '%) · Not start ' + dm.notStart + ' (' + dm.notStartPct.toFixed(1) + '%)</span>';
+      } },
+
+    // ── Project 3 (HR Tech) breakdown-sub ──
+    { sel: '[data-hris-bind="hrTechBreakdownSub"]', html: s => {
+        const p = s.projects;
+        return 'Q2 avg ' + p.hrTech + '%: AI Rec ' + p.aiRecruitment + '%·EASY ' + p.easy + '% ✓·Frappe ' + p.frappe + '%·Genspark ' + p.genspark + '% 🚀+Cowork<br>' +
+               'Q1 ✓ ครบ · Q2 contribution เริ่มแล้ว · Genspark 🚀 Launch Active<br>' +
+               '<span style="color:var(--green);font-size:9px">🚀 Genspark Expand + Claude Cowork ✓ Active พ.ค. (Full HR Dept) · EASY Phase 1 IT Test ✓ Done → Go-live 11 พ.ค. · Frappe Edit Form Active</span>';
+      } },
+
+    // ── Calc-note formula ──
+    { sel: '[data-hris-bind="calcNote"]', html: s => {
+        const dm = s.dataMaster, p = s.projects;
+        const cov = (dm.coverage != null ? dm.coverage.toFixed(1) : '–');
+        const wDataHub = (p.dataHub * 33.3 / 100).toFixed(1);
+        const wHrTech  = (p.hrTech  * 33.3 / 100).toFixed(1);
+        return 'วิธีคำนวณ (Weighted avg · น้ำหนัก 1/3 ต่อโครงการ):<br>' +
+               'Outsource Payroll 100% × 33.3% = 33.3% &nbsp;|&nbsp; ' +
+               'HR Data Hub <strong style="color:var(--green)">' + p.dataHub + '%</strong> × 33.3% = ' + wDataHub + '% (Data Cleansing ' + cov + '% ▲ · Active ' + dm.active.toLocaleString('en-US') + ' · Finished ' + dm.finished + ' · Not start ' + dm.notStart + ') &nbsp;|&nbsp; ' +
+               'HR Tech ' + p.hrTech + '% × 33.3% = ' + wHrTech + '% (Q2 avg ' + p.hrTech + '% · AI Rec ' + p.aiRecruitment + '% · EASY ' + p.easy + '% ✓ · Frappe ' + p.frappe + '% · Genspark ' + p.genspark + '% 🚀+Cowork 🆕)<br>' +
+               'รวม = <strong style="color:var(--text-secondary)">~' + p.overall + '%</strong>' +
+               '<span style="color:var(--green);margin-left:8px">▲ +' + (p.overall - 47) + '% จาก baseline 47% — Data Cleansing ' + cov + '% · Finished ' + dm.finished + ' คน · Not start ' + dm.notStart + ' คน · AI Interview Summary Report ✓ · EA Chatbot go-live 11 พ.ค.</span>';
+      } },
+
+    // ── Year progress (Project 2 header) ──
+    { sel: '[data-hris-bind="yearProgressDataHub"]', text: s => 'Data Cleansing ' + (s.dataMaster.coverage != null ? s.dataMaster.coverage.toFixed(1) : '–') + '% ▲ · Q3 active · Q2 acceleration mode' },
+
+    // ── Phase target (Database Data Cleansing Progress) ──
+    { sel: '[data-hris-bind="phaseTargetCleansing"]', text: s => {
+        const dm = s.dataMaster;
+        const today = new Date().toLocaleDateString('th-TH', { day:'numeric', month:'short', year:'numeric' });
+        return 'ณ ' + today + ' — Active ' + dm.active.toLocaleString('en-US') + ' คน · Finished ' + dm.finished + ' (' + dm.finishedPct.toFixed(1) + '%) · Submitted ' + dm.submitted + ' (' + dm.submittedPct.toFixed(1) + '%) · Unfinish ' + dm.unfinish + ' (' + dm.unfinishPct.toFixed(1) + '%) · Not start ' + dm.notStart + ' (' + dm.notStartPct.toFixed(1) + '%)';
+      } },
+
+    // ── Action Alert: Data Cleansing line (only 1st item) ──
+    { sel: '[data-hris-bind="alertDataCleansing"]', html: s => {
+        const dm = s.dataMaster;
+        const cov = dm.coverage != null ? dm.coverage.toFixed(1) : '–';
+        const totalCov = (dm.finished + dm.submitted + dm.unfinish);
+        return '<strong style="color:var(--blue)">Data Cleansing — HR Data Control Hub:</strong> ความคืบหน้าล่าสุด <strong style="color:var(--green)">' + cov + '% (' + totalCov.toLocaleString('en-US') + '/' + dm.active.toLocaleString('en-US') + ' คน)</strong> — Finished <strong style="color:var(--green)">' + dm.finished + ' คน (' + dm.finishedPct.toFixed(1) + '%)</strong> · Submitted ' + dm.submitted + ' คน (' + dm.submittedPct.toFixed(1) + '%) · Unfinish ' + dm.unfinish + ' คน (' + dm.unfinishPct.toFixed(1) + '%) · <strong style="color:#7a1f18">Not start ' + dm.notStart + ' คน (' + dm.notStartPct.toFixed(1) + '%)</strong> · ต้องเร่งติดตามกับ Department Head และ owner list เพื่อดันให้ถึง <strong>85%-90%</strong>';
+      } },
+
+    // ── Summary tab callout (KPI 1 current signal) ──
+    { sel: '[data-kpi-no="1"] .tracker-callout span:last-child', text: s => {
+        const dm = s.dataMaster;
+        return 'Active ' + dm.active.toLocaleString('en-US') + ' · Finished ' + dm.finished + ' · Submitted ' + dm.submitted + ' · Unfinish ' + dm.unfinish + ' · Not start ' + dm.notStart;
+      } }
+  ];
+
+  function render(state){
+    BINDINGS.forEach(b => {
+      try {
+        const nodes = document.querySelectorAll(b.sel);
+        if (!nodes.length) return;
+        nodes.forEach(el => {
+          if (b.html) el.innerHTML = b.html(state);
+          else if (b.text) el.textContent = b.text(state);
+          if (b.styleWidth) el.style.width = b.styleWidth(state);
+        });
+      } catch(e) { console.warn('[HRIS] binding', b.sel, e); }
+    });
+    const lastRef = document.getElementById('hrisLastRefresh');
+    if (lastRef) lastRef.textContent = state.meta.lastRefresh || '-';
+  }
+
+  window.HRIS = {
+    state: loadState(),
+    save(){ saveState(this.state); },
+    refresh(){
+      this.state.meta.lastRefresh = new Date().toLocaleString('th-TH', { dateStyle:'medium', timeStyle:'short' });
+      recompute(this.state);
+      this.save();
+      render(this.state);
+      window.dispatchEvent(new CustomEvent('hris:updated', { detail: this.state }));
+    },
+    setKpi(no, actual){ if (this.state.kpiExcel.kpis[no]) this.state.kpiExcel.kpis[no].actual = actual; this.refresh(); },
+    setDataMaster(partial){
+      Object.assign(this.state.dataMaster, partial);
+      const dm = this.state.dataMaster;
+      if (dm.active > 0){
+        dm.finishedPct  = +(dm.finished  / dm.active * 100).toFixed(1);
+        dm.submittedPct = +(dm.submitted / dm.active * 100).toFixed(1);
+        dm.unfinishPct  = +(dm.unfinish  / dm.active * 100).toFixed(1);
+        dm.notStartPct  = +(dm.notStart  / dm.active * 100).toFixed(1);
+        dm.coverage     = +((dm.finished + dm.submitted + dm.unfinish) / dm.active * 100).toFixed(1);
+      }
+      this.refresh();
+    },
+    setProject(name, value){
+      if (this.state.projects[name] != null){ this.state.projects[name] = value; this.refresh(); }
+    },
+    importKpiSnapshot(snap){
+      if (snap && snap.kpis){
+        for (const no in snap.kpis){
+          const k = snap.kpis[no];
+          if (this.state.kpiExcel.kpis[no]) Object.assign(this.state.kpiExcel.kpis[no], k);
+        }
+        this.state.kpiExcel.lastImport = snap.dateLabel || new Date().toLocaleString('th-TH');
+      }
+      this.refresh();
+    },
+    reset(){ this.state = JSON.parse(JSON.stringify(INITIAL_STATE)); this.save(); this.refresh(); }
+  };
+
+  function injectButton(){
+    if (document.getElementById('hrisRefreshAll')) return;
+    const wrap = document.createElement('div');
+    wrap.id = 'hrisRefreshAll';
+    wrap.style.cssText = 'position:fixed;top:14px;right:18px;z-index:9999;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.96);backdrop-filter:blur(8px);border:1px solid rgba(13,143,82,0.25);border-radius:999px;padding:6px 10px 6px 14px;box-shadow:0 4px 14px rgba(13,143,82,0.12);font-family:"IBM Plex Sans Thai",sans-serif';
+    wrap.innerHTML = '<span style="font-size:10px;font-family:\'IBM Plex Mono\',monospace;color:#15803d;letter-spacing:.04em">SYNC</span><span id="hrisLastRefresh" style="font-size:11px;color:#374151">-</span><button type="button" id="hrisRefreshBtn" style="appearance:none;border:none;background:#15803d;color:#fff;font-size:11px;font-weight:600;padding:6px 12px;border-radius:999px;cursor:pointer;font-family:inherit">&#8635; Refresh All</button>';
+    document.body.appendChild(wrap);
+    document.getElementById('hrisRefreshBtn').addEventListener('click', () => {
+      window.HRIS.refresh();
+      const btn = document.getElementById('hrisRefreshBtn');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '&#10003; Synced';
+      btn.style.background = '#0d9488';
+      setTimeout(() => { btn.innerHTML = orig; btn.style.background = '#15803d'; }, 1200);
+    });
+  }
+
+  function init(){
+    injectButton();
+    recompute(window.HRIS.state);
+    render(window.HRIS.state);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+
+  window.addEventListener('storage', e => {
+    if (e.key === 'hrisKpiImportSnapshot' && e.newValue){
+      try { window.HRIS.importKpiSnapshot(JSON.parse(e.newValue)); } catch(err){}
+    }
+  });
+  try {
+    const snap = localStorage.getItem('hrisKpiImportSnapshot');
+    if (snap) window.HRIS.importKpiSnapshot(JSON.parse(snap));
+  } catch(e){}
+})();
+</script>
+
+
+<!-- ── Iframe HR Data Master Bridge ── -->
+<script>
+(function(){
+  'use strict';
+
+  function parseNum(s){
+    if (!s) return null;
+    const cleaned = String(s).replace(/[^\d.\-]/g,'');
+    if (!cleaned) return null;
+    const v = parseFloat(cleaned);
+    return isNaN(v) ? null : v;
+  }
+
+  function readIframeState(){
+    const frame = document.getElementById('hrDataMasterFrame');
+    if (!frame || !frame.contentDocument) return null;
+    const doc = frame.contentDocument;
+    if (!doc.body) return null;
+
+    const out = {};
+    const sel = (cls) => {
+      const el = doc.querySelector('.kpi.' + cls + ' strong');
+      return el ? parseNum(el.textContent) : null;
+    };
+    const active    = sel('blue');
+    const finished  = sel('green');
+    const unfinish  = sel('orange');
+    const submitted = sel('indigo');
+    const notStart  = sel('red');
+
+    if (active != null) out.active = active;
+    if (finished != null) out.finished = finished;
+    if (unfinish != null) out.unfinish = unfinish;
+    if (submitted != null) out.submitted = submitted;
+    if (notStart != null) out.notStart = notStart;
+
+    const covEl = doc.querySelector('#insightRow .ic-val.b');
+    if (covEl){
+      const cov = parseNum(covEl.textContent);
+      if (cov != null) out.coverage = cov;
+    }
+    const missEl = doc.querySelector('#insightRow .ic-val.a');
+    if (missEl) out.topMissing = (missEl.textContent || '').trim();
+    const bestEl = doc.querySelector('#insightRow .ic-val.g');
+    if (bestEl) out.bestFinishCompany = (bestEl.textContent || '').trim();
+    const worstEl = doc.querySelector('#insightRow .ic-val.r');
+    if (worstEl) out.worstNotStartCompany = (worstEl.textContent || '').trim();
+
+    return Object.keys(out).length > 0 ? out : null;
+  }
+
+  function syncFromIframe(){
+    if (!window.HRIS) return false;
+    const data = readIframeState();
+    if (!data) return false;
+    if (data.active && data.finished != null){
+      const records_with_missing = data.active - data.finished;
+      const est_missing_fields = records_with_missing * 1.5;
+      const defect = (est_missing_fields / (data.active * 14)) * 100;
+      data.defectRate = +defect.toFixed(1);
+      data.fieldFillRate = +(100 - defect).toFixed(1);
+    }
+    window.HRIS.setDataMaster(data);
+    console.log('[HRIS bridge] synced from iframe:', data);
+    return true;
+  }
+
+  window.HRIS_syncFromIframe = syncFromIframe;
+
+  function wireRefreshAll(){
+    const btn = document.getElementById('hrisRefreshBtn');
+    if (!btn || btn._iframeWired) {
+      setTimeout(wireRefreshAll, 500);
+      return;
+    }
+    btn._iframeWired = true;
+    btn.addEventListener('click', () => syncFromIframe(), true);
+  }
+  setTimeout(wireRefreshAll, 200);
+
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      setTimeout(() => syncFromIframe(), 300);
+    });
+  });
+
+  let lastSnap = '';
+  setInterval(() => {
+    if (document.hidden) return;
+    if (!window.HRIS) return;
+    const data = readIframeState();
+    if (!data) return;
+    const snap = JSON.stringify(data);
+    if (snap !== lastSnap){
+      lastSnap = snap;
+      syncFromIframe();
+    }
+  }, 4000);
+
+  setTimeout(() => syncFromIframe(), 1500);
+  setTimeout(() => syncFromIframe(), 3500);
+})();
+</script>
+
+
+<!-- ── Auto-Today Marker (timeline + date stamps + iframe sync) ── -->
+<script>
+(function(){
+  'use strict';
+
+  function computeTodayPos(){
+    const now = new Date();
+    const month = now.getMonth();
+    const day = now.getDate();
+    const lastDay = new Date(now.getFullYear(), month + 1, 0).getDate();
+    const dayOffset = (day - 1) / lastDay;
+    const pct = (month + dayOffset) * (100 / 12);
+    return pct.toFixed(2) + '%';
+  }
+
+  const THAI_MONTHS_ABBR = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const DOW_ABBR = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+  // ISO 8601 week number
+  function getWeekNumber(d){
+    const dt = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    dt.setUTCDate(dt.getUTCDate() + 4 - (dt.getUTCDay() || 7));
+    const yearStart = new Date(Date.UTC(dt.getUTCFullYear(), 0, 1));
+    return Math.ceil((((dt - yearStart) / 86400000) + 1) / 7);
+  }
+
+  function thaiToday(){
+    const now = new Date();
+    const dow = DOW_ABBR[now.getDay()];
+    const day = now.getDate();
+    const month = THAI_MONTHS_ABBR[now.getMonth()];
+    const buddhistYear = (now.getFullYear() + 543).toString().slice(-2);
+    const week = getWeekNumber(now);
+    return 'ณ ' + dow + ' ' + day + ' ' + month + ' 25' + buddhistYear + ' · W' + week;
+  }
+
+  function thaiQuarter(){
+    const m = new Date().getMonth();
+    if (m < 3) return 'Q1';
+    if (m < 6) return 'Q2';
+    if (m < 9) return 'Q3';
+    return 'Q4';
+  }
+
+  function pushVarToIframe(pos){
+    const frame = document.getElementById('hrDataMasterFrame');
+    if (!frame || !frame.contentDocument) return;
+    try {
+      const root = frame.contentDocument.documentElement;
+      if (root) root.style.setProperty('--hris-today-pos', pos);
+    } catch(e){}
+  }
+
+  function updateTodayMarker(){
+    const pos = computeTodayPos();
+    document.documentElement.style.setProperty('--hris-today-pos', pos);
+    pushVarToIframe(pos);
+
+    document.querySelectorAll('[data-hris-now]').forEach(el => {
+      el.style.left = pos;
+    });
+
+    const today = thaiToday();
+    document.querySelectorAll('[data-hris-bind="todayDate"]').forEach(el => {
+      el.textContent = today;
+    });
+    document.querySelectorAll('[data-hris-bind="todayProjectsHeader"]').forEach(el => {
+      el.textContent = '18 PROJECTS OVERVIEW — ' + today;
+    });
+    document.querySelectorAll('[data-hris-bind="todayQ"]').forEach(el => {
+      el.textContent = today + ' · ' + thaiQuarter() + ' Active';
+    });
+
+    // Update Now-pin label (short form: "Sat 9 พ.ค. · W19")
+    const now = new Date();
+    const dow = DOW_ABBR[now.getDay()];
+    const day = now.getDate();
+    const monthIdx = now.getMonth();
+    const monthAbbr = THAI_MONTHS_ABBR[monthIdx];
+    const week = getWeekNumber(now);
+    const pinLabelText = dow + ' ' + day + ' ' + monthAbbr + ' · W' + week;
+    document.querySelectorAll('[data-hris-bind="tlNowPin"] .pin-label').forEach(el => {
+      el.textContent = pinLabelText;
+    });
+
+    // ── Highlight current month + quarter ──
+    document.querySelectorAll('.tl2-month').forEach((el, i) => {
+      el.classList.toggle('is-today', i === monthIdx);
+    });
+    const qIdx = Math.floor(monthIdx / 3);
+    document.querySelectorAll('.tl2-quarter').forEach((el, i) => {
+      el.classList.toggle('is-today', i === qIdx);
+    });
+
+    // ── Shaded today-band: cover the current month width (8.33%) ──
+    const bandLeft = (monthIdx * 100 / 12).toFixed(2) + '%';
+    const bandWidth = (100 / 12).toFixed(2) + '%';
+    document.documentElement.style.setProperty('--hris-today-band-left', bandLeft);
+    document.documentElement.style.setProperty('--hris-today-band-width', bandWidth);
+
+    return { pos: pos, today: today };
+  }
+
+  window.HRIS_updateTodayMarker = updateTodayMarker;
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', updateTodayMarker);
+  } else {
+    updateTodayMarker();
+  }
+
+  // Re-run every hour (handles cross-midnight)
+  setInterval(updateTodayMarker, 3600 * 1000);
+
+  // Re-run after iframe loads (delayed to let frame finish render)
+  setTimeout(updateTodayMarker, 1500);
+  setTimeout(updateTodayMarker, 3500);
+
+  // Hook into Refresh All
+  setTimeout(function wireRefresh(){
+    const btn = document.getElementById('hrisRefreshBtn');
+    if (!btn || btn._todayWired) {
+      setTimeout(wireRefresh, 500);
+      return;
+    }
+    btn._todayWired = true;
+    btn.addEventListener('click', () => updateTodayMarker(), true);
+  }, 200);
+
+  // Re-run on tab switch (in case iframe content rendered later)
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => setTimeout(updateTodayMarker, 400));
+  });
+})();
+</script>
+
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
