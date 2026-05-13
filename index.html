@@ -644,7 +644,8 @@ body {
       .tl2-name.xs { color: var(--text-muted); font-size: 9px; padding-left: 20px; }
       .tl2-track { position: relative; height: 22px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
       .tl2-track.thin { height: 15px; }
-      .tl2-now { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #e8a542; opacity: 0.85; z-index: 5; left: var(--hris-today-pos, 35.5%); box-shadow: 0 0 5px rgba(232,165,66,0.35); pointer-events: none; }
+      .tl2-now { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #e8a542; opacity: 0.85; z-index: 5; left: var(--hris-today-pos, 35.5%); box-shadow: 0 0 5px rgba(232,165,66,0.35); pointer-events: none; animation: hrisNowPulse 2.5s ease-in-out infinite; }
+      @keyframes hrisNowPulse { 0%, 100% { box-shadow: 0 0 4px rgba(232,165,66,0.3); opacity: 0.75; } 50% { box-shadow: 0 0 10px rgba(232,165,66,0.6); opacity: 1; } }
       .tl2-bar { position: absolute; top: 0; height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 6px; overflow: hidden; }
       .tl2-bar span { font-size: 10px; font-family: var(--mono); white-space: nowrap; }
       .b-g   { background: var(--green); } .b-g span { color: #fff; }
@@ -1923,7 +1924,8 @@ body.locked #site-footer {
       .tl2-name.xs { color: var(--text-muted); font-size: 9px; padding-left: 20px; }
       .tl2-track { position: relative; height: 22px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
       .tl2-track.thin { height: 15px; }
-      .tl2-now { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #e8a542; opacity: 0.85; z-index: 5; left: var(--hris-today-pos, 35.5%); box-shadow: 0 0 5px rgba(232,165,66,0.35); pointer-events: none; }
+      .tl2-now { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #e8a542; opacity: 0.85; z-index: 5; left: var(--hris-today-pos, 35.5%); box-shadow: 0 0 5px rgba(232,165,66,0.35); pointer-events: none; animation: hrisNowPulse 2.5s ease-in-out infinite; }
+      @keyframes hrisNowPulse { 0%, 100% { box-shadow: 0 0 4px rgba(232,165,66,0.3); opacity: 0.75; } 50% { box-shadow: 0 0 10px rgba(232,165,66,0.6); opacity: 1; } }
       .tl2-track::before { content: ""; position: absolute; top: 0; bottom: 0; left: 25%; width: 1px; background: rgba(15,23,42,0.06); pointer-events: none; z-index: 1; }
       .tl2-track::after  { content: ""; position: absolute; top: 0; bottom: 0; left: 75%; width: 1px; background: rgba(15,23,42,0.06); pointer-events: none; z-index: 1; }
       .tl2-track-mid     { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(26,110,199,0.18); pointer-events: none; z-index: 1; }
@@ -28061,11 +28063,32 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     state: loadState(),
     save(){ saveState(this.state); },
     refresh(){
+      // 1) Sync from iframe FIRST (pulls fresh HR Data Master numbers)
+      try { if (window.HRIS_syncFromIframe) window.HRIS_syncFromIframe(); } catch(e) { console.warn(e); }
+      // 2) Update today marker (date/position)
+      try { if (window.HRIS_updateTodayMarker) window.HRIS_updateTodayMarker(); } catch(e) { console.warn(e); }
+      // 3) Recompute derived values
       this.state.meta.lastRefresh = new Date().toLocaleString('th-TH', { dateStyle:'medium', timeStyle:'short' });
       recompute(this.state);
       this.save();
+      // 4) Full re-render of all bindings (analysis text, bars, etc.)
       render(this.state);
       window.dispatchEvent(new CustomEvent('hris:updated', { detail: this.state }));
+      console.log('[HRIS] refresh complete:', { coverage: this.state.dataMaster.coverage, overall: this.state.projects.overall, kpis: this.state.kpiExcel.kpis });
+    },
+    diagnose(){
+      console.log('═════════ HRIS DIAGNOSE ═════════');
+      console.log('Today:', new Date().toLocaleString('th-TH'));
+      console.log('CSS var --hris-today-pos:', getComputedStyle(document.documentElement).getPropertyValue('--hris-today-pos'));
+      console.log('dataMaster:', this.state.dataMaster);
+      console.log('kpiExcel.kpis:', this.state.kpiExcel.kpis);
+      console.log('projects:', this.state.projects);
+      console.log('Iframe state:', window.HRIS_syncFromIframe ? 'available' : 'NOT loaded');
+      const frame = document.getElementById('hrDataMasterFrame');
+      console.log('Iframe loaded:', frame && frame.contentDocument ? 'YES' : 'NO');
+      console.log('Bindings count:', document.querySelectorAll('[data-hris-bind]').length);
+      console.log('═════════════════════════════════');
+      return this.state;
     },
     setKpi(no, actual){ if (this.state.kpiExcel.kpis[no]) this.state.kpiExcel.kpis[no].actual = actual; this.refresh(); },
     setDataMaster(partial){
@@ -28298,7 +28321,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     document.documentElement.style.setProperty('--hris-today-pos', pos);
     pushVarToIframe(pos);
 
-    document.querySelectorAll('[data-hris-now]').forEach(el => {
+    // FORCE inline style on every now marker (defensive — CSS variable might lag)
+    document.querySelectorAll('[data-hris-now], .tl2-now, .tl-now, .tl2-now-pin').forEach(el => {
       el.style.left = pos;
     });
 
