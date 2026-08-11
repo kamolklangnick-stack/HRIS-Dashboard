@@ -1268,348 +1268,287 @@ body.locked #site-footer {
     </div>
   </div>
 
-  <!-- ── Q2 MID-QUARTER EVALUATION (อัพเดต 24 มิ.ย. 2569) ── -->
-  <div style="background:linear-gradient(135deg,#fffdf5 0%,#f0fdf4 100%);border:1px solid rgba(13,143,82,0.25);border-radius:14px;padding:20px 22px;margin-bottom:16px">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+  <!-- ══════════════════════════════════════════════
+       📅 QUARTERLY TIMELINE & PROGRESS (Q1–Q4 2026)
+       Unified expandable panel · replaces Q2 + Q3 panels
+  ══════════════════════════════════════════════ -->
+  <style>
+    .q-timeline { background: linear-gradient(135deg,#f8fafc 0%,#f0fdf4 100%); border:1px solid rgba(13,143,82,0.2); border-radius:14px; padding:20px 22px; margin-bottom:16px; }
+    .q-timeline > header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+    .q-badge { font-size:11px; font-family:var(--mono); background:rgba(13,143,82,0.12); color:var(--green); padding:5px 12px; border-radius:999px; border:1px solid rgba(13,143,82,0.3); text-transform:uppercase; letter-spacing:0.1em; }
+    .q-status-bar { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:14px; background:#fff; border:1px solid var(--border); border-radius:12px; padding:12px 14px; }
+    .q-mini { display:flex; flex-direction:column; gap:2px; padding:4px 10px; border-right:1px solid var(--border); }
+    .q-mini:last-child { border-right:none; }
+    .q-mini-label { font-size:10px; color:var(--text-muted); font-family:var(--mono); text-transform:uppercase; letter-spacing:0.06em; }
+    .q-mini-value { font-size:16px; font-weight:600; }
+    .q-mini-sub { font-size:10px; color:var(--text-secondary); }
+    .q-accord { background:#fff; border:1px solid var(--border); border-radius:10px; margin-bottom:8px; overflow:hidden; }
+    .q-accord[open] { box-shadow:0 4px 12px rgba(0,0,0,0.05); }
+    .q-accord > summary { list-style:none; cursor:pointer; padding:11px 16px; display:flex; justify-content:space-between; align-items:center; gap:10px; font-size:13px; user-select:none; transition:background .15s; }
+    .q-accord > summary::-webkit-details-marker { display:none; }
+    .q-accord > summary:hover { background:#f8fafc; }
+    .q-accord > summary::before { content:"▶"; font-size:9px; color:var(--text-muted); margin-right:6px; transition:transform .2s; display:inline-block; }
+    .q-accord[open] > summary::before { transform:rotate(90deg); color:var(--green); }
+    .q-accord[open] > summary { background:linear-gradient(135deg,rgba(13,143,82,0.05),rgba(59,130,246,0.03)); border-bottom:1px solid var(--border); }
+    .q-title-row { display:flex; align-items:center; gap:10px; flex:1; }
+    .q-tag { font-size:9px; font-family:var(--mono); padding:2px 7px; border-radius:999px; letter-spacing:0.04em; }
+    .q-tag.done { background:rgba(13,143,82,0.12); color:var(--green); border:1px solid rgba(13,143,82,0.3); }
+    .q-tag.now { background:rgba(139,92,246,0.14); color:#7c3aed; border:1px solid rgba(139,92,246,0.35); }
+    .q-tag.next { background:rgba(59,130,246,0.1); color:var(--blue); border:1px solid var(--blue-border); }
+    .q-tag.future { background:#f1f5f9; color:var(--text-muted); border:1px solid var(--border); }
+    .q-body { padding:14px 16px; display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .q-col { display:flex; flex-direction:column; gap:8px; }
+    .q-col-title { font-size:12px; font-weight:600; color:var(--text-primary); border-bottom:1px solid var(--border); padding-bottom:4px; margin-bottom:2px; }
+    .q-kpi-row { background:#f8fafc; border:1px solid var(--border); border-radius:6px; padding:6px 9px; font-size:11px; display:flex; justify-content:space-between; gap:6px; }
+    .q-kpi-row.ok { background:var(--green-dim); border-color:var(--green-border); color:#0a6b3c; }
+    .q-kpi-row.warn { background:var(--amber-dim); border-color:var(--amber-border); color:#78350f; }
+    .q-kpi-row.pending { background:var(--blue-dim); border-color:var(--blue-border); color:#1e3a5f; }
+    .q-milestone { display:flex; gap:6px; align-items:flex-start; font-size:11px; padding:3px 0; line-height:1.5; color:var(--text-secondary); }
+    .q-milestone .icon { flex-shrink:0; margin-top:2px; }
+    @media (max-width:768px){ .q-status-bar, .q-body { grid-template-columns:1fr; } }
+  </style>
+
+  <div class="q-timeline">
+    <header>
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:11px;font-family:var(--mono);background:rgba(13,143,82,0.12);color:var(--green);padding:5px 12px;border-radius:999px;border:1px solid rgba(13,143,82,0.3);text-transform:uppercase;letter-spacing:0.1em">📊 Q2 Mid-Quarter Evaluation</span>
-        <span style="font-size:12px;color:var(--text-secondary)">ประเมินจาก Action Plan (Approved) · เทียบ Q2 target ก่อนจบไตรมาส</span>
+        <span class="q-badge">📅 Quarterly Timeline · Q1–Q4 2026</span>
+        <span style="font-size:12px;color:var(--text-secondary)">คลิกแต่ละ Q เพื่อดูรายละเอียด · Q2 = ปัจจุบัน</span>
       </div>
-      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">ณ 24 มิ.ย. 2569 (Q2 เหลือ ~6 วัน)</span>
-    </div>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">อัพเดต 24 มิ.ย. 2569</span>
+    </header>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-
-      <!-- HR Data Based -->
-      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
-          <div>
-            <div style="font-size:14px;font-weight:600;color:var(--text-primary)">📋 HR Data Based</div>
-            <div style="font-size:10px;color:var(--text-muted);font-family:var(--mono);margin-top:2px">PIC: Pornpetch K. · อัพเดต 24 มิ.ย. (ล่าสุด)</div>
-          </div>
-          <span class="badge badge-completed" style="font-size:9px;padding:3px 8px">✓ บรรลุ Q2</span>
-        </div>
-
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <!-- KPI 1: Timeline -->
-          <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:8px;padding:9px 12px">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
-              <span style="font-size:12px;color:var(--green);font-weight:600">✓ %Timeline Progress</span>
-              <span style="font-size:11px;color:var(--green);font-family:var(--mono);font-weight:700">100% / target 50%</span>
-            </div>
-            <div style="font-size:11px;color:#0a6b3c;margin-top:3px;line-height:1.5">เกินเป้า 50pp · Phase 1 milestones ปิดงานครบ (HR AI Rec ✓ · EA Chatbot ✓ · Dashboard ✓)</div>
-          </div>
-
-          <!-- KPI 2: Data Accuracy (UPDATED — 97.4% BURLU!) -->
-          <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:8px;padding:9px 12px">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
-              <span style="font-size:12px;color:var(--green);font-weight:600">🎉 Data Accuracy (Eligible base)</span>
-              <span style="font-size:11px;color:var(--green);font-family:var(--mono);font-weight:700">97.4% / target ≥97% ✓</span>
-            </div>
-            <div style="font-size:11px;color:#0a6b3c;margin-top:3px;line-height:1.5">
-              <strong>929 / 954 คน Eligible</strong> ครบทุก fields · เหลือ <strong>25 คน (2.6%)</strong> · <strong>เกินเป้า +0.4pp</strong>
-            </div>
-            <div style="font-size:11px;color:#0a6b3c;margin-top:4px;line-height:1.5">
-              <strong>Progress ล่าสุด:</strong> +27 คน กรอกเพิ่ม (จาก 903→929) · 183 แบบฟอร์มใหม่ · ⚠→✓ Achieve
-            </div>
-            <div style="font-size:11px;color:#0a6b3c;margin-top:4px;line-height:1.5">
-              <strong>ที่เหลือ 25 คน:</strong> Non-Factory 1 · Factory 24 คน ใน 16 หน่วยงาน (ปิดต่อได้เพื่อ stretch Q3 target ≥99%)
-            </div>
-          </div>
-
-          <!-- Forecast (UPDATED — already achieved) -->
-          <div style="background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:8px;padding:9px 12px">
-            <div style="font-size:11px;color:var(--blue);font-weight:600;margin-bottom:4px">📈 Q2 Status: ✓ บรรลุแล้ว · Stretch สำหรับ Q3</div>
-            <div style="font-size:11px;color:#1e3a5f;line-height:1.7">
-              <div>🟢 <strong>Current (24 มิ.ย.)</strong> → <strong>97.4%</strong> ✓ บรรลุ Q2 target</div>
-              <div>🚀 <strong>Stretch (ปิดที่เหลือ 25 คน)</strong> → <strong>99.9%</strong> → เตรียม Q3 target ≥99%</div>
-              <div>📅 <strong>Q3 Target:</strong> ≥99% Accuracy + ≥95% Dashboard Coverage + ≥85% Manager Adoption</div>
-            </div>
-          </div>
-
-          <!-- Recommendation (UPDATED — pivot to Q3 prep) -->
-          <div style="background:rgba(13,143,82,0.08);border:1px solid rgba(13,143,82,0.25);border-radius:8px;padding:9px 12px">
-            <div style="font-size:11px;color:var(--green);font-weight:600;margin-bottom:4px">💡 Action ที่เหลือก่อน 30 มิ.ย. (Stretch + Q3 Prep)</div>
-            <div style="font-size:11px;color:#0a6b3c;line-height:1.6">
-              <div>1. <strong>ปิดที่เหลือ 25 คน</strong> — Stretch to 99% (เตรียม Q3 baseline)</div>
-              <div>2. <strong>Sample audit 30 records</strong> — ตรวจคุณภาพ 929 ที่ Finished — confidence check ก่อนรายงาน</div>
-              <div>3. <strong>Q2 Closing Report</strong> — pack ตัวเลขจริงส่งผู้บริหาร (ทั้ง 2 KPI บรรลุ)</div>
-              <div>4. <strong>Q3 Plan kickoff</strong> — Dashboard Coverage ≥95% + Manager Adoption Rate</div>
-            </div>
-          </div>
-        </div>
+    <!-- Current status bar (always visible) -->
+    <div class="q-status-bar">
+      <div class="q-mini">
+        <span class="q-mini-label">Q1 done</span>
+        <span class="q-mini-value" style="color:var(--green)">100% ✓</span>
+        <span class="q-mini-sub">บรรลุทั้ง 2 โครงการ</span>
       </div>
-
-      <!-- HR Tech Project -->
-      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
-          <div>
-            <div style="font-size:14px;font-weight:600;color:var(--text-primary)">🚀 HR Tech Project</div>
-            <div style="font-size:10px;color:var(--text-muted);font-family:var(--mono);margin-top:2px">PIC: Pornpetch K. / Tech project team</div>
-          </div>
-          <span class="badge badge-completed" style="font-size:9px;padding:3px 8px">✓ Likely Achieving</span>
-        </div>
-
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <!-- KPI 1: Adoption Rate -->
-          <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:8px;padding:9px 12px">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
-              <span style="font-size:12px;color:var(--green);font-weight:600">📊 Digital &amp; AI Adoption Rate</span>
-              <span style="font-size:11px;color:var(--green);font-family:var(--mono);font-weight:700">~80% / target ≥60%</span>
-            </div>
-            <div style="font-size:11px;color:#0a6b3c;margin-top:3px;line-height:1.5">Full HR Dept rollout · Genspark + Claude Cowork ใช้งานครบ · forecast Q2 close: <strong>78-82%</strong> (เกินเป้า)</div>
-          </div>
-
-          <!-- KPI 2: CSAT -->
-          <div style="background:var(--amber-dim);border:1px solid var(--amber-border);border-radius:8px;padding:9px 12px">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
-              <span style="font-size:12px;color:var(--amber);font-weight:600">😊 Customer Satisfaction (CSAT)</span>
-              <span style="font-size:11px;color:var(--amber);font-family:var(--mono);font-weight:700">รอผล Survey / target ≥70%</span>
-            </div>
-            <div style="font-size:11px;color:#78350f;margin-top:3px;line-height:1.5">Baseline = 85% (Q1) · ยังไม่ได้ทำ Survey รอบ 1-Month หลัง Genspark full rollout (พ.ค.) · ควรทำภายในสัปดาห์นี้</div>
-          </div>
-
-          <!-- Recommendation -->
-          <div style="background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:8px;padding:9px 12px">
-            <div style="font-size:11px;color:var(--blue);font-weight:600;margin-bottom:4px">💡 ข้อเสนอแนะการประเมินก่อนจบ Q2</div>
-            <div style="font-size:11px;color:#1e3a5f;line-height:1.6">
-              <div>1. <strong>ส่ง CSAT Survey 1-Month</strong> ทันที (Microsoft Form 5 คำถาม) ให้ HR Full Dept ภายใน 25-26 มิ.ย.</div>
-              <div>2. <strong>วัด Adoption rate</strong> จาก Genspark logs: Active users / Full HR Dept × 100</div>
-              <div>3. <strong>เก็บ Use Case จริง</strong>: รายชื่อ workflows ที่ใช้ Genspark + Cowork (อย่างน้อย 10 cases) — ใช้เป็น qualitative evidence</div>
-              <div>4. <strong>EA Chatbot</strong>: tracking สถิติการใช้งานหลังประกาศ Infographic — เพิ่มข้อมูล CSAT</div>
-            </div>
-          </div>
-        </div>
+      <div class="q-mini">
+        <span class="q-mini-label">Q2 done 🎉</span>
+        <span class="q-mini-value" style="color:var(--green)">96%</span>
+        <span class="q-mini-sub">Data 97.4% · HR Tech 91%</span>
       </div>
-
-    </div>
-
-    <!-- Critical actions checklist (UPDATED — Q2 achieved, focus on CSAT + Q3 prep) -->
-    <div style="margin-top:14px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 18px">
-      <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:8px">⏱ Action ก่อน 30 มิ.ย. — <span style="color:var(--green)">Q2 บรรลุเป้าแล้ว 🎉</span> · เหลือ CSAT Survey + Q3 Kickoff</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:11px;line-height:1.7">
-        <div style="background:#f0fdf4;border-left:3px solid var(--green);padding:8px 12px;border-radius:0 6px 6px 0">
-          <strong style="color:var(--green)">🟢 ปิดเป้า Q2 สุดท้าย — ภายใน 25-26 มิ.ย.</strong>
-          <ul style="margin:6px 0 0 16px;padding:0">
-            <li>📊 <strong>ส่ง CSAT Survey 1-Month</strong> (HR Tech) — 5 คำถาม MS Form ให้ HR Full Dept</li>
-            <li>📈 <strong>วัด Adoption Rate จริง</strong> จาก Genspark logs (Active users / Full HR Dept)</li>
-            <li>🎯 <strong>Stretch: ปิดที่เหลือ 25 คน</strong> Data Accuracy → 99% (เตรียม Q3 baseline)</li>
-          </ul>
-        </div>
-        <div style="background:#eff6ff;border-left:3px solid var(--blue);padding:8px 12px;border-radius:0 6px 6px 0">
-          <strong style="color:var(--blue)">🔵 Q3 Preparation — ภายใน 28-30 มิ.ย.</strong>
-          <ul style="margin:6px 0 0 16px;padding:0">
-            <li>📊 Sample audit 30 จาก 929 finished — confidence check</li>
-            <li>🤖 รวบรวม Genspark Use Case Library (≥10 cases)</li>
-            <li>📝 Q2 Closing Report — pack ตัวเลขจริงส่งผู้บริหาร</li>
-            <li>🚀 <strong>Q3 Kickoff:</strong> Dashboard Coverage ≥95% · Manager Adoption ≥85% · CSAT ≥80%</li>
-          </ul>
-        </div>
+      <div class="q-mini">
+        <span class="q-mini-label">Q3 upcoming</span>
+        <span class="q-mini-value" style="color:#7c3aed">85%</span>
+        <span class="q-mini-sub">projected readiness</span>
+      </div>
+      <div class="q-mini">
+        <span class="q-mini-label">Q4 future</span>
+        <span class="q-mini-value" style="color:var(--text-muted)">–</span>
+        <span class="q-mini-sub">planning phase</span>
       </div>
     </div>
 
-    <!-- Summary (UPDATED — Q2 achieved!) -->
-    <div style="margin-top:12px;background:linear-gradient(135deg,rgba(13,143,82,0.15),rgba(59,130,246,0.10));border:1px solid rgba(13,143,82,0.4);border-radius:10px;padding:14px 18px;font-size:12px;line-height:1.7;color:#0a6b3c">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-        <span style="font-size:20px">🎉</span>
-        <strong style="font-size:14px;color:var(--green)">Q2 บรรลุเป้าทั้ง 2 โครงการ (ล่าสุด 24 มิ.ย.)</strong>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px">
-        <div style="background:#fff;padding:8px 12px;border-radius:8px;border:1px solid var(--green-border)">
-          <strong style="color:var(--green)">📋 HR Data Based ✓</strong><br>
-          Timeline <strong>100%</strong> (+50pp) · Accuracy <strong>97.4%</strong> (+0.4pp)<br>
-          <span style="font-size:10px;color:var(--text-muted)">929/954 คน · เกินเป้าทั้ง 2 KPI</span>
+    <!-- ▼ Q1 · Jan-Mar 2026 -->
+    <details class="q-accord">
+      <summary>
+        <div class="q-title-row">
+          <strong>Q1 · ม.ค.–มี.ค. 2026</strong>
+          <span class="q-tag done">✓ Achieved 100%</span>
         </div>
-        <div style="background:#fff;padding:8px 12px;border-radius:8px;border:1px solid var(--green-border)">
-          <strong style="color:var(--green)">🚀 HR Tech Project ✓</strong><br>
-          Adoption <strong>~80%</strong> (+20pp) · CSAT <strong>รอ Survey</strong> (baseline 85%)<br>
-          <span style="font-size:10px;color:var(--text-muted)">Full HR Dept Active · CSAT ใกล้บรรลุแน่</span>
+        <span style="font-size:11px;color:var(--text-muted);font-family:var(--mono)">Foundation Phase</span>
+      </summary>
+      <div class="q-body">
+        <div class="q-col">
+          <div class="q-col-title">📋 HR Data Based</div>
+          <div class="q-kpi-row ok">
+            <span>Timeline Progress</span>
+            <strong>100% / target 25%</strong>
+          </div>
+          <div class="q-kpi-row ok">
+            <span>Data Accuracy</span>
+            <strong>98% / target ≥95%</strong>
+          </div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;padding:6px 8px;background:#f8fafc;border-radius:6px;line-height:1.6">
+            <strong>สรุป:</strong> วางโครงสร้าง Data Master · Setup SharePoint + Notion Template · Data Cleansing เริ่มต้น
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── 🎯 Q3 FORWARD-LOOKING PROGRESS (Jul-Sep 2026) ── -->
-  <div style="background:linear-gradient(135deg,#f0f9ff 0%,#faf5ff 100%);border:1px solid rgba(139,92,246,0.28);border-radius:14px;padding:20px 22px;margin-bottom:16px">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px">
-      <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:11px;font-family:var(--mono);background:rgba(139,92,246,0.14);color:#7c3aed;padding:5px 12px;border-radius:999px;border:1px solid rgba(139,92,246,0.35);text-transform:uppercase;letter-spacing:0.1em">🎯 Q3 Progress Forecast</span>
-        <span style="font-size:12px;color:var(--text-secondary)">Q3 = ก.ค.–ก.ย. 2026 · Progress % vs Q3 target · Baseline จาก Q2 end-state</span>
-      </div>
-      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">Runway ~90 วัน</span>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-
-      <!-- ═══ HR Data Based (Q3) ═══ -->
-      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:11px">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
-          <div>
-            <div style="font-size:14px;font-weight:600;color:var(--text-primary)">📋 HR Data Based · Q3</div>
-            <div style="font-size:10px;color:var(--text-muted);font-family:var(--mono);margin-top:2px">4 KPIs · เพิ่ม Dashboard Coverage + Manager Adoption</div>
+        <div class="q-col">
+          <div class="q-col-title">🚀 HR Tech Project</div>
+          <div class="q-kpi-row ok">
+            <span>Digital & AI Adoption</span>
+            <strong>77.5% / target ≥40%</strong>
           </div>
-          <span class="badge badge-onprocess" style="font-size:9px;padding:3px 8px">📊 On Track (avg)</span>
-        </div>
-
-        <!-- KPI 1: Timeline -->
-        <div style="display:flex;flex-direction:column;gap:3px">
-          <div style="display:flex;justify-content:space-between;font-size:11px">
-            <span><strong style="color:var(--green)">✓ Timeline Progress</strong> · target 75%</span>
-            <span style="color:var(--green);font-family:var(--mono);font-weight:700">100% / 75% → 100% ✓</span>
+          <div class="q-kpi-row ok">
+            <span>Customer Satisfaction</span>
+            <strong>85% / target ≥50%</strong>
           </div>
-          <div style="height:8px;background:var(--bg3);border-radius:6px;overflow:hidden;position:relative">
-            <div style="height:100%;width:100%;background:linear-gradient(90deg,#22c55e,#16a34a);border-radius:6px"></div>
-            <div style="position:absolute;left:75%;top:-2px;bottom:-2px;width:2px;background:#7c3aed" title="Q3 target 75%"></div>
-          </div>
-          <div style="font-size:10px;color:var(--text-muted)">🟣 เส้นม่วง = Q3 target · ✓ เกินเป้าแล้ว (Q2 บรรลุ)</div>
-        </div>
-
-        <!-- KPI 2: Data Accuracy -->
-        <div style="display:flex;flex-direction:column;gap:3px">
-          <div style="display:flex;justify-content:space-between;font-size:11px">
-            <span><strong style="color:var(--amber)">⚠ Data Accuracy</strong> · target ≥99%</span>
-            <span style="color:var(--amber);font-family:var(--mono);font-weight:700">97.4% / 99% → 98% progress</span>
-          </div>
-          <div style="height:8px;background:var(--bg3);border-radius:6px;overflow:hidden;position:relative">
-            <div style="height:100%;width:97.4%;background:linear-gradient(90deg,#eab308,#d97706);border-radius:6px"></div>
-            <div style="position:absolute;left:99%;top:-2px;bottom:-2px;width:2px;background:#7c3aed" title="Q3 target 99%"></div>
-          </div>
-          <div style="font-size:10px;color:var(--text-muted)">ขาดอีก 1.6pp · ปิด 25 คนที่เหลือ = 99.9% ✓</div>
-        </div>
-
-        <!-- KPI 3: Dashboard Coverage -->
-        <div style="display:flex;flex-direction:column;gap:3px">
-          <div style="display:flex;justify-content:space-between;font-size:11px">
-            <span><strong style="color:var(--blue)">📊 Dashboard Coverage</strong> · target ≥95%</span>
-            <span style="color:var(--blue);font-family:var(--mono);font-weight:700">~80% / 95% → 84% progress</span>
-          </div>
-          <div style="height:8px;background:var(--bg3);border-radius:6px;overflow:hidden;position:relative">
-            <div style="height:100%;width:80%;background:linear-gradient(90deg,#3b82f6,#2563eb);border-radius:6px"></div>
-            <div style="position:absolute;left:95%;top:-2px;bottom:-2px;width:2px;background:#7c3aed" title="Q3 target 95%"></div>
-          </div>
-          <div style="font-size:10px;color:var(--text-muted)">Workforce · Trend · Manager Insight · ต้องเพิ่ม Retirement + Compensation dashboards</div>
-        </div>
-
-        <!-- KPI 4: Manager Adoption -->
-        <div style="display:flex;flex-direction:column;gap:3px">
-          <div style="display:flex;justify-content:space-between;font-size:11px">
-            <span><strong style="color:var(--red)">👔 User Adoption (Manager)</strong> · target ≥85%</span>
-            <span style="color:var(--red);font-family:var(--mono);font-weight:700">รอวัด / 85% → 0% baseline</span>
-          </div>
-          <div style="height:8px;background:var(--bg3);border-radius:6px;overflow:hidden;position:relative">
-            <div style="height:100%;width:2%;background:linear-gradient(90deg,#ef4444,#dc2626);border-radius:6px"></div>
-            <div style="position:absolute;left:85%;top:-2px;bottom:-2px;width:2px;background:#7c3aed" title="Q3 target 85%"></div>
-          </div>
-          <div style="font-size:10px;color:var(--text-muted)">🚨 ต้องเริ่มวัด Manager usage — ยังไม่มี tracking · Priority ที่ 1 ของ Q3</div>
-        </div>
-
-        <!-- Data Based Q3 Focus -->
-        <div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.25);border-radius:8px;padding:8px 11px;margin-top:2px">
-          <div style="font-size:10px;color:#7c3aed;font-weight:600;margin-bottom:3px">🎯 Q3 Focus (HR Data Based)</div>
-          <div style="font-size:10px;color:var(--text-secondary);line-height:1.6">
-            1. ปิด Data Accuracy → 99% (Aug) ·
-            2. Launch Dashboard Coverage: +Retirement +Comp (ก.ค.) ·
-            3. <strong>เริ่ม Manager Adoption tracking</strong> (baseline ก.ค.)
+          <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;padding:6px 8px;background:#f8fafc;border-radius:6px;line-height:1.6">
+            <strong>Milestones:</strong><br>
+            • HR AI Rec v2: AI Interview Assistance/ChatBot/EA DNA ✓<br>
+            • EASY Chatbot: KB + Content Update ✓<br>
+            • Frappe: Manual + Robot Import ✓<br>
+            • Genspark AI Trial 5/5 ผ่าน 98.2/100 ✓
           </div>
         </div>
       </div>
+    </details>
 
-      <!-- ═══ HR Tech Project (Q3) ═══ -->
-      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:11px">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
-          <div>
-            <div style="font-size:14px;font-weight:600;color:var(--text-primary)">🚀 HR Tech Project · Q3</div>
-            <div style="font-size:10px;color:var(--text-muted);font-family:var(--mono);margin-top:2px">2 KPIs · Digital Adoption + CSAT</div>
-          </div>
-          <span class="badge badge-completed" style="font-size:9px;padding:3px 8px">✓ On Track</span>
+    <!-- ▼ Q2 · Apr-Jun 2026 (CURRENT — default open) -->
+    <details class="q-accord" open>
+      <summary>
+        <div class="q-title-row">
+          <strong>Q2 · เม.ย.–มิ.ย. 2026</strong>
+          <span class="q-tag now">🎉 Achieved · Now</span>
         </div>
-
-        <!-- KPI 1: Adoption Rate -->
-        <div style="display:flex;flex-direction:column;gap:3px">
-          <div style="display:flex;justify-content:space-between;font-size:11px">
-            <span><strong style="color:var(--green)">✓ Digital &amp; AI Adoption</strong> · target ≥70%</span>
-            <span style="color:var(--green);font-family:var(--mono);font-weight:700">~80% / 70% → 100% ✓</span>
+        <span style="font-size:11px;color:var(--text-muted);font-family:var(--mono)">Phase 1 Complete</span>
+      </summary>
+      <div class="q-body">
+        <div class="q-col">
+          <div class="q-col-title">📋 HR Data Based ✓ บรรลุ</div>
+          <div class="q-kpi-row ok">
+            <span>Timeline Progress</span>
+            <strong>100% / target 50%</strong>
           </div>
-          <div style="height:8px;background:var(--bg3);border-radius:6px;overflow:hidden;position:relative">
-            <div style="height:100%;width:80%;background:linear-gradient(90deg,#22c55e,#16a34a);border-radius:6px"></div>
-            <div style="position:absolute;left:70%;top:-2px;bottom:-2px;width:2px;background:#7c3aed" title="Q3 target 70%"></div>
+          <div class="q-kpi-row ok">
+            <span>Data Accuracy 🎉</span>
+            <strong>97.4% / target ≥97%</strong>
           </div>
-          <div style="font-size:10px;color:var(--text-muted)">เกินเป้า +10pp · Genspark + Cowork Full HR Dept active</div>
-        </div>
-
-        <!-- KPI 2: CSAT -->
-        <div style="display:flex;flex-direction:column;gap:3px">
-          <div style="display:flex;justify-content:space-between;font-size:11px">
-            <span><strong style="color:var(--green)">✓ Customer Satisfaction (CSAT)</strong> · target ≥80%</span>
-            <span style="color:var(--green);font-family:var(--mono);font-weight:700">85% (Q1) → 100% projected</span>
-          </div>
-          <div style="height:8px;background:var(--bg3);border-radius:6px;overflow:hidden;position:relative">
-            <div style="height:100%;width:85%;background:linear-gradient(90deg,#22c55e,#16a34a);border-radius:6px"></div>
-            <div style="position:absolute;left:80%;top:-2px;bottom:-2px;width:2px;background:#7c3aed" title="Q3 target 80%"></div>
-          </div>
-          <div style="font-size:10px;color:var(--text-muted)">Baseline Q1 = 85% · ต้องส่ง Survey 3-Month (ก.ย.) เพื่อ confirm</div>
-        </div>
-
-        <!-- HR Tech Q3 New Deliverables -->
-        <div style="background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:8px;padding:9px 12px;margin-top:2px">
-          <div style="font-size:11px;color:var(--blue);font-weight:600;margin-bottom:5px">📦 Q3 Deliverables ใหม่</div>
-          <div style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:#1e3a5f;line-height:1.5">
-            <div>• <strong>PVD Form Online</strong> — Pilot + Rollout (Task ①)</div>
-            <div>• <strong>HRM Dashboard Suite</strong> — Turnover + Insurance Go-live (Task ②)</div>
-            <div>• <strong>Memo Manday @core</strong> — วันลาพักร้อน customization (Task ⑦, deadline 14 Aug)</div>
-            <div>• <strong>Genspark Use Case Library</strong> — ≥20 cases (expand จาก Q2 target 10)</div>
-            <div>• <strong>Factory AI Adoption</strong> — push to ≥85% (Task ⑤)</div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;padding:6px 8px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;line-height:1.6">
+            <strong>Highlights:</strong><br>
+            • Eligible 954 · Finished <strong style="color:var(--green)">929</strong> · Remaining 25 (2.6%)<br>
+            • +27 คน กรอกเพิ่มในรอบสุดท้าย · 183 แบบฟอร์ม<br>
+            • Non-Factory 1 · Factory 24 ใน 16 หน่วยงาน<br>
+            • Progress: 79.3% → 94.6% → <strong>97.4%</strong> ✓ Q2 บรรลุ
           </div>
         </div>
-
-        <!-- HR Tech Q3 Focus -->
-        <div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.25);border-radius:8px;padding:8px 11px">
-          <div style="font-size:10px;color:#7c3aed;font-weight:600;margin-bottom:3px">🎯 Q3 Focus (HR Tech)</div>
-          <div style="font-size:10px;color:var(--text-secondary);line-height:1.6">
-            1. Sustain Adoption ≥70% + ปิด Factory ≥85% ·
-            2. CSAT Survey 3-Month (ก.ย.) ·
-            3. Deliver PVD Online + HRM Dashboards
+        <div class="q-col">
+          <div class="q-col-title">🚀 HR Tech Project ✓ บรรลุ</div>
+          <div class="q-kpi-row ok">
+            <span>Digital & AI Adoption</span>
+            <strong>~80% / target ≥60%</strong>
+          </div>
+          <div class="q-kpi-row pending">
+            <span>CSAT (รอ Survey 1-Month)</span>
+            <strong>~85% projected / ≥70%</strong>
+          </div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;padding:6px 8px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;line-height:1.6">
+            <strong>Go-Live Milestones:</strong><br>
+            • HR AI Recruitment v2 → ✓ Go-live ต้น พ.ค.<br>
+            • EA Chatbot (EASY) → ✓ Go-live 11 พ.ค. · Infographic launch<br>
+            • Genspark + Claude Cowork → ✓ Full HR Dept rollout<br>
+            • Frappe: 75% (Field Expansion — ประเมิน Manday eUnite)
           </div>
         </div>
       </div>
+    </details>
 
-    </div>
-
-    <!-- Q3 Priority + Progress Meter Summary -->
-    <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:11px 14px">
-        <div style="font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:8px">📊 Q3 Overall Readiness</div>
-        <div style="display:flex;flex-direction:column;gap:6px;font-size:11px">
-          <div>
-            <div style="display:flex;justify-content:space-between"><span>HR Data Based</span><span style="font-family:var(--mono);font-weight:700">avg 71%</span></div>
-            <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:2px">
-              <div style="height:100%;width:71%;background:linear-gradient(90deg,#eab308,#22c55e);border-radius:4px"></div>
-            </div>
+    <!-- ▼ Q3 · Jul-Sep 2026 (NEXT — default open) -->
+    <details class="q-accord" open>
+      <summary>
+        <div class="q-title-row">
+          <strong>Q3 · ก.ค.–ก.ย. 2026</strong>
+          <span class="q-tag next">🎯 Focus · Upcoming</span>
+        </div>
+        <span style="font-size:11px;color:var(--text-muted);font-family:var(--mono)">Expansion Phase</span>
+      </summary>
+      <div class="q-body">
+        <div class="q-col">
+          <div class="q-col-title">📋 HR Data Based · 4 KPIs</div>
+          <div class="q-kpi-row ok">
+            <span>Timeline (baseline 100%)</span>
+            <strong>maintain / target 75%</strong>
           </div>
-          <div>
-            <div style="display:flex;justify-content:space-between"><span>HR Tech Project</span><span style="font-family:var(--mono);font-weight:700">avg 100%</span></div>
-            <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:2px">
-              <div style="height:100%;width:100%;background:linear-gradient(90deg,#22c55e,#16a34a);border-radius:4px"></div>
-            </div>
+          <div class="q-kpi-row warn">
+            <span>Data Accuracy</span>
+            <strong>97.4% → 99% / target ≥99%</strong>
           </div>
-          <div style="margin-top:4px;padding-top:6px;border-top:1px dashed var(--border)">
-            <div style="display:flex;justify-content:space-between"><strong>🎯 Combined Q3 Progress</strong><strong style="color:#7c3aed;font-family:var(--mono)">avg ~85%</strong></div>
-            <div style="height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:3px">
-              <div style="height:100%;width:85%;background:linear-gradient(90deg,#8b5cf6,#22c55e);border-radius:4px"></div>
-            </div>
+          <div class="q-kpi-row warn">
+            <span>Dashboard Coverage</span>
+            <strong>~80% / target ≥95%</strong>
+          </div>
+          <div class="q-kpi-row" style="background:#fef2f2;border-color:#fecaca;color:#b91c1c">
+            <span>Manager Adoption ⚠</span>
+            <strong>รอวัด / target ≥85%</strong>
+          </div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;padding:6px 8px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;line-height:1.6">
+            <strong>Q3 Focus:</strong><br>
+            • ปิด 25 คน remaining → Accuracy 99.9%<br>
+            • +Retirement + Compensation dashboards<br>
+            • 🚨 <strong>Start Manager Adoption tracking</strong> (Priority #1)
+          </div>
+        </div>
+        <div class="q-col">
+          <div class="q-col-title">🚀 HR Tech · 2 KPIs + Deliverables</div>
+          <div class="q-kpi-row ok">
+            <span>Digital & AI Adoption</span>
+            <strong>~80% / target ≥70%</strong>
+          </div>
+          <div class="q-kpi-row ok">
+            <span>CSAT</span>
+            <strong>85% (Q1) / target ≥80%</strong>
+          </div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;padding:6px 8px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;line-height:1.6">
+            <strong>New Deliverables Q3:</strong><br>
+            • PVD Form Online → Pilot + Rollout<br>
+            • HRM Dashboard Suite (Turnover · Insurance Go-live)<br>
+            • <strong style="color:var(--red)">Memo Manday @core</strong> — deadline 14 Aug<br>
+            • Factory AI Adoption → push ≥85%<br>
+            • Genspark Use Case Library → 20 cases
           </div>
         </div>
       </div>
+    </details>
 
-      <div style="background:rgba(220,38,38,0.05);border:1px solid rgba(220,38,38,0.22);border-radius:10px;padding:11px 14px">
-        <div style="font-size:12px;font-weight:600;color:var(--red);margin-bottom:6px">🚨 Q3 Critical Items (ต้องเริ่มทำก่อน ก.ค.)</div>
-        <div style="display:flex;flex-direction:column;gap:5px;font-size:11px;color:var(--text-secondary);line-height:1.5">
-          <div>🔴 <strong>Manager Adoption Tracking</strong> — ยังไม่มี baseline · Priority #1</div>
-          <div>🟡 <strong>Dashboard Coverage +Retirement +Comp</strong> — ขาด 15pp</div>
-          <div>🟡 <strong>Data Accuracy stretch</strong> 97.4% → 99% (ปิด 25 คน)</div>
-          <div>🟢 <strong>Timeline · Adoption · CSAT</strong> — เกินเป้าแล้ว (maintain)</div>
+    <!-- ▼ Q4 · Oct-Dec 2026 (FUTURE — default closed) -->
+    <details class="q-accord">
+      <summary>
+        <div class="q-title-row">
+          <strong>Q4 · ต.ค.–ธ.ค. 2026</strong>
+          <span class="q-tag future">📅 Planned · Future</span>
+        </div>
+        <span style="font-size:11px;color:var(--text-muted);font-family:var(--mono)">Optimization & Audit</span>
+      </summary>
+      <div class="q-body">
+        <div class="q-col">
+          <div class="q-col-title">📋 HR Data Based · Final Targets</div>
+          <div class="q-kpi-row pending">
+            <span>Timeline Progress</span>
+            <strong>target 100%</strong>
+          </div>
+          <div class="q-kpi-row pending">
+            <span>Data Accuracy</span>
+            <strong>target ≥99% (sustain)</strong>
+          </div>
+          <div class="q-kpi-row pending">
+            <span>Dashboard Coverage</span>
+            <strong>target 100%</strong>
+          </div>
+          <div class="q-kpi-row pending">
+            <span>Manager Adoption</span>
+            <strong>target ≥90%</strong>
+          </div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;padding:6px 8px;background:#f8fafc;border-radius:6px;line-height:1.6">
+            <strong>Q4 Deliverables:</strong> ROI Review · KPI Report · PDPA & Audit Ready · Full System Documentation
+          </div>
+        </div>
+        <div class="q-col">
+          <div class="q-col-title">🚀 HR Tech · Final Push</div>
+          <div class="q-kpi-row pending">
+            <span>Digital & AI Adoption</span>
+            <strong>target ≥80%</strong>
+          </div>
+          <div class="q-kpi-row pending">
+            <span>CSAT</span>
+            <strong>target ≥90%</strong>
+          </div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;padding:6px 8px;background:#f8fafc;border-radius:6px;line-height:1.6">
+            <strong>Q4 Actions:</strong><br>
+            • Final CSAT Survey (Year-end)<br>
+            • Genspark: Full Integration + Standard workflows<br>
+            • Prepare Year-End Report + Q1 2027 Plan<br>
+            • Handover documentation
+          </div>
         </div>
       </div>
+    </details>
+
+    <!-- Summary footer -->
+    <div style="margin-top:12px;background:linear-gradient(135deg,rgba(13,143,82,0.1),rgba(139,92,246,0.06));border:1px solid rgba(13,143,82,0.25);border-radius:10px;padding:11px 14px;font-size:12px;color:#0a6b3c;line-height:1.7">
+      <strong>📌 Current Status Overall:</strong>
+      🎉 Q1 ✓ + Q2 ✓ บรรลุครบ · Q3 Focus <strong>Manager Adoption tracking</strong> (Priority #1) + Data 99% stretch + Dashboard Coverage · Q4 = Optimize & Audit
     </div>
   </div>
 
