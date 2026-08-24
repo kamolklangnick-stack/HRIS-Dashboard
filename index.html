@@ -3377,26 +3377,26 @@ body.locked #site-footer {
       </div>
     
 
-      <div class="tracker-card accent-gray" data-kpi-no="2">
+      <div class="tracker-card accent-green" data-kpi-no="2">
         <div class="tracker-card-top">
           <div>
             <span class="tracker-kpi-no">KPI 2</span>
             <h3>HRIS User Satisfaction - HR Staff, Line Managers &amp; Employees</h3>
           </div>
-          <span class="tracker-pill pending" data-kpi-pill>Awaiting actual</span>
+          <span class="tracker-pill ontrack" data-kpi-pill>✓ Q1+Q2 Achieved</span>
         </div>
         <div class="tracker-meta-grid">
-          <div><span class="tracker-meta-label">Target</span><strong>≥90%</strong></div>
-          <div><span class="tracker-meta-label">KPI</span><strong>%Internal HRIS User Satisfaction</strong></div>
+          <div><span class="tracker-meta-label">Target</span><strong>≥90% (Yr)</strong></div>
+          <div><span class="tracker-meta-label">KPI</span><strong>%Internal HRIS User Satisfaction (Adoption + CSAT)</strong></div>
         </div>
         <div class="tracker-callout">
-          <span class="tracker-callout-label">Current signal</span>
-          <strong>User satisfaction &amp; SLA tracker</strong>
-          <span>ในไฟล์ Action Plan ยังไม่มี Actual Result / survey result ที่กรอกไว้</span>
+          <span class="tracker-callout-label">เป้าหมายรายไตรมาส (Adoption + CSAT)</span>
+          <strong>Q1 Ad 77.5% ✓ · CSAT 85.0% ✓ &nbsp;|&nbsp; Q2 Ad 67.0% ✓ · CSAT 83.3% ✓</strong>
+          <span>Non-Factory: Ad 85.0% ✓ · CSAT 83.6% ✓ &nbsp;|&nbsp; Factory: Ad 20.0% ⚠ · CSAT 80.0% ✓ &nbsp;|&nbsp; Q3/Q4 รอผลสำรวจ 3-Month</span>
         </div>
-        <div class="tracker-progress-row"><span>Progress</span><span>Pending actual</span></div>
-            <div class="tracker-progress tracker-progress-dashed"></div>
-        <div class="tracker-note">ควรเติมคะแนนความพึงพอใจ, SLA 3 วันทำการ และ accuracy rate รายเดือน</div>
+        <div class="tracker-progress-row"><span>Progress (Q2 CSAT)</span><span>83.3%</span></div>
+            <div class="tracker-progress"><div class="tracker-progress-fill green" style="width:83.3%"></div></div>
+        <div class="tracker-note">🎉 Q1+Q2 บรรลุครบ (Ad ≥40/≥60 · CSAT ≥50/≥70) · Q2 baseline: Ad จาก 18 คน + CSAT จาก 15 คน (month_1) · Factory Ad ต่ำกว่าเป้า → Q3 push ≥85% + upskill workshop</div>
         <div class="tracker-actions">
           <span class="tracker-actions-title">Key activities from source file</span>
           <ul><li><strong>ส่งมอบงานแก่ Internal &amp; External Customer ตามเวลาที่กำหนด</strong> — SLA ไม่เกิน 3 วันทำการ</li><li><strong>Accuracy rate</strong> — % Accuracy above 90% each month</li><li><strong>Excellent quolity</strong> — ส่งมอบงานที่มีคุณภาพ Reject &amp; Complaint &lt;10%</li></ul>
@@ -30265,7 +30265,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   // Baseline progress (used when no Excel data is filled in / for Reset)
   const BASELINE = {
     1: { progress: 80.0, label: '80.0%',     pill: { cls:'ontrack',   text:'✓ Target Achieved' },        actual: 'Eligible 954 · Finished 929 · Remaining 25 · Q2 ✓ บรรลุ 97.4%' },
-    2: { progress: null, label: 'Pending actual', pill: { cls:'pending', text:'Awaiting actual' }, actual: 'ในไฟล์ Action Plan ยังไม่มี Actual Result / survey result ที่กรอกไว้' },
+    2: { progress: 83.3, label: '83.3%',     pill: { cls:'ontrack', text:'✓ Q1+Q2 Achieved' },   actual: 'Q1 Ad 77.5% ✓ · CSAT 85.0% ✓ | Q2 Ad 67.0% ✓ · CSAT 83.3% ✓ (Non-Factory 85/83.6 · Factory 20/80 · Q3/Q4 รอผล)' },
     3: { progress: 96,   label: '96.0%',     pill: { cls:'onprocess', text:'Linked with Tab 1' },actual: 'อ้างอิง Executive Dashboard ใน Tab 1 — Overall 96% (Payroll 100% · Data Hub 97% ✓ · HR Tech 91%) · 🎉 Q2 บรรลุ' },
     4: { progress: null, label: 'Pending actual', pill: { cls:'pending', text:'Awaiting actual' }, actual: 'ในไฟล์ Action Plan ยังไม่มี actual defect / audit pass rate ที่กรอกไว้' },
     5: { progress: 91,   label: '91.0%',     pill: { cls:'ontrack', text:'✓ Target Exceeded' },        actual: 'Phase 1 ✓ ครบ · AI Rec 100% ✓ · EASY 100% ✓ · Frappe 75% (P1 ใช้·P2 รอ IT) · Genspark 90% 🚀+Cowork+Claude AI · Q3: Memo 22 ก.ย. · PVD Dev · CSAT 3M' }
