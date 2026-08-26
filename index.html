@@ -27,15 +27,30 @@
   var wk = Math.ceil((((tmp - yStart)/86400000) + 1)/7);
   var label = DAYS_TH[d.getDay()] + ' ' + day + ' ' + MONTHS_TH[m] + ' · W' + wk;
 
-  // Update pin label after DOM ready
-  function updatePin(){
-    var pin = document.querySelector('#tlNowPin .pin-label');
-    if (pin) pin.textContent = label;
+  // Format "ณ 26 ส.ค. 2569" (Buddhist Era)
+  var beYear = d.getFullYear() + 543;
+  var thaiDate = day + ' ' + MONTHS_TH[m] + ' ' + beYear;
+  var thaiPrefixDate = 'ณ ' + thaiDate;
+
+  // Determine current Quarter (Q1..Q4)
+  var qNum = Math.floor(m / 3) + 1;
+
+  function updateAll(){
+    // Pin label — "Wed 26 ส.ค. · W35"
+    document.querySelectorAll('#tlNowPin .pin-label').forEach(function(el){ el.textContent = label; });
+    // Today badges — "ณ 26 ส.ค. 2569"
+    document.querySelectorAll('[data-hris-bind="todayDate"]').forEach(function(el){ el.textContent = thaiPrefixDate; });
+    // Today Q badge
+    document.querySelectorAll('[data-hris-bind="todayQ"]').forEach(function(el){ el.textContent = thaiPrefixDate + ' · Q' + qNum + ' Active'; });
+    // Projects header
+    document.querySelectorAll('[data-hris-bind="todayProjectsHeader"]').forEach(function(el){ el.textContent = '18 PROJECTS OVERVIEW — ' + thaiPrefixDate; });
+    // "อัพเดต 26 ส.ค. 2569" style
+    document.querySelectorAll('[data-hris-bind="todayUpdate"]').forEach(function(el){ el.textContent = 'อัพเดต ' + thaiDate; });
   }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', updatePin);
+    document.addEventListener('DOMContentLoaded', updateAll);
   } else {
-    updatePin();
+    updateAll();
   }
 })();
 </script>
@@ -1248,7 +1263,7 @@ body.locked #site-footer {
       <span>Project support by</span>
       <strong>Thanutt K.</strong>
     </div>
-    <div class="date-badge" data-hris-bind="todayDate">ณ 24 มิ.ย. 2569</div>
+    <div class="date-badge" data-hris-bind="todayDate"></div>
   </div>
 </div>
 
@@ -1292,7 +1307,7 @@ body.locked #site-footer {
   <div class="alert-banner" style="background:linear-gradient(135deg,#f8fafc 0%,#eef6ff 100%);border-color:rgba(26,110,199,0.22)">
     <span class="alert-icon">📍</span>
     <div class="alert-content">
-      <div class="alert-title" style="color:var(--blue)" data-hris-bind="alertTitle">Executive update — 🎉 Q2 บรรลุทั้ง 2 โครงการ · Data Accuracy 97.4% · HR Tech 91% (อัพเดต 24 มิ.ย. 2569)</div>
+      <div class="alert-title" style="color:var(--blue)" data-hris-bind="alertTitle"></div>
       <div class="alert-items">
         <div class="alert-item" style="color:#166534">
           <div class="alert-item-dot" style="background:var(--green)"></div>
@@ -1368,7 +1383,7 @@ body.locked #site-footer {
         <span class="q-badge">📅 Quarterly Timeline · Q1–Q4 2026</span>
         <span style="font-size:12px;color:var(--text-secondary)">คลิกแต่ละ Q เพื่อดูรายละเอียด · Q2 = ปัจจุบัน</span>
       </div>
-      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)">อัพเดต 24 มิ.ย. 2569</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)" data-hris-bind="todayUpdate"></span>
     </header>
 
     <!-- Current status bar (always visible) -->
@@ -1821,7 +1836,7 @@ body.locked #site-footer {
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
         <span class="badge badge-completed" style="font-size:11px;padding:5px 14px">🎉 Q2 บรรลุ · Q3 On Track</span>
-        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)" data-hris-bind="todayDate">ณ 24 มิ.ย. 2569</span>
+        <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)" data-hris-bind="todayDate"></span>
       </div>
     </div>
 
@@ -2328,7 +2343,7 @@ body.locked #site-footer {
           <span class="phase-tag phase-tag-green">Q2</span>
           <div class="phase-content">
             <span class="phase-title">Database – Data Accuracy Progress (Q2 บรรลุ 🎉)</span>
-            <span class="phase-target" data-hris-bind="phaseTargetCleansing">ณ 24 มิ.ย. 2569 — Eligible 954 คน · Finished 929 (97.4%) · Remaining 25 (2.6%)</span>
+            <span class="phase-target" data-hris-bind="phaseTargetCleansing"></span>
             <div style="margin-top:6px;background:var(--green-dim);border:1px solid var(--green-border);border-radius:6px;padding:7px 10px;display:flex;flex-direction:column;gap:6px">
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
                 <span style="font-size:11px;color:var(--green);font-weight:600">Data Accuracy: 97.4% (Finished / Eligible)</span>
@@ -2746,7 +2761,7 @@ body.locked #site-footer {
       <div style="display:grid;grid-template-columns:190px 1fr;gap:10px;align-items:center;margin-bottom:6px;height:28px">
         <div></div>
         <div style="position:relative;height:28px">
-          <div class="tl2-now-pin" id="tlNowPin" data-hris-bind="tlNowPin" style="position:absolute;top:0;left:var(--hris-today-pos, 35.5%);transform:translateX(-50%);z-index:50;pointer-events:none"><div class="pin-label">Wed 26 ส.ค. · W35</div></div>
+          <div class="tl2-now-pin" id="tlNowPin" style="position:absolute;top:0;left:var(--hris-today-pos, 35.5%);transform:translateX(-50%);z-index:50;pointer-events:none"><div class="pin-label"></div></div>
         </div>
       </div>
       <div class="tl2-body" style="position:relative">
@@ -2954,7 +2969,7 @@ body.locked #site-footer {
 </div>
 
 <!-- ══════════════════════════════════════════════════════
-     <span data-hris-bind="todayProjectsHeader">18 PROJECTS OVERVIEW — ณ 24 มิ.ย. 2569</span>
+     <span data-hris-bind="todayProjectsHeader"></span>
      ══════════════════════════════════════════════════════ -->
 <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;margin:0 0 24px;overflow:hidden">
 
@@ -2965,7 +2980,7 @@ body.locked #site-footer {
       <span style="font-size:15px;font-weight:600;color:var(--text-primary)">สถานะโครงการทั้งหมด — แผนปี 2569</span>
     </div>
     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-      <span style="font-size:10px;font-family:var(--mono);color:var(--text-muted)" data-hris-bind="todayQ">ณ 24 มิ.ย. 2569 · Q2 Active</span>
+      <span style="font-size:10px;font-family:var(--mono);color:var(--text-muted)" data-hris-bind="todayQ"></span>
       <span style="font-size:10px;font-family:var(--mono);padding:4px 12px;border-radius:20px;background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border)">● 17 On Process &nbsp;|&nbsp; 1 Completed</span>
     </div>
   </div>
@@ -3293,7 +3308,7 @@ body.locked #site-footer {
       <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);font-family:var(--mono)"><span style="width:10px;height:6px;background:var(--amber);border-radius:2px;display:inline-block"></span>On Process</span>
       <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);font-family:var(--mono)"><span style="width:10px;height:6px;background:var(--red);border-radius:2px;display:inline-block"></span>Pending / Action Required</span>
     </div>
-    <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)" data-hris-bind="mayUpdateNote">+JUN = 🎉 Q2 บรรลุทั้ง 2 โครงการ · Data Accuracy 97.4% · HR Tech 91% · ณ 24 มิ.ย. 2569</span>
+    <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono)" data-hris-bind="mayUpdateNote"></span>
   </div>
 
 </div>
@@ -3309,7 +3324,7 @@ body.locked #site-footer {
       </div>
       <div class="summary-hero-side">
         <span class="tracker-pill onprocess">Summary Tab</span>
-        <span class="date-badge" id="summaryDate" data-hris-bind="todayDate">ณ 24 มิ.ย. 2569</span>
+        <span class="date-badge" id="summaryDate" data-hris-bind="todayDate"></span>
       </div>
     </div>
 
@@ -30649,7 +30664,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
       active: 954, finished: 929, submitted: 0, unfinish: 0, notStart: 25,
       coverage: 97.4, finishedPct: 97.4, submittedPct: 0, unfinishPct: 0, notStartPct: 2.6,
       defectRate: 2.6, fieldFillRate: 97.4,
-      lastSync: 'ณ 24 มิ.ย. 2569 (Q2 บรรลุ)'
+      lastSync: (function(){ const d=new Date(); return 'ณ ' + d.toLocaleDateString('th-TH', {day:'numeric',month:'short',year:'numeric'}); })()
     },
     kpiExcel: {
       kpis: {
@@ -30772,6 +30787,24 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     { sel: '[data-kpi-no="1"] .tracker-callout span:last-child', text: s => {
         const dm = s.dataMaster;
         return 'Eligible ' + dm.active + ' · Finished ' + dm.finished + ' · Remaining ' + dm.notStart + ' · Q2 ✓ บรรลุ 97.4%';
+      } },
+
+    // ── Executive alert title (dynamic date) ──
+    { sel: '[data-hris-bind="alertTitle"]', text: s => {
+        const dm = s.dataMaster, p = s.projects;
+        const today = new Date().toLocaleDateString('th-TH', { day:'numeric', month:'short', year:'numeric' });
+        const cov = dm.coverage != null ? dm.coverage.toFixed(1) : '–';
+        return 'Executive update — 🎉 Q2 บรรลุทั้ง 2 โครงการ · Data Accuracy ' + cov + '% · HR Tech ' + p.hrTech + '% (อัพเดต ' + today + ')';
+      } },
+
+    // ── May update note (dynamic date) ──
+    { sel: '[data-hris-bind="mayUpdateNote"]', text: s => {
+        const dm = s.dataMaster, p = s.projects;
+        const today = new Date().toLocaleDateString('th-TH', { day:'numeric', month:'short', year:'numeric' });
+        const cov = dm.coverage != null ? dm.coverage.toFixed(1) : '–';
+        const m = new Date().getMonth();
+        const monthShort = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][m];
+        return '+' + monthShort + ' = 🎉 Q2 บรรลุทั้ง 2 โครงการ · Data Accuracy ' + cov + '% · HR Tech ' + p.hrTech + '% · ณ ' + today;
       } }
   ];
 
