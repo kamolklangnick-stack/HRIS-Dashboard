@@ -15,6 +15,28 @@
   var lastDay = new Date(d.getFullYear(), m+1, 0).getDate();
   var pct = ((m + (day-1)/lastDay) * 100/12).toFixed(2) + '%';
   document.documentElement.style.setProperty('--hris-today-pos', pct);
+
+  // Build "Wed 26 ส.ค. · W35" style label
+  var DAYS_TH = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var MONTHS_TH = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  // ISO week number
+  var tmp = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  var dayNum = tmp.getUTCDay() || 7;
+  tmp.setUTCDate(tmp.getUTCDate() + 4 - dayNum);
+  var yStart = new Date(Date.UTC(tmp.getUTCFullYear(),0,1));
+  var wk = Math.ceil((((tmp - yStart)/86400000) + 1)/7);
+  var label = DAYS_TH[d.getDay()] + ' ' + day + ' ' + MONTHS_TH[m] + ' · W' + wk;
+
+  // Update pin label after DOM ready
+  function updatePin(){
+    var pin = document.querySelector('#tlNowPin .pin-label');
+    if (pin) pin.textContent = label;
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updatePin);
+  } else {
+    updatePin();
+  }
 })();
 </script>
 <style>
@@ -2724,7 +2746,7 @@ body.locked #site-footer {
       <div style="display:grid;grid-template-columns:190px 1fr;gap:10px;align-items:center;margin-bottom:6px;height:28px">
         <div></div>
         <div style="position:relative;height:28px">
-          <div class="tl2-now-pin" id="tlNowPin" data-hris-bind="tlNowPin" style="position:absolute;top:0;left:var(--hris-today-pos, 35.5%);transform:translateX(-50%);z-index:50;pointer-events:none"><div class="pin-label">Sat 9 พ.ค. · W19</div></div>
+          <div class="tl2-now-pin" id="tlNowPin" data-hris-bind="tlNowPin" style="position:absolute;top:0;left:var(--hris-today-pos, 35.5%);transform:translateX(-50%);z-index:50;pointer-events:none"><div class="pin-label">Wed 26 ส.ค. · W35</div></div>
         </div>
       </div>
       <div class="tl2-body" style="position:relative">
