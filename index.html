@@ -1599,8 +1599,118 @@ body.locked #site-footer {
         <div class="tl2-li"><div class="tl2-dot" style="background:var(--amber)"></div>UAT active</div>
         <div class="tl2-li"><div class="tl2-dot" style="background:var(--amber-dim);border:1px solid var(--amber-border)"></div>รอข้อมูล</div>
         <div class="tl2-li"><div class="tl2-dot" style="background:none;border:1px dashed var(--amber-border)"></div>TBC</div>
-        <div class="tl2-li"><div style="width:2px;height:10px;background:var(--amber);opacity:0.7;flex-shrink:0"></div>Today 19 เม.ย.</div>
+        <div class="tl2-li"><div style="width:2px;height:10px;background:var(--amber);opacity:0.7;flex-shrink:0"></div>Today</div>
+        <div class="tl2-li" style="margin-left:auto;color:var(--text-secondary)">💡 คลิกที่ Group/หัวข้อ เพื่อ ย่อ/ขยาย</div>
       </div>
+
+      <style>
+        .tl2-group { cursor: pointer; user-select: none; transition: background 0.15s; padding: 6px 4px; border-radius: 4px; }
+        .tl2-group:hover { background: rgba(99,102,241,0.04); }
+        .tl2-glabel::before {
+          content: '▼';
+          display: inline-block;
+          margin-right: 6px;
+          font-size: 9px;
+          transition: transform 0.2s;
+          transform: rotate(0deg);
+          color: currentColor;
+          opacity: 0.6;
+        }
+        .tl2-group.collapsed .tl2-glabel::before { transform: rotate(-90deg); }
+        .tl2-row.hidden-collapse { display: none !important; }
+        .tl2-row.has-children { cursor: pointer; }
+        .tl2-row.has-children .tl2-name::after {
+          content: '▼';
+          display: inline-block;
+          margin-left: 6px;
+          font-size: 8px;
+          opacity: 0.5;
+          transition: transform 0.2s;
+        }
+        .tl2-row.has-children.collapsed .tl2-name::after { transform: rotate(-90deg); }
+        .tl2-row.has-children:hover { background: rgba(99,102,241,0.03); border-radius: 4px; }
+      </style>
+
+      <script>
+      (function initTimelineCollapse(){
+        function setup(){
+          const body = document.querySelector('.tl2-body');
+          if (!body) return;
+          const children = Array.from(body.children);
+
+          // Track group boundaries & child rows
+          let currentGroup = null;
+          let currentGroupRows = [];
+          const groupMap = new Map(); // group el -> [rows]
+          const parentRowMap = new Map(); // parent .tl2-row (s) -> [child xs rows]
+          let currentParent = null;
+          let currentParentChildren = [];
+
+          function commitGroup(){
+            if (currentGroup) groupMap.set(currentGroup, currentGroupRows);
+            currentGroupRows = [];
+          }
+          function commitParent(){
+            if (currentParent && currentParentChildren.length) {
+              parentRowMap.set(currentParent, currentParentChildren);
+              currentParent.classList.add('has-children');
+            }
+            currentParentChildren = [];
+          }
+
+          for (const el of children) {
+            if (el.classList.contains('tl2-group')) {
+              commitParent();
+              commitGroup();
+              currentGroup = el;
+              currentParent = null;
+              continue;
+            }
+            if (el.classList.contains('tl2-row')) {
+              if (currentGroup) currentGroupRows.push(el);
+              const nameEl = el.querySelector('.tl2-name');
+              if (nameEl) {
+                if (nameEl.classList.contains('xs')) {
+                  if (currentParent) currentParentChildren.push(el);
+                } else if (nameEl.classList.contains('s')) {
+                  commitParent();
+                  currentParent = el;
+                }
+              }
+            }
+          }
+          commitParent();
+          commitGroup();
+
+          // Group click handlers
+          groupMap.forEach((rows, groupEl) => {
+            groupEl.addEventListener('click', (e) => {
+              const collapsed = groupEl.classList.toggle('collapsed');
+              rows.forEach(r => r.classList.toggle('hidden-collapse', collapsed));
+              // Also hide any expanded sub-children marker
+              e.stopPropagation();
+            });
+          });
+
+          // Parent row click handlers (only on the name label part)
+          parentRowMap.forEach((childRows, parentEl) => {
+            const nameEl = parentEl.querySelector('.tl2-name');
+            if (!nameEl) return;
+            nameEl.style.cursor = 'pointer';
+            nameEl.addEventListener('click', (e) => {
+              const collapsed = parentEl.classList.toggle('collapsed');
+              childRows.forEach(r => r.classList.toggle('hidden-collapse', collapsed));
+              e.stopPropagation();
+            });
+          });
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', setup);
+        } else {
+          setup();
+        }
+      })();
+      </script>
     </div>
   </div>
 
