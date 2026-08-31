@@ -1278,6 +1278,332 @@ body.locked #site-footer {
   <div class="tab-panels">
     <section class="tab-panel active" data-panel="exec">
 <div class="main">
+  <!-- TIMELINE -->
+  <div class="timeline-section">
+    <div class="section-title">Project Timeline — ปี 2569 (Jan → Dec 2026)</div>
+    <style>
+      .tl2-wrap { font-family: var(--font); }
+      .tl2-header { display: grid; grid-template-columns: 190px 1fr; gap: 10px; margin-bottom: 4px; }
+      .tl2-quarters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding: 0; margin-bottom: 3px; position: relative; }
+      .tl2-quarter { font-size: 9px; font-family: var(--mono); font-weight: 600; letter-spacing: 0.08em; color: var(--blue); text-align: center; padding: 3px 0; border: 1px solid rgba(26,110,199,0.18); border-bottom: 2px solid var(--blue); background: rgba(26,110,199,0.04); border-radius: 4px 4px 0 0; }
+      .tl2-quarter:nth-child(1) { background: rgba(13,143,82,0.05); border-color: rgba(13,143,82,0.18); border-bottom-color: var(--green); color: var(--green); }
+      .tl2-quarter:nth-child(2) { background: rgba(26,110,199,0.05); border-color: rgba(26,110,199,0.2); border-bottom-color: var(--blue); color: var(--blue); }
+      .tl2-quarter:nth-child(3) { background: rgba(184,114,10,0.05); border-color: rgba(184,114,10,0.2); border-bottom-color: var(--amber); color: var(--amber); }
+      .tl2-quarter:nth-child(4) { background: rgba(124,58,237,0.05); border-color: rgba(124,58,237,0.2); border-bottom-color: #7c3aed; color: #7c3aed; }
+      .tl2-months { display: grid; grid-template-columns: repeat(12, 1fr); padding: 0; margin-bottom: 4px; }
+      .tl2-month { font-size: 11px; color: var(--text-muted); font-family: var(--mono); text-align: center; padding: 2px 0; border-right: 1px dotted rgba(0,0,0,0.06); }
+      .tl2-month:nth-child(3n) { border-right: 1px solid rgba(26,110,199,0.18); }
+      .tl2-month:last-child { border-right: none; }
+      .tl2-now-label { position: absolute; top: -28px; transform: translateX(-50%); background: var(--amber); color: #fff; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 4px; white-space: nowrap; box-shadow: 0 2px 8px rgba(217,119,6,0.3); z-index: 6; pointer-events: none; }
+      .tl2-now-label::after { content: ""; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 6px; height: 6px; background: var(--amber); }
+      .tl2-body { display: flex; flex-direction: column; gap: 3px; }
+      .tl2-group { display: grid; grid-template-columns: 190px 1fr; gap: 10px; align-items: center; margin: 10px 0 4px; }
+      .tl2-glabel { font-size: 11px; font-family: var(--mono); font-weight: 500; text-align: left; letter-spacing: 0.04em; padding-left: 2px; }
+      .tl2-gline { height: 1px; }
+      .tl2-row { display: grid; grid-template-columns: 190px 1fr; gap: 10px; align-items: center; }
+      .tl2-name { font-size: 11px; color: var(--text-secondary); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--mono); padding-left: 2px; }
+      .tl2-name.s { color: var(--text-muted); font-size: 10px; padding-left: 10px; }
+      .tl2-name.xs { color: var(--text-muted); font-size: 9px; padding-left: 20px; }
+      .tl2-track { position: relative; height: 22px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+      .tl2-track.thin { height: 15px; }
+      .tl2-now { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #e8a542; opacity: 0.85; z-index: 5; left: var(--hris-today-pos, 35.5%); box-shadow: 0 0 5px rgba(232,165,66,0.35); pointer-events: none; animation: hrisNowPulse 2.5s ease-in-out infinite; }
+      @keyframes hrisNowPulse { 0%, 100% { box-shadow: 0 0 4px rgba(232,165,66,0.3); opacity: 0.75; } 50% { box-shadow: 0 0 10px rgba(232,165,66,0.6); opacity: 1; } }
+      .tl2-track::before { content: ""; position: absolute; top: 0; bottom: 0; left: 25%; width: 1px; background: rgba(15,23,42,0.06); pointer-events: none; z-index: 1; }
+      .tl2-track::after  { content: ""; position: absolute; top: 0; bottom: 0; left: 75%; width: 1px; background: rgba(15,23,42,0.06); pointer-events: none; z-index: 1; }
+      .tl2-track-mid     { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(26,110,199,0.18); pointer-events: none; z-index: 1; }
+      /* Now label container — floats above the timeline body, positioned by CSS variable */
+      .tl2-now-pin { position: absolute; top: 0; left: var(--hris-today-pos, 35.5%); transform: translateX(-50%); z-index: 7; pointer-events: none; }
+      .tl2-now-pin .pin-label { background: #d49340; color: #fff; font-family: var(--mono); font-size: 9.5px; font-weight: 600; letter-spacing: 0.06em; padding: 4px 9px; border-radius: 5px; white-space: nowrap; box-shadow: 0 2px 8px rgba(212,147,64,0.28); position: relative; }
+      .tl2-now-pin .pin-label::after { content: ""; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 7px; height: 7px; background: #d49340; }
+      /* ── Today highlight on month + quarter ── */
+      .tl2-month.is-today {
+        background: linear-gradient(180deg, rgba(232,165,66,0.10) 0%, rgba(232,165,66,0.03) 100%);
+        color: #b87b27; font-weight: 700;
+        border-radius: 4px;
+        box-shadow: 0 0 0 1px rgba(232,165,66,0.22) inset;
+      }
+      .tl2-quarter.is-today {
+        background: linear-gradient(180deg, rgba(232,165,66,0.13), rgba(232,165,66,0.04)) !important;
+        border-color: rgba(232,165,66,0.55) !important;
+        border-bottom-color: #d49340 !important;
+        color: #b87b27 !important;
+        box-shadow: 0 0 0 1px rgba(232,165,66,0.28) inset;
+      }
+      /* Shaded vertical band across all timeline rows for current month */
+      .tl2-today-band {
+        position: absolute; top: 0; bottom: 0;
+        left: var(--hris-today-band-left, 33.33%);
+        width: var(--hris-today-band-width, 8.33%);
+        background: linear-gradient(180deg, rgba(99,102,241,0.05), rgba(99,102,241,0.015));
+        z-index: 0; pointer-events: none;
+        border-left: 1px dashed rgba(99,102,241,0.22);
+        border-right: 1px dashed rgba(99,102,241,0.22);
+      }
+      /* Zebra stripe — alternating row backgrounds for readability */
+      .tl2-row:nth-child(odd) .tl2-track { background: #f7f6f0; }
+      .tl2-row:nth-child(even) .tl2-track { background: #fbfaf5; }
+      .tl2-body { background: #fcfbf7; padding: 8px 0; border-radius: 8px; }
+      .tl2-track { transition: background-color 0.2s; }
+      .tl2-row:hover .tl2-track { background: rgba(99,102,241,0.05); }
+      .tl2-bar { position: absolute; top: 0; height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 6px; overflow: hidden; }
+      .tl2-bar span { font-size: 10px; font-family: var(--mono); white-space: nowrap; }
+      .b-g   { background: var(--green); } .b-g span { color: #fff; }
+      .b-gd  { background: var(--green-dim); border: 1px solid var(--green-border); } .b-gd span { color: var(--green); }
+      .b-b   { background: var(--blue); } .b-b span { color: #fff; }
+      .b-bd  { background: var(--blue-dim); border: 1px solid var(--blue-border); } .b-bd span { color: var(--blue); }
+      .b-bf  { background: rgba(26,110,199,0.06); border: 1px solid rgba(26,110,199,0.15); } .b-bf span { color: var(--blue); opacity: 0.7; }
+      .b-a   { background: var(--amber); } .b-a span { color: #fff; }
+      .b-ad  { background: var(--amber-dim); border: 1px solid var(--amber-border); } .b-ad span { color: var(--amber); }
+      .b-atbc{ background: none; border: 1px dashed var(--amber-border); } .b-atbc span { color: var(--text-muted); }
+      .b-mini{ background: var(--blue-dim); border: 1px solid var(--blue-border); } .b-mini span { font-size: 9px; color: var(--blue); }
+      .tl2-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+      .tl2-li { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text-muted); font-family: var(--mono); }
+      .tl2-dot { width: 12px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    
+/* FIX TIMELINE POSITIONING */
+.timeline-grid {
+  position: relative;
+}
+
+.timeline-today-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #f59e0b;
+  z-index: 10;
+  pointer-events: none;
+}
+
+</style>
+
+    <div class="tl2-wrap">
+      <div class="tl2-header">
+        <div></div>
+        <div>
+          <div class="tl2-quarters">
+            <div class="tl2-quarter">Q1 ▸ ม.ค.–มี.ค.</div>
+            <div class="tl2-quarter">Q2 ▸ เม.ย.–มิ.ย.</div>
+            <div class="tl2-quarter">Q3 ▸ ก.ค.–ก.ย.</div>
+            <div class="tl2-quarter">Q4 ▸ ต.ค.–ธ.ค.</div>
+          </div>
+          <div class="tl2-months" data-hris-bind="tlMonthsHeader">
+            <span class="tl2-month">ม.ค.</span><span class="tl2-month">ก.พ.</span><span class="tl2-month">มี.ค.</span>
+            <span class="tl2-month">เม.ย.</span><span class="tl2-month">พ.ค.</span><span class="tl2-month">มิ.ย.</span>
+            <span class="tl2-month">ก.ค.</span><span class="tl2-month">ส.ค.</span><span class="tl2-month">ก.ย.</span>
+            <span class="tl2-month">ต.ค.</span><span class="tl2-month">พ.ย.</span><span class="tl2-month">ธ.ค.</span>
+          </div>
+        </div>
+      </div>
+      <!-- Now-pin row aligned to grid (same 190px/1fr columns as tl2-row) -->
+      <div style="display:grid;grid-template-columns:190px 1fr;gap:10px;align-items:center;margin-bottom:6px;height:28px">
+        <div></div>
+        <div style="position:relative;height:28px">
+          <div class="tl2-now-pin" id="tlNowPin" style="position:absolute;top:0;left:var(--hris-today-pos, 35.5%);transform:translateX(-50%);z-index:50;pointer-events:none"><div class="pin-label"></div></div>
+        </div>
+      </div>
+      <div class="tl2-body" style="position:relative">
+        <div class="tl2-today-band" id="tlTodayBand"></div>
+
+        <!-- GROUP 1 -->
+        <div class="tl2-group">
+          <span class="tl2-glabel" style="color:var(--green)">① Outsource Payroll</span>
+          <div class="tl2-gline" style="background:var(--green-border)"></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ PH1 Kick-Off &amp; Scope</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:8.33%"><span>ม.ค.</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ PH2 Setup + UAT</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:8.33%;width:8.33%"><span>ก.พ.</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ PH3 Go-Live &amp; Follow-Up</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-gd" style="left:8.33%;width:16.67%"><span>ก.พ.–มี.ค. ✓ รอ support</span></div></div>
+        </div>
+
+        <!-- GROUP 2 -->
+        <div class="tl2-group">
+          <span class="tl2-glabel" style="color:var(--blue)">② HR Data Control Hub</span>
+          <div class="tl2-gline" style="background:var(--blue-border)"></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ Q1 Planning → Go-live</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:0%;width:25%"><span>ม.ค.–มี.ค. Active</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Data Cleansing (Q1)</span>
+          <div class="tl2-track" style="height:15px"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:0%;width:25%;opacity:0.85"><span>ม.ค.–มี.ค. ⚠ Action</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ Q3 HRIS Dashboard</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:50%;width:25%;opacity:0.75"><span>ก.ค.–ส.ค. Active</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Retirement Dashboard</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-mini" style="left:50%;width:16.67%"><span>ใช้งานอยู่</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ T/O Dashboard</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-mini" style="left:50%;width:16.67%"><span>ใช้งานอยู่</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ HC &amp; WF Dashboard</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-mini" style="left:50%;width:16.67%"><span>ใช้งานอยู่</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ HRM-Monthly Dashboard</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-mini" style="left:50%;width:16.67%"><span>ใช้งานอยู่</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ Q4 ROI &amp; Audit Ready</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-bf" style="left:75%;width:25%"><span>ต.ค.–ธ.ค. Pending</span></div></div>
+        </div>
+
+        <!-- GROUP 3 -->
+        <div class="tl2-group">
+          <span class="tl2-glabel" style="color:var(--amber)">③ HR Tech Project</span>
+          <div class="tl2-gline" style="background:var(--amber-border)"></div>
+        </div>
+
+        <!-- AI Recruitment v2 -->
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ HR AI Recruitment v2 ✓</span>
+          <div class="tl2-track"><div class="tl2-now"></div>
+            <div class="tl2-bar b-g" style="left:0%;width:41.67%"><span>✓ Phase 1 Complete · Go-live ต้น พ.ค.</span></div>
+            <div class="tl2-bar b-bd" style="left:41.67%;width:58.33%"><span>Monitor &amp; Stabilize</span></div>
+          </div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ AI Interview Assistance</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ AI Interview ChatBot</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ EA DNA Fix Question</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ AI Interview Summary Report</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:25%;width:8.33%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Dashboard &amp; Analytics</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:25%;width:8.33%"><span>✓ Done</span></div></div>
+        </div>
+
+        <!-- EASY Smart Assistant -->
+        <div class="tl2-row" style="margin-top:4px">
+          <span class="tl2-name s">↳ EASY Smart Assistant ✓</span>
+          <div class="tl2-track"><div class="tl2-now"></div>
+            <div class="tl2-bar b-g" style="left:0%;width:41.67%"><span>✓ Phase 1 Complete · Go-live ✓</span></div>
+            <div class="tl2-bar b-b" style="left:41.67%;width:8.33%"><span>● Infographic Launch</span></div>
+          </div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Update ข้อมูล HR</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Phase 1 IT Test</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:16.67%;width:16.67%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Close Defect/UAT + Production</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:25%;width:16.67%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Go-live Checkpoint w/ Infra</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:33.33%;width:8.33%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Infographic ประกาศใช้งาน</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:33.33%;width:8.33%"><span>● พ.ค. Active</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Phase 2 SharePoint Connect</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-bd" style="left:50%;width:25%;opacity:0.6"><span>⏸ Pending</span></div></div>
+        </div>
+
+        <!-- Frappe Application Form -->
+        <div class="tl2-row" style="margin-top:4px">
+          <span class="tl2-name s">↳ Frappe App Form</span>
+          <div class="tl2-track"><div class="tl2-now"></div>
+            <div class="tl2-bar b-g" style="left:0%;width:25%"><span>มี.ค. Base ✓</span></div>
+            <div class="tl2-bar b-g" style="left:33.33%;width:8.33%"><span>P1 ✓ ใช้งาน</span></div>
+            <div class="tl2-bar b-a" style="left:50%;width:25%"><span>● P2 รอ IT · 3 manday รอเสนอ</span></div>
+          </div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Manual Import Template @core</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Robot Import @core (Base)</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Edit Quick / Full Form</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:25%;width:16.67%"><span>● On process</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Field Expansion (Phase 2 · IT)</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-a" style="left:50%;width:25%"><span>⚠ 3 manday รอเสนอผู้บริหาร</span></div></div>
+        </div>
+
+        <!-- Genspark separator -->
+        <div class="tl2-group" style="margin-top:4px">
+          <span class="tl2-glabel" style="color:var(--blue);font-size:10px">④ Genspark AI + Claude Cowork 🆕</span>
+          <div class="tl2-gline" style="background:var(--blue-border)"></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ นำเสนอ / อนุมัติ ✓</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:16.67%"><span>ม.ค.–ก.พ. ✓</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ Trial 5 users ✓</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:16.67%;width:8.33%"><span>มี.ค. Trial ✓ 5/5 98.2</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ Launch + Expand ✓</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:25%;width:16.67%"><span>✓ เม.ย.–พ.ค. Full HR Dept + Cowork</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name s">↳ Follow-up &amp; Support KPI</span>
+          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:41.67%;width:16.67%"><span>● มิ.ย.–ก.ค. Baseline / 1M Survey</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Adoption / ROI / CSAT (3M)</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-bd" style="left:58.33%;width:16.67%"><span>ส.ค.–ก.ย. 3M Survey</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Adoption / ROI / CSAT (6M)</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-bf" style="left:75%;width:16.67%"><span>ต.ค.–พ.ย. 6M Survey</span></div></div>
+        </div>
+        <div class="tl2-row">
+          <span class="tl2-name xs">↳ ↳ Adoption / ROI / CSAT (1Y)</span>
+          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-bf" style="left:91.67%;width:8.33%"><span>ธ.ค. Year-End Eval</span></div></div>
+        </div>
+
+      </div>
+
+      <div class="tl2-legend">
+        <div class="tl2-li"><div class="tl2-dot" style="background:var(--green)"></div>Completed</div>
+        <div class="tl2-li"><div class="tl2-dot" style="background:var(--green-dim);border:1px solid var(--green-border)"></div>Done · follow-up</div>
+        <div class="tl2-li"><div class="tl2-dot" style="background:var(--blue)"></div>Active</div>
+        <div class="tl2-li"><div class="tl2-dot" style="background:var(--blue-dim);border:1px solid var(--blue-border)"></div>Pending</div>
+        <div class="tl2-li"><div class="tl2-dot" style="background:var(--amber)"></div>UAT active</div>
+        <div class="tl2-li"><div class="tl2-dot" style="background:var(--amber-dim);border:1px solid var(--amber-border)"></div>รอข้อมูล</div>
+        <div class="tl2-li"><div class="tl2-dot" style="background:none;border:1px dashed var(--amber-border)"></div>TBC</div>
+        <div class="tl2-li"><div style="width:2px;height:10px;background:var(--amber);opacity:0.7;flex-shrink:0"></div>Today 19 เม.ย.</div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- KPI BAR -->
   <div class="kpi-bar">
@@ -2640,331 +2966,6 @@ body.locked #site-footer {
 
   </div>
 
-  <!-- TIMELINE -->
-  <div class="timeline-section">
-    <div class="section-title">Project Timeline — ปี 2569 (Jan → Dec 2026)</div>
-    <style>
-      .tl2-wrap { font-family: var(--font); }
-      .tl2-header { display: grid; grid-template-columns: 190px 1fr; gap: 10px; margin-bottom: 4px; }
-      .tl2-quarters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding: 0; margin-bottom: 3px; position: relative; }
-      .tl2-quarter { font-size: 9px; font-family: var(--mono); font-weight: 600; letter-spacing: 0.08em; color: var(--blue); text-align: center; padding: 3px 0; border: 1px solid rgba(26,110,199,0.18); border-bottom: 2px solid var(--blue); background: rgba(26,110,199,0.04); border-radius: 4px 4px 0 0; }
-      .tl2-quarter:nth-child(1) { background: rgba(13,143,82,0.05); border-color: rgba(13,143,82,0.18); border-bottom-color: var(--green); color: var(--green); }
-      .tl2-quarter:nth-child(2) { background: rgba(26,110,199,0.05); border-color: rgba(26,110,199,0.2); border-bottom-color: var(--blue); color: var(--blue); }
-      .tl2-quarter:nth-child(3) { background: rgba(184,114,10,0.05); border-color: rgba(184,114,10,0.2); border-bottom-color: var(--amber); color: var(--amber); }
-      .tl2-quarter:nth-child(4) { background: rgba(124,58,237,0.05); border-color: rgba(124,58,237,0.2); border-bottom-color: #7c3aed; color: #7c3aed; }
-      .tl2-months { display: grid; grid-template-columns: repeat(12, 1fr); padding: 0; margin-bottom: 4px; }
-      .tl2-month { font-size: 11px; color: var(--text-muted); font-family: var(--mono); text-align: center; padding: 2px 0; border-right: 1px dotted rgba(0,0,0,0.06); }
-      .tl2-month:nth-child(3n) { border-right: 1px solid rgba(26,110,199,0.18); }
-      .tl2-month:last-child { border-right: none; }
-      .tl2-now-label { position: absolute; top: -28px; transform: translateX(-50%); background: var(--amber); color: #fff; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 4px; white-space: nowrap; box-shadow: 0 2px 8px rgba(217,119,6,0.3); z-index: 6; pointer-events: none; }
-      .tl2-now-label::after { content: ""; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 6px; height: 6px; background: var(--amber); }
-      .tl2-body { display: flex; flex-direction: column; gap: 3px; }
-      .tl2-group { display: grid; grid-template-columns: 190px 1fr; gap: 10px; align-items: center; margin: 10px 0 4px; }
-      .tl2-glabel { font-size: 11px; font-family: var(--mono); font-weight: 500; text-align: left; letter-spacing: 0.04em; padding-left: 2px; }
-      .tl2-gline { height: 1px; }
-      .tl2-row { display: grid; grid-template-columns: 190px 1fr; gap: 10px; align-items: center; }
-      .tl2-name { font-size: 11px; color: var(--text-secondary); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--mono); padding-left: 2px; }
-      .tl2-name.s { color: var(--text-muted); font-size: 10px; padding-left: 10px; }
-      .tl2-name.xs { color: var(--text-muted); font-size: 9px; padding-left: 20px; }
-      .tl2-track { position: relative; height: 22px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
-      .tl2-track.thin { height: 15px; }
-      .tl2-now { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #e8a542; opacity: 0.85; z-index: 5; left: var(--hris-today-pos, 35.5%); box-shadow: 0 0 5px rgba(232,165,66,0.35); pointer-events: none; animation: hrisNowPulse 2.5s ease-in-out infinite; }
-      @keyframes hrisNowPulse { 0%, 100% { box-shadow: 0 0 4px rgba(232,165,66,0.3); opacity: 0.75; } 50% { box-shadow: 0 0 10px rgba(232,165,66,0.6); opacity: 1; } }
-      .tl2-track::before { content: ""; position: absolute; top: 0; bottom: 0; left: 25%; width: 1px; background: rgba(15,23,42,0.06); pointer-events: none; z-index: 1; }
-      .tl2-track::after  { content: ""; position: absolute; top: 0; bottom: 0; left: 75%; width: 1px; background: rgba(15,23,42,0.06); pointer-events: none; z-index: 1; }
-      .tl2-track-mid     { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(26,110,199,0.18); pointer-events: none; z-index: 1; }
-      /* Now label container — floats above the timeline body, positioned by CSS variable */
-      .tl2-now-pin { position: absolute; top: 0; left: var(--hris-today-pos, 35.5%); transform: translateX(-50%); z-index: 7; pointer-events: none; }
-      .tl2-now-pin .pin-label { background: #d49340; color: #fff; font-family: var(--mono); font-size: 9.5px; font-weight: 600; letter-spacing: 0.06em; padding: 4px 9px; border-radius: 5px; white-space: nowrap; box-shadow: 0 2px 8px rgba(212,147,64,0.28); position: relative; }
-      .tl2-now-pin .pin-label::after { content: ""; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 7px; height: 7px; background: #d49340; }
-      /* ── Today highlight on month + quarter ── */
-      .tl2-month.is-today {
-        background: linear-gradient(180deg, rgba(232,165,66,0.10) 0%, rgba(232,165,66,0.03) 100%);
-        color: #b87b27; font-weight: 700;
-        border-radius: 4px;
-        box-shadow: 0 0 0 1px rgba(232,165,66,0.22) inset;
-      }
-      .tl2-quarter.is-today {
-        background: linear-gradient(180deg, rgba(232,165,66,0.13), rgba(232,165,66,0.04)) !important;
-        border-color: rgba(232,165,66,0.55) !important;
-        border-bottom-color: #d49340 !important;
-        color: #b87b27 !important;
-        box-shadow: 0 0 0 1px rgba(232,165,66,0.28) inset;
-      }
-      /* Shaded vertical band across all timeline rows for current month */
-      .tl2-today-band {
-        position: absolute; top: 0; bottom: 0;
-        left: var(--hris-today-band-left, 33.33%);
-        width: var(--hris-today-band-width, 8.33%);
-        background: linear-gradient(180deg, rgba(99,102,241,0.05), rgba(99,102,241,0.015));
-        z-index: 0; pointer-events: none;
-        border-left: 1px dashed rgba(99,102,241,0.22);
-        border-right: 1px dashed rgba(99,102,241,0.22);
-      }
-      /* Zebra stripe — alternating row backgrounds for readability */
-      .tl2-row:nth-child(odd) .tl2-track { background: #f7f6f0; }
-      .tl2-row:nth-child(even) .tl2-track { background: #fbfaf5; }
-      .tl2-body { background: #fcfbf7; padding: 8px 0; border-radius: 8px; }
-      .tl2-track { transition: background-color 0.2s; }
-      .tl2-row:hover .tl2-track { background: rgba(99,102,241,0.05); }
-      .tl2-bar { position: absolute; top: 0; height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 6px; overflow: hidden; }
-      .tl2-bar span { font-size: 10px; font-family: var(--mono); white-space: nowrap; }
-      .b-g   { background: var(--green); } .b-g span { color: #fff; }
-      .b-gd  { background: var(--green-dim); border: 1px solid var(--green-border); } .b-gd span { color: var(--green); }
-      .b-b   { background: var(--blue); } .b-b span { color: #fff; }
-      .b-bd  { background: var(--blue-dim); border: 1px solid var(--blue-border); } .b-bd span { color: var(--blue); }
-      .b-bf  { background: rgba(26,110,199,0.06); border: 1px solid rgba(26,110,199,0.15); } .b-bf span { color: var(--blue); opacity: 0.7; }
-      .b-a   { background: var(--amber); } .b-a span { color: #fff; }
-      .b-ad  { background: var(--amber-dim); border: 1px solid var(--amber-border); } .b-ad span { color: var(--amber); }
-      .b-atbc{ background: none; border: 1px dashed var(--amber-border); } .b-atbc span { color: var(--text-muted); }
-      .b-mini{ background: var(--blue-dim); border: 1px solid var(--blue-border); } .b-mini span { font-size: 9px; color: var(--blue); }
-      .tl2-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
-      .tl2-li { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text-muted); font-family: var(--mono); }
-      .tl2-dot { width: 12px; height: 10px; border-radius: 2px; flex-shrink: 0; }
-    
-/* FIX TIMELINE POSITIONING */
-.timeline-grid {
-  position: relative;
-}
-
-.timeline-today-line {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: #f59e0b;
-  z-index: 10;
-  pointer-events: none;
-}
-
-</style>
-
-    <div class="tl2-wrap">
-      <div class="tl2-header">
-        <div></div>
-        <div>
-          <div class="tl2-quarters">
-            <div class="tl2-quarter">Q1 ▸ ม.ค.–มี.ค.</div>
-            <div class="tl2-quarter">Q2 ▸ เม.ย.–มิ.ย.</div>
-            <div class="tl2-quarter">Q3 ▸ ก.ค.–ก.ย.</div>
-            <div class="tl2-quarter">Q4 ▸ ต.ค.–ธ.ค.</div>
-          </div>
-          <div class="tl2-months" data-hris-bind="tlMonthsHeader">
-            <span class="tl2-month">ม.ค.</span><span class="tl2-month">ก.พ.</span><span class="tl2-month">มี.ค.</span>
-            <span class="tl2-month">เม.ย.</span><span class="tl2-month">พ.ค.</span><span class="tl2-month">มิ.ย.</span>
-            <span class="tl2-month">ก.ค.</span><span class="tl2-month">ส.ค.</span><span class="tl2-month">ก.ย.</span>
-            <span class="tl2-month">ต.ค.</span><span class="tl2-month">พ.ย.</span><span class="tl2-month">ธ.ค.</span>
-          </div>
-        </div>
-      </div>
-      <!-- Now-pin row aligned to grid (same 190px/1fr columns as tl2-row) -->
-      <div style="display:grid;grid-template-columns:190px 1fr;gap:10px;align-items:center;margin-bottom:6px;height:28px">
-        <div></div>
-        <div style="position:relative;height:28px">
-          <div class="tl2-now-pin" id="tlNowPin" style="position:absolute;top:0;left:var(--hris-today-pos, 35.5%);transform:translateX(-50%);z-index:50;pointer-events:none"><div class="pin-label"></div></div>
-        </div>
-      </div>
-      <div class="tl2-body" style="position:relative">
-        <div class="tl2-today-band" id="tlTodayBand"></div>
-
-        <!-- GROUP 1 -->
-        <div class="tl2-group">
-          <span class="tl2-glabel" style="color:var(--green)">① Outsource Payroll</span>
-          <div class="tl2-gline" style="background:var(--green-border)"></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name s">↳ PH1 Kick-Off &amp; Scope</span>
-          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:8.33%"><span>ม.ค.</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name s">↳ PH2 Setup + UAT</span>
-          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:8.33%;width:8.33%"><span>ก.พ.</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name s">↳ PH3 Go-Live &amp; Follow-Up</span>
-          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-gd" style="left:8.33%;width:16.67%"><span>ก.พ.–มี.ค. ✓ รอ support</span></div></div>
-        </div>
-
-        <!-- GROUP 2 -->
-        <div class="tl2-group">
-          <span class="tl2-glabel" style="color:var(--blue)">② HR Data Control Hub</span>
-          <div class="tl2-gline" style="background:var(--blue-border)"></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name s">↳ Q1 Planning → Go-live</span>
-          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:0%;width:25%"><span>ม.ค.–มี.ค. Active</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Data Cleansing (Q1)</span>
-          <div class="tl2-track" style="height:15px"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:0%;width:25%;opacity:0.85"><span>ม.ค.–มี.ค. ⚠ Action</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name s">↳ Q3 HRIS Dashboard</span>
-          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:50%;width:25%;opacity:0.75"><span>ก.ค.–ส.ค. Active</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Retirement Dashboard</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-mini" style="left:50%;width:16.67%"><span>ใช้งานอยู่</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ T/O Dashboard</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-mini" style="left:50%;width:16.67%"><span>ใช้งานอยู่</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ HC &amp; WF Dashboard</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-mini" style="left:50%;width:16.67%"><span>ใช้งานอยู่</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ HRM-Monthly Dashboard</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-mini" style="left:50%;width:16.67%"><span>ใช้งานอยู่</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name s">↳ Q4 ROI &amp; Audit Ready</span>
-          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-bf" style="left:75%;width:25%"><span>ต.ค.–ธ.ค. Pending</span></div></div>
-        </div>
-
-        <!-- GROUP 3 -->
-        <div class="tl2-group">
-          <span class="tl2-glabel" style="color:var(--amber)">③ HR Tech Project</span>
-          <div class="tl2-gline" style="background:var(--amber-border)"></div>
-        </div>
-
-        <!-- AI Recruitment v2 -->
-        <div class="tl2-row">
-          <span class="tl2-name s">↳ HR AI Recruitment v2 ✓</span>
-          <div class="tl2-track"><div class="tl2-now"></div>
-            <div class="tl2-bar b-g" style="left:0%;width:41.67%"><span>✓ Phase 1 Complete · Go-live ต้น พ.ค.</span></div>
-            <div class="tl2-bar b-bd" style="left:41.67%;width:58.33%"><span>Monitor &amp; Stabilize</span></div>
-          </div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ AI Interview Assistance</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ AI Interview ChatBot</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ EA DNA Fix Question</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ AI Interview Summary Report</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:25%;width:8.33%"><span>✓ Done</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Dashboard &amp; Analytics</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:25%;width:8.33%"><span>✓ Done</span></div></div>
-        </div>
-
-        <!-- EASY Smart Assistant -->
-        <div class="tl2-row" style="margin-top:4px">
-          <span class="tl2-name s">↳ EASY Smart Assistant ✓</span>
-          <div class="tl2-track"><div class="tl2-now"></div>
-            <div class="tl2-bar b-g" style="left:0%;width:41.67%"><span>✓ Phase 1 Complete · Go-live ✓</span></div>
-            <div class="tl2-bar b-b" style="left:41.67%;width:8.33%"><span>● Infographic Launch</span></div>
-          </div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Update ข้อมูล HR</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Phase 1 IT Test</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:16.67%;width:16.67%"><span>✓ Done</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Close Defect/UAT + Production</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:25%;width:16.67%"><span>✓ Done</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Go-live Checkpoint w/ Infra</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:33.33%;width:8.33%"><span>✓ Done</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Infographic ประกาศใช้งาน</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:33.33%;width:8.33%"><span>● พ.ค. Active</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Phase 2 SharePoint Connect</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-bd" style="left:50%;width:25%;opacity:0.6"><span>⏸ Pending</span></div></div>
-        </div>
-
-        <!-- Frappe Application Form -->
-        <div class="tl2-row" style="margin-top:4px">
-          <span class="tl2-name s">↳ Frappe App Form</span>
-          <div class="tl2-track"><div class="tl2-now"></div>
-            <div class="tl2-bar b-g" style="left:0%;width:25%"><span>มี.ค. Base ✓</span></div>
-            <div class="tl2-bar b-g" style="left:33.33%;width:8.33%"><span>P1 ✓ ใช้งาน</span></div>
-            <div class="tl2-bar b-a" style="left:50%;width:25%"><span>● P2 รอ IT · 3 manday รอเสนอ</span></div>
-          </div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Manual Import Template @core</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Robot Import @core (Base)</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:25%"><span>✓ Done</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Edit Quick / Full Form</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:25%;width:16.67%"><span>● On process</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Field Expansion (Phase 2 · IT)</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-a" style="left:50%;width:25%"><span>⚠ 3 manday รอเสนอผู้บริหาร</span></div></div>
-        </div>
-
-        <!-- Genspark separator -->
-        <div class="tl2-group" style="margin-top:4px">
-          <span class="tl2-glabel" style="color:var(--blue);font-size:10px">④ Genspark AI + Claude Cowork 🆕</span>
-          <div class="tl2-gline" style="background:var(--blue-border)"></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name s">↳ นำเสนอ / อนุมัติ ✓</span>
-          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:0%;width:16.67%"><span>ม.ค.–ก.พ. ✓</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name s">↳ Trial 5 users ✓</span>
-          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:16.67%;width:8.33%"><span>มี.ค. Trial ✓ 5/5 98.2</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name s">↳ Launch + Expand ✓</span>
-          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-g" style="left:25%;width:16.67%"><span>✓ เม.ย.–พ.ค. Full HR Dept + Cowork</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name s">↳ Follow-up &amp; Support KPI</span>
-          <div class="tl2-track"><div class="tl2-now"></div><div class="tl2-bar b-b" style="left:41.67%;width:16.67%"><span>● มิ.ย.–ก.ค. Baseline / 1M Survey</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Adoption / ROI / CSAT (3M)</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-bd" style="left:58.33%;width:16.67%"><span>ส.ค.–ก.ย. 3M Survey</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Adoption / ROI / CSAT (6M)</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-bf" style="left:75%;width:16.67%"><span>ต.ค.–พ.ย. 6M Survey</span></div></div>
-        </div>
-        <div class="tl2-row">
-          <span class="tl2-name xs">↳ ↳ Adoption / ROI / CSAT (1Y)</span>
-          <div class="tl2-track thin"><div class="tl2-now"></div><div class="tl2-bar b-bf" style="left:91.67%;width:8.33%"><span>ธ.ค. Year-End Eval</span></div></div>
-        </div>
-
-      </div>
-
-      <div class="tl2-legend">
-        <div class="tl2-li"><div class="tl2-dot" style="background:var(--green)"></div>Completed</div>
-        <div class="tl2-li"><div class="tl2-dot" style="background:var(--green-dim);border:1px solid var(--green-border)"></div>Done · follow-up</div>
-        <div class="tl2-li"><div class="tl2-dot" style="background:var(--blue)"></div>Active</div>
-        <div class="tl2-li"><div class="tl2-dot" style="background:var(--blue-dim);border:1px solid var(--blue-border)"></div>Pending</div>
-        <div class="tl2-li"><div class="tl2-dot" style="background:var(--amber)"></div>UAT active</div>
-        <div class="tl2-li"><div class="tl2-dot" style="background:var(--amber-dim);border:1px solid var(--amber-border)"></div>รอข้อมูล</div>
-        <div class="tl2-li"><div class="tl2-dot" style="background:none;border:1px dashed var(--amber-border)"></div>TBC</div>
-        <div class="tl2-li"><div style="width:2px;height:10px;background:var(--amber);opacity:0.7;flex-shrink:0"></div>Today 19 เม.ย.</div>
-      </div>
-    </div>
-  </div>
 
 </div>
 
